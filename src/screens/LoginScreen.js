@@ -17,6 +17,9 @@ const CLIENT_SECRET = '79cd7ebaf39c4437a8418daa887b7fae';
 
 const LoginScreen = () => {
 
+  Linking.addEventListener('url', urlRedirect);
+
+
   function urlRedirect(url) {
     console.log("CALLED");
     if(!url) return;
@@ -24,6 +27,7 @@ const LoginScreen = () => {
     let { path, queryParams } = Linking.parse(url);
     console.log(`Linked to app with path: ${path} and data: ${JSON.stringify(queryParams)}`);
 }
+
 
 
     WebBrowser.maybeCompleteAuthSession();
@@ -48,8 +52,6 @@ const LoginScreen = () => {
 
 
   React.useEffect(() => {
-    Linking.addEventListener('url', urlRedirect);
-
     if (response?.type === 'success') {
         const { code } = response.params;
         console.log(code); 
