@@ -3,6 +3,7 @@
     "name": "SpotifyStatistics-Recommendations",
     "slug": "SpotifyStatistics-Recommendations",
     "version": "1.0.0",
+    "scheme": "myapp", 
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
