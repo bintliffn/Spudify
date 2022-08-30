@@ -6,8 +6,10 @@ import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 import { makeRedirectUri, useAuthRequest, ResponseType, fetchUserInfoAsync} from 'expo-auth-session';
-import { Button } from 'react-native';
+import { Button, View } from 'react-native';
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
+
 
 const querystring = require('querystring');
 const Buffer = require('buffer').Buffer;
@@ -15,28 +17,25 @@ const Buffer = require('buffer').Buffer;
 const CLIENT_ID = '58c38efab4da4d3996627f385f337bd1';
 const CLIENT_SECRET = '79cd7ebaf39c4437a8418daa887b7fae';
 
+
 const LoginScreen = () => {
 
-  Linking.addEventListener('url', urlRedirect);
+  const [loggedInStatus,setLoggedInStatus] = React.useState(false);
 
-
-  function urlRedirect(url) {
-    console.log("CALLED");
-    if(!url) return;
-    // parse and redirect to new url
-    let { path, queryParams } = Linking.parse(url);
-    console.log(`Linked to app with path: ${path} and data: ${JSON.stringify(queryParams)}`);
-}
-
-
-
-    WebBrowser.maybeCompleteAuthSession();
+  WebBrowser.maybeCompleteAuthSession();
 // Endpoint
   const discovery = {
       authorizationEndpoint: 'https://accounts.spotify.com/authorize',
       tokenEndpoint: 'https://accounts.spotify.com/api/token',
     };
 
+  function logout(){
+    SecureStore.deleteItemAsync('access_token');
+    SecureStore.deleteItemAsync('refresh_token');
+    SecureStore.deleteItemAsync('token_expriration');
+    setLoggedInStatus(false);
+  }
+  //figure out why login doesnt work sometimes
   const [request, response, promptAsync] = useAuthRequest(
     {
     //will need to be stored securely
@@ -50,11 +49,15 @@ const LoginScreen = () => {
     discovery
   );
 
-
+//when response variable changes run the code below to exchange authenication code for authentication token /refresh token
   React.useEffect(() => {
+    console.log("RESPONSE CHANGED")
+    console.log(response?.type)
     if (response?.type === 'success') {
+        console.log("RESPONSE SUCCESS")
+        //retreive authentication code if user successfully logged in
         const { code } = response.params;
-        console.log(code); 
+        //send post request using authentication code to get authentication token
           axios({
             method: 'post',
             url: 'https://accounts.spotify.com/api/token',
@@ -67,11 +70,15 @@ const LoginScreen = () => {
               'content-type': 'application/x-www-form-urlencoded',
               Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
             },
-          })
+          }) //handle the response
             .then(response => {
+              console.log(request.status);
               if (response.status === 200) {
-                //res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
-                console.log(response.data);
+                console.log("successful post")
+                SecureStore.setItemAsync('access_token', JSON.stringify(response.data.access_token));
+                SecureStore.setItemAsync('refresh_token', JSON.stringify(response.data.refresh_token));
+                SecureStore.setItemAsync('token_expriration', JSON.stringify(response.data.expires_in));
+                setLoggedInStatus(true);
               } else {
                // res.send(response);
                console.log(response.data)
@@ -80,18 +87,33 @@ const LoginScreen = () => {
             .catch(error => {
               console.log(error);
             });
-          
     }
-  })
+  }, response)
+
+  //when component is loaded initially
+  React.useEffect(() =>{
+    //if the accessToken is stored
+    SecureStore.getItemAsync('access_token').then(data=>{
+      if(data != null){
+        console.log(data);
+        //set the button text to logout
+        setLoggedInStatus(true);
+      }
+    });
+
+  },[])
 
 
-
+/*display button
+  when the button is pressed begin authentication process by calling promptAsync function*/
   return (
-    <Button
-      title="Login"
-      onPress={() => {
-      promptAsync()}}
-    />
+    //tertianary statement to determine which button to render
+    <View>
+    { loggedInStatus ?
+    <Button title = 'logout' onPress={() => {logout()}}/>:
+    <Button title = 'login' onPress={() => {promptAsync()}}/> 
+    }
+    </View>
   );
 };
 
