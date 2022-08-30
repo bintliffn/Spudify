@@ -6,7 +6,7 @@ import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 import { makeRedirectUri, useAuthRequest, ResponseType, fetchUserInfoAsync} from 'expo-auth-session';
-import { Button, View } from 'react-native';
+import { Button, SafeAreaView, View } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -108,12 +108,12 @@ const LoginScreen = () => {
   when the button is pressed begin authentication process by calling promptAsync function*/
   return (
     //tertianary statement to determine which button to render
-    <View>
+    <SafeAreaView>
     { loggedInStatus ?
     <Button title = 'logout' onPress={() => {logout()}}/>:
     <Button title = 'login' onPress={() => {promptAsync()}}/> 
     }
-    </View>
+    </SafeAreaView>
   );
 };
 
