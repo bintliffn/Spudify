@@ -29,13 +29,18 @@ const LoginScreen = () => {
       tokenEndpoint: 'https://accounts.spotify.com/api/token',
     };
 
+  function login(){
+    promptAsync();
+    setLoggedInStatus(true);
+  }
+
   function logout(){
     SecureStore.deleteItemAsync('access_token');
     SecureStore.deleteItemAsync('refresh_token');
     SecureStore.deleteItemAsync('token_expriration');
     setLoggedInStatus(false);
   }
-  //figure out why login doesnt work sometimes
+
   const [request, response, promptAsync] = useAuthRequest(
     {
     //will need to be stored securely
@@ -51,8 +56,6 @@ const LoginScreen = () => {
 
 //when response variable changes run the code below to exchange authenication code for authentication token /refresh token
   React.useEffect(() => {
-    console.log("RESPONSE CHANGED")
-    console.log(response?.type)
     if (response?.type === 'success') {
         console.log("RESPONSE SUCCESS")
         //retreive authentication code if user successfully logged in
@@ -74,7 +77,6 @@ const LoginScreen = () => {
             .then(response => {
               console.log(request.status);
               if (response.status === 200) {
-                console.log("successful post")
                 SecureStore.setItemAsync('access_token', JSON.stringify(response.data.access_token));
                 SecureStore.setItemAsync('refresh_token', JSON.stringify(response.data.refresh_token));
                 SecureStore.setItemAsync('token_expriration', JSON.stringify(response.data.expires_in));
@@ -95,7 +97,6 @@ const LoginScreen = () => {
     //if the accessToken is stored
     SecureStore.getItemAsync('access_token').then(data=>{
       if(data != null){
-        console.log(data);
         //set the button text to logout
         setLoggedInStatus(true);
       }
@@ -107,11 +108,10 @@ const LoginScreen = () => {
 /*display button
   when the button is pressed begin authentication process by calling promptAsync function*/
   return (
-    //tertianary statement to determine which button to render
     <SafeAreaView>
-    { loggedInStatus ?
-    <Button title = 'logout' onPress={() => {logout()}}/>:
-    <Button title = 'login' onPress={() => {promptAsync()}}/> 
+    { loggedInStatus ?     //tertianary statement to determine which button to render
+    <Button title = 'Logout' onPress={() => {logout()}}/>:
+    <Button title = 'login' onPress={() => {login()}}/> 
     }
     </SafeAreaView>
   );
