@@ -9,7 +9,9 @@ import { makeRedirectUri, useAuthRequest, ResponseType, fetchUserInfoAsync} from
 import { Button, SafeAreaView, View } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-
+//DELETE LAter
+import { getNewToken } from '../utils/RefreshToken';
+import { getRecentlyPlayed } from '../utils/Queries';
 
 const querystring = require('querystring');
 const Buffer = require('buffer').Buffer;
@@ -32,7 +34,7 @@ const LoginScreen = () => {
   function login(){
     promptAsync();
     setLoggedInStatus(true);
-  }
+    }
 
   function logout(){
     SecureStore.deleteItemAsync('access_token');
@@ -45,7 +47,7 @@ const LoginScreen = () => {
     {
     //will need to be stored securely
       clientId: '58c38efab4da4d3996627f385f337bd1',
-      scopes: ['user-read-email', 'playlist-modify-public'],
+      scopes: ['user-read-currently-playing', 'user-follow-read', 'user-read-recently-played', 'user-top-read'],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
@@ -109,10 +111,8 @@ const LoginScreen = () => {
   when the button is pressed begin authentication process by calling promptAsync function*/
   return (
     <SafeAreaView>
-    { loggedInStatus ?     //tertianary statement to determine which button to render
-    <Button title = 'Logout' onPress={() => {logout()}}/>:
-    <Button title = 'login' onPress={() => {login()}}/> 
-    }
+    <Button title = 'login' onPress={() => (login())}/>
+    <Button title = 'refresh Token' onPress={() => (getNewToken())}/>
     </SafeAreaView>
   );
 };
