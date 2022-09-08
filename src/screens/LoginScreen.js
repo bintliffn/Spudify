@@ -7,11 +7,9 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 import { makeRedirectUri, useAuthRequest, ResponseType, fetchUserInfoAsync} from 'expo-auth-session';
 import { Button, SafeAreaView, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-//DELETE LAter
-import { getNewToken } from '../utils/RefreshToken';
-import { getRecentlyPlayed } from '../utils/Queries';
 
 const querystring = require('querystring');
 const Buffer = require('buffer').Buffer;
@@ -94,26 +92,28 @@ const LoginScreen = () => {
     }
   }, response)
 
-  //when component is loaded initially
-  React.useEffect(() =>{
+  //when Screen is in focus
+  useFocusEffect(
+    React.useCallback(()=>{
+      console.log("called");
     //if the accessToken is stored
     SecureStore.getItemAsync('access_token').then(data=>{
       if(data != null){
-        //set the button text to logout
+        getNewToken();
+        //set logged in to true
         setLoggedInStatus(true);
       }
-    });
-
-  },[])
+      });
+    },[])
+  );
 
 
 /*display button
   when the button is pressed begin authentication process by calling promptAsync function*/
   return (
-    <SafeAreaView>
-    <Button title = 'login' onPress={() => (login())}/>
-    <Button title = 'refresh Token' onPress={() => (getNewToken())}/>
-    </SafeAreaView>
+      <SafeAreaView>
+        <Button title = 'login' onPress={() => (login())}/>
+      </SafeAreaView>
   );
 };
 

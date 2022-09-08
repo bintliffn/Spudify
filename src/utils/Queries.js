@@ -3,20 +3,20 @@ import axios from 'axios';
 
 const baseURL = 'https://api.spotify.com/v1/';
 
-//need to get access token from local storage
-export const getRecentlyPlayed = () => {
-    //temporary hardcoded
-    const accessToken = "BQA7xanoSd8MA9H2-9StI8KVDSwRiPVSVNx3bgIOib703_JA-g17sT7p0d77lvTAowVyH_wpsWsZWZy4fYicuZzqgC35ubDLa8oMm3aHF5hCYIxhboc6BQqWkNRieHdqu_FQ8keAK7rbsH0WNCOv2VYZl1xmY4mqs8yDShpoGTLUPOBNFVQ0NwQADVzGmki2VEKZx-8kZpUMvkE_T3K_fYoCkzY39NFN0oTxY59FgvdAw31GLV6JSf04";
-            axios({
+
+export const getRecentlyPlayed = async() => {
+    const accessToken = await SecureStore.getItemAsync("access_token");
+      axios({
         method: 'get',
-        url: 'https://api.spotify.com/v1/me/player/recently-played',
+        url: `${baseURL}me/player/recently-played`,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer '+accessToken,
         },
       }) //handle the response
         .then(response => {
-            console.log(response.data);
+          //working (need to extract track ids/images/artists)
+            console.log(response.data.items);
         })
         .catch(error => {
           console.log(error);
