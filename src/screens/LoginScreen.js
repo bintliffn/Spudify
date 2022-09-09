@@ -10,6 +10,8 @@ import { Button, SafeAreaView, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { getNewToken } from '../utils/RefreshToken';
+import { getRecentlyPlayed } from '../utils/Queries';
 
 const querystring = require('querystring');
 const Buffer = require('buffer').Buffer;
@@ -18,7 +20,7 @@ const CLIENT_ID = '58c38efab4da4d3996627f385f337bd1';
 const CLIENT_SECRET = '79cd7ebaf39c4437a8418daa887b7fae';
 
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
 
   const [loggedInStatus,setLoggedInStatus] = React.useState(false);
 
@@ -113,6 +115,7 @@ const LoginScreen = () => {
   return (
       <SafeAreaView>
         <Button title = 'login' onPress={() => (login())}/>
+        <Button title = 'test' onPress={() => (navigation.navigate('Test'))}/>
       </SafeAreaView>
   );
 };
