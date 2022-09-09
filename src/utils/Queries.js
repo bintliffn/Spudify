@@ -3,8 +3,7 @@ import axios from 'axios';
 
 const baseURL = 'https://api.spotify.com/v1/';
 
-
-export const getRecentlyPlayed = async() => {
+export default async function getRecentlyPlayed() {
     const accessToken = await SecureStore.getItemAsync("access_token");
       axios({
         method: 'get',
@@ -25,7 +24,7 @@ export const getRecentlyPlayed = async() => {
 //must pass either "tracks" or "artists" for function to work (retreives top artists or tracks for a user)
 //also must pass time_range (valid values are long_term, medium_term, short_term)
 //Need to test
-export const getTopArtistsOrTracks = async(artistsOrTracks, time_range) => {
+export default async function getTopArtistsOrTracks(artistsOrTracks, time_range) {
   const accessToken = await SecureStore.getItemAsync("access_token");
     axios({
       method: 'get',
@@ -45,7 +44,7 @@ export const getTopArtistsOrTracks = async(artistsOrTracks, time_range) => {
       });
 }
 //need to test
-export const getAudioAnalysisOfSong = async(trackId) => {
+export default async function getAudioAnalysisOfSong (trackId) {
   const accessToken = await SecureStore.getItemAsync("access_token");
     axios({
       method: 'get',
