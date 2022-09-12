@@ -3,8 +3,6 @@ import axios from 'axios';
 
 const baseURL = 'https://api.spotify.com/v1/';
 
-
-
 //Working
 export async function getRecentlyPlayed() {
     const accessToken = await SecureStore.getItemAsync("access_token");
@@ -42,7 +40,7 @@ export async function getTopArtistsOrTracks(artistsOrTracks, time_range, limit) 
       }
     }) //handle the response
       .then(response => {
-        //returns array of songs/artists (array contains a lot of information about the song/artist that will need to be extracted in a later step)
+        //returns array of songs/artists depending on value passed in
         return response.data.items;
       })
       .catch(error => {
@@ -91,10 +89,33 @@ export async function getRecommendations (artists,genres,tracks, limit) {
       }
     }) //handle the response
       .then(response => {
-        //returns array of songs(array contains a lot of information about the song/artist that will need to be extracted in a later step)
+        //returns array of songs
         return response.data.tracks;
       })
       .catch(error => {
         console.log(error);
       });
 }
+
+//Working
+//returns recommendations. The only parameter is a JSON object containing the parameters that should be added to the request
+export async function getRecommendationsAdvanced (jsonBody) {
+  const accessToken = await SecureStore.getItemAsync("access_token");
+    axios({
+      method: 'get',
+      url: `${baseURL}recommendations`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+accessToken,
+      },
+      params : jsonBody,
+    }) //handle the response
+      .then(response => {
+        //returns array of songs 
+        return response.data.tracks;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+}
+
