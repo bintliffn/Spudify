@@ -1,4 +1,4 @@
-import { getTopArtistsOrSongs, getTopArtistsOrTracks, getAudioAnalysisOfSong, getRecommendations, getRecommendationsAdvanced } from "../utils/Queries";
+import { getTopArtistsOrSongs, getTopArtistsOrTracks, getAudioAnalysisOfSong, getRecommendations, getRecommendationsAdvanced, getRecentlyPlayed } from "../utils/Queries";
 import { Button, SafeAreaView, View } from 'react-native';
 
 const payload = {
@@ -9,10 +9,16 @@ const payload = {
     'limit': 5,
   }
 
+  async function testFunc(){
+    const test = await getRecommendationsAdvanced(payload);
+    console.log(test[0].name)
+  }
+  
+
 const Test = ({ navigation })=>{
     return (
         <SafeAreaView>
-          <Button title = 'test' onPress={() => (getRecommendationsAdvanced(payload))}/>
+          <Button title = 'test' onPress={() => (testFunc())}/>
         </SafeAreaView>
     );
 }
