@@ -2,22 +2,16 @@
 //need to make it so Post request to get token triggers after successful get code request not on USeState how it is now
 //need to find a way to store the client secret not in plain text
 //need to figure out how to store refresh token / access token for use in API calls
+import axios from "axios";
 import * as React from "react";
 import * as WebBrowser from "expo-web-browser";
-import * as Linking from "expo-linking";
-import {
-  makeRedirectUri,
-  useAuthRequest,
-  ResponseType,
-  fetchUserInfoAsync,
-} from "expo-auth-session";
-import { Image, Text, View } from "react-native";
+import * as SecureStore from "expo-secure-store";
+import { useFocusEffect } from "@react-navigation/native";
+import { getNewToken } from "../../utils/RefreshToken";
+import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
+import { SafeAreaView, Image, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import { styles } from "./utils";
-import { useFocusEffect } from "@react-navigation/native";
-import axios from "axios";
-import * as SecureStore from "expo-secure-store";
-import { getNewToken } from "../../utils/RefreshToken";
 
 const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
@@ -134,14 +128,14 @@ function LoginScreen({ navigation }) {
   /*display button
   when the button is pressed begin authentication process by calling promptAsync function*/
   return (
-    <View style={[styles.parentView]}>
+    <SafeAreaView>
       {loggedInStatus ? (
-        <View style={[styles.dashboardView]}>
+        <View style={[styles.view]}>
           <Button
             title="test"
             compact
             mode="contained"
-            contentStyle={{height: "100%"}}
+            contentStyle={{ height: "100%" }}
             style={[styles.button]}
             onPress={() => navigation.navigate("Test")}
           >
@@ -151,7 +145,7 @@ function LoginScreen({ navigation }) {
             title="logout"
             compact
             mode="contained"
-            contentStyle={{height: "100%"}}
+            contentStyle={{ height: "100%" }}
             style={[styles.button]}
             onPress={() => logout()}
           >
@@ -159,7 +153,7 @@ function LoginScreen({ navigation }) {
           </Button>
         </View>
       ) : (
-        <View style={[styles.loginPageView]}>
+        <View style={[styles.view]}>
           <Image style={[styles.logo]} source={require(spotify_logo)}></Image>
           <Text style={[styles.titleText]}>Spudify</Text>
           <Text style={[styles.bodyText]}>Login to start your journey!</Text>
@@ -167,7 +161,7 @@ function LoginScreen({ navigation }) {
             title="login"
             compact
             mode="contained"
-            contentStyle={{height: "100%"}}
+            contentStyle={{ height: "100%" }}
             uppercase={false}
             style={[styles.button]}
             onPress={() => login()}
@@ -176,7 +170,7 @@ function LoginScreen({ navigation }) {
           </Button>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 

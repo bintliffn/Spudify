@@ -14,31 +14,23 @@ export const styles = StyleSheet.create({
   titleText: {
     color: "white",
     fontSize: 50,
+    paddingTop: 100,
     paddingBottom: 300,
   },
   bodyText: {
     color: "white",
     fontSize: 15,
-    paddingBottom: 30,
+    paddingBottom: 10,
   },
   logo: {
     position: "absolute",
     width: 50,
     height: 50,
-    top: 40,
+    top: 5,
     left: 25,
   },
-  parentView: {
-    flex: 1,
-  },
-  loginPageView: {
-    flex: 2,
+  view: {
     alignItems: "center",
     justifyContent: "center",
-  },
-  dashboardView: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 3,
   },
 });

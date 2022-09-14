@@ -3,7 +3,7 @@ import Test from "./src/screens/Test";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DefaultTheme } from "react-native-paper";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -18,7 +18,6 @@ const MyTheme = {
 
 export default function App() {
   return (
-    <SafeAreaProvider>
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator
         initialRouteName="Login"
@@ -30,6 +29,5 @@ export default function App() {
         <Stack.Screen name="Test" component={Test} />
       </Stack.Navigator>
     </NavigationContainer>
-    </SafeAreaProvider>
   );
 }
