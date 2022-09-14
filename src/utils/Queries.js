@@ -89,7 +89,8 @@ export async function getRecommendations(artists, genres, tracks, limit) {
 //returns recommendations. The only parameter is a JSON object containing the parameters that should be added to the request
 //This function will mainly be used in phase 2 when advanced recommendations can be used
 export async function getRecommendationsAdvanced(jsonBody) {
-  const accessToken = await SecureStore.getItemAsync("access_token");
+  let accessToken = await SecureStore.getItemAsync("access_token");
+  //accessToken = JSON.parse(accessToken);
   const promise = axios({
     method: "get",
     url: `${baseURL}recommendations`,
