@@ -6,7 +6,10 @@ const baseURL = "https://api.spotify.com/v1/";
 //Returns an array of 20 most recently played tracks
 export async function getRecentlyPlayed(populateData) {
   //retreive access token from local storage
-  const accessToken = await SecureStore.getItemAsync("access_token");
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
   //send GET request to spotify
   const promise = axios({
     method: "get",
@@ -27,7 +30,10 @@ export async function getTopArtistsOrTracks(
   time_range,
   limit
 ) {
-  const accessToken = await SecureStore.getItemAsync("access_token");
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
   const promise = axios({
     method: "get",
     url: `${baseURL}me/top/${artistsOrTracks}`,
@@ -47,7 +53,10 @@ export async function getTopArtistsOrTracks(
 //returns attribute values for a song (ex. dancability: .67)
 //must pass in a trackid
 export async function getAudioAnalysisOfSong(trackId) {
-  const accessToken = await SecureStore.getItemAsync("access_token");
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
   const promise = axios({
     method: "get",
     url: `${baseURL}audio-features/${trackId}`,
@@ -67,7 +76,10 @@ export async function getAudioAnalysisOfSong(trackId) {
 //Artists/Genres/Tracks must be passed as comma seperated values ex. track1,track2,track3
 //limit is the number of recommended tracks you want to recieve (max: 50)
 export async function getRecommendations(artists, genres, tracks, limit) {
-  const accessToken = await SecureStore.getItemAsync("access_token");
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
   const promise = axios({
     method: "get",
     url: `${baseURL}recommendations`,
@@ -89,14 +101,17 @@ export async function getRecommendations(artists, genres, tracks, limit) {
 //returns recommendations. The only parameter is a JSON object containing the parameters that should be added to the request
 //This function will mainly be used in phase 2 when advanced recommendations can be used
 export async function getRecommendationsAdvanced(jsonBody) {
-  let accessToken = await SecureStore.getItemAsync("access_token");
-  //accessToken = JSON.parse(accessToken);
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  console.log(accessToken);
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
   const promise = axios({
     method: "get",
     url: `${baseURL}recommendations`,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + accessToken,
+      Authorization: "Bearer " + accessToken,
     },
     params: jsonBody,
   });
