@@ -11,7 +11,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { getNewToken } from '../utils/RefreshToken';
-import { getRecentlyPlayed } from '../utils/Queries';
 
 const querystring = require('querystring');
 const Buffer = require('buffer').Buffer;
@@ -98,7 +97,9 @@ const LoginScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(()=>{
       console.log("called");
-    //if the accessToken is stored
+    //if the accessToken is stored locally already then get a new token 
+    //this makes it so when a user opens the app it will automatically get a new access token in the backgrounf
+    //because their previous token has likely expired by now
     SecureStore.getItemAsync('access_token').then(data=>{
       if(data != null){
         getNewToken();
@@ -115,7 +116,6 @@ const LoginScreen = ({ navigation }) => {
   return (
       <SafeAreaView>
         <Button title = 'login' onPress={() => (login())}/>
-        <Button title = 'test' onPress={() => (navigation.navigate('Test'))}/>
       </SafeAreaView>
   );
 };
