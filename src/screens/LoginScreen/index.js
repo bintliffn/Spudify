@@ -18,7 +18,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { getNewToken } from "../../utils/RefreshToken";
-import { getRecentlyPlayed } from "../../utils/Queries";
 
 const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
