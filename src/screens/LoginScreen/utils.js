@@ -1,11 +1,12 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  loginButton: {
+  button: {
     borderRadius: 50,
     width: 211,
-    height: 94,
+    height: 80,
     justifyContent: "center",
+    backgroundColor: "#1DB954",
   },
   loginButtonText: {
     fontSize: 30,
@@ -36,7 +37,8 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   dashboardView: {
-    paddingTop: 100,
+    alignItems: "center",
+    justifyContent: "center",
     flex: 3,
   },
 });
