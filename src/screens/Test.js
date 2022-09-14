@@ -1,5 +1,6 @@
-import { getTopArtistsOrSongs, getTopArtistsOrTracks, getAudioAnalysisOfSong, getRecommendations, getRecommendationsAdvanced, getRecentlyPlayed } from "../utils/Queries";
+import {getTopArtistsOrTracks, getAudioAnalysisOfSong, getRecommendations, getRecommendationsAdvanced, getRecentlyPlayed } from "../utils/Queries";
 import { Button, SafeAreaView, View } from 'react-native';
+import Song from "../Components/Song";
 
 const payload = {
     'seed_artists': "4YjpqCSDD7zwMQgPYJMqb0,7Hvq85OU8T7Hsd63zNBwaL,"+
@@ -10,8 +11,8 @@ const payload = {
   }
 
   async function testFunc(){
-    const test = await getRecommendationsAdvanced(payload);
-    console.log(test[0].name)
+    const test = await getTopArtistsOrTracks("tracks","long_term",5);
+     Song(test[0]);
   }
   
 

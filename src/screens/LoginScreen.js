@@ -116,6 +116,7 @@ const LoginScreen = ({ navigation }) => {
   return (
       <SafeAreaView>
         <Button title = 'login' onPress={() => (login())}/>
+        <Button title = 'test' onPress={() => (navigation.navigate("Test"))}/>
       </SafeAreaView>
   );
 };
