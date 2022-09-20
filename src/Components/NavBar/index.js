@@ -3,7 +3,7 @@ import { View, SafeAreaView } from "react-native";
 import { Appbar } from "react-native-paper";
 import { styles } from "./utils";
 
-function NavBar() {
+export default function NavBar() {
   return (
     <SafeAreaView>
       <Appbar>
@@ -15,5 +15,3 @@ function NavBar() {
     </SafeAreaView>
   );
 }
-
-export default NavBar;
