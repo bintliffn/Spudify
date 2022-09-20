@@ -5,8 +5,9 @@ import {
   getRecommendationsAdvanced,
   getRecentlyPlayed,
   getUserInfo,
-  getUserFollowing
+  getUserFollowing,
 } from "../utils/Queries";
+<<<<<<< HEAD
 import { Button, SafeAreaView, View , Text} from "react-native";
 import Song from "../Components/DisplaySong/Song";
 import React from "react";
@@ -14,6 +15,10 @@ import { StyleSheet } from "react-native";
 
 
 
+=======
+import { Button, SafeAreaView, View } from "react-native";
+import Song from "../components/Song";
+>>>>>>> 64a5bca043bd5800d0fce4f9013c823cc136ddbf
 
 const payload = {
   seed_artists:
@@ -23,6 +28,13 @@ const payload = {
   limit: 5,
 };
 
+<<<<<<< HEAD
+=======
+async function testFunc() {
+  const test = await getUserFollowing();
+}
+
+>>>>>>> 64a5bca043bd5800d0fce4f9013c823cc136ddbf
 const Test = ({ navigation }) => {
   const [display, setDisplay] = React.useState(false);
   const[jsonBody,setJsonBody] = React.useState();
