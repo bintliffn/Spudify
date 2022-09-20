@@ -4,6 +4,8 @@ import {
   getRecommendations,
   getRecommendationsAdvanced,
   getRecentlyPlayed,
+  getUserInfo,
+  getUserFollowing
 } from "../utils/Queries";
 import { Button, SafeAreaView, View } from "react-native";
 import Song from "../Components/Song";
@@ -17,9 +19,7 @@ const payload = {
 };
 
 async function testFunc() {
-  const test = await getTopArtistsOrTracks("tracks", "long_term", 5);
-  Song(test[0]);
-}
+  const test = await getUserFollowing();
 
 const Test = ({ navigation }) => {
   return (
