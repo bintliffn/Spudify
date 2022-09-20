@@ -32,6 +32,10 @@ export const styles = StyleSheet.create({
         flexDirection: "column",
         flex: 1,
         paddingLeft: 20 
+    },
+    DurationView:{
+        alignItems: "flex-end",
+        justifyContent: "center",
     }
 
 });

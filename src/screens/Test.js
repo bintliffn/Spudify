@@ -4,6 +4,8 @@ import {
   getRecommendations,
   getRecommendationsAdvanced,
   getRecentlyPlayed,
+  getUserInfo,
+  getUserFollowing
 } from "../utils/Queries";
 import { Button, SafeAreaView, View , Text} from "react-native";
 import Song from "../Components/DisplaySong/Song";
@@ -20,12 +22,6 @@ const payload = {
   seed_tracks: "",
   limit: 5,
 };
-
-async function testFunc() {
-  const test = await getTopArtistsOrTracks("tracks", "long_term", 5);
-  setJsonBody(test[0]);
-  setDisplay(true)
-}
 
 const Test = ({ navigation }) => {
   const [display, setDisplay] = React.useState(false);
