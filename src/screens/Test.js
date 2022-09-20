@@ -1,4 +1,4 @@
-import {getTopArtistsOrTracks, getAudioAnalysisOfSong, getRecommendations, getRecommendationsAdvanced, getRecentlyPlayed, getUserProfilePic } from "../utils/Queries";
+import {getTopArtistsOrTracks, getUserInfo, getAudioAnalysisOfSong, getRecommendations, getRecommendationsAdvanced, getRecentlyPlayed, getUserProfilePic } from "../utils/Queries";
 import { Button, SafeAreaView, View } from 'react-native';
 import Song from "../Components/Song";
 
@@ -11,7 +11,7 @@ const payload = {
   }
 
   async function testFunc(){
-    const test = await getUserProfilePic();
+    const test = await getUserInfo();
     console.log(test);
   }
   

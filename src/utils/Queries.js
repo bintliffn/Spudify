@@ -120,7 +120,6 @@ export async function getRecommendationsAdvanced (jsonBody) {
 //More info here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-current-users-profile
 export async function getUserInfo () {
   var accessToken = await SecureStore.getItemAsync("access_token");
-  console.log(accessToken)
   if(accessToken.includes('"')){
     accessToken = JSON.parse(accessToken);
   }
