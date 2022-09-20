@@ -5,10 +5,10 @@ import {
   getRecommendationsAdvanced,
   getRecentlyPlayed,
   getUserInfo,
-  getUserFollowing
+  getUserFollowing,
 } from "../utils/Queries";
 import { Button, SafeAreaView, View } from "react-native";
-import Song from "../Components/Song";
+import Song from "../components/Song";
 
 const payload = {
   seed_artists:
@@ -20,6 +20,7 @@ const payload = {
 
 async function testFunc() {
   const test = await getUserFollowing();
+}
 
 const Test = ({ navigation }) => {
   return (
