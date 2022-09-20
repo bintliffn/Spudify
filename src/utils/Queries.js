@@ -118,7 +118,6 @@ export async function getRecommendationsAdvanced(jsonBody) {
   const dataPromise = promise.then((response) => response.data.tracks);
   return dataPromise;
 }
-<<<<<<< HEAD
 
 //Returns information about a user such as their username/ number of followers/ profile image if they have one
 //More info here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-current-users-profile
@@ -143,7 +142,6 @@ export async function getUserInfo () {
 //More infor about response here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-followed
 export async function getUserFollowing () {
   var accessToken = await SecureStore.getItemAsync("access_token");
-  console.log(accessToken)
   if(accessToken.includes('"')){
     accessToken = JSON.parse(accessToken);
   }
@@ -161,5 +159,3 @@ export async function getUserFollowing () {
     const dataPromise = promise.then((response) => response.data)
     return dataPromise;
 }
-=======
->>>>>>> 771a152ca86dc53b580d801f06f84da68b2584b5
