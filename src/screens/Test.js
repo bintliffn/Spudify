@@ -20,7 +20,6 @@ const payload = {
 
 async function testFunc() {
   const test = await getUserFollowing();
-console.log(test)}
 
 const Test = ({ navigation }) => {
   return (
