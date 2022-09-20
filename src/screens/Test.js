@@ -7,6 +7,7 @@ import {
 } from "../utils/Queries";
 import { Button, SafeAreaView, View } from "react-native";
 import Song from "../Components/Song";
+import NavBar from "../Components/NavBar";
 
 const payload = {
   seed_artists:
@@ -25,6 +26,7 @@ const Test = ({ navigation }) => {
   return (
     <SafeAreaView>
       <Button title="test" onPress={() => testFunc()} />
+      <NavBar/>
     </SafeAreaView>
   );
 };
