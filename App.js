@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DefaultTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
-import User from "./src/components/User";
 import { UserProvider } from "./src/components/contexts/UserProvider";
 
 const Stack = createNativeStackNavigator();
