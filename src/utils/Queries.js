@@ -4,7 +4,7 @@ import axios from "axios";
 const baseURL = "https://api.spotify.com/v1/";
 
 //Returns an array of 20 most recently played tracks
-export async function getRecentlyPlayed(populateData) {
+export async function getRecentlyPlayed() {
   //retreive access token from local storage
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {

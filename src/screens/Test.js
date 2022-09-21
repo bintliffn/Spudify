@@ -7,8 +7,13 @@ import {
   getUserInfo,
   getUserFollowing,
 } from "../utils/Queries";
-import { Button, SafeAreaView, View } from "react-native";
-import Song from "../components/Song";
+import { Button, SafeAreaView, View , Text} from "react-native";
+import Song from "../components/DisplaySong/Song";
+import React from "react";
+import { StyleSheet } from "react-native";
+
+
+
 
 const payload = {
   seed_artists:
@@ -18,16 +23,49 @@ const payload = {
   limit: 5,
 };
 
-async function testFunc() {
-  const test = await getUserFollowing();
-}
-
 const Test = ({ navigation }) => {
+  const [display, setDisplay] = React.useState(false);
+  const[jsonBody,setJsonBody] = React.useState();
+
+  async function testFunc() {
+    const test = await getRecentlyPlayed(5);
+    setJsonBody(test[0].track);
+    setDisplay(true)
+  }
+
+  React.useEffect(()=>{
+      testFunc();
+  },[])
+
   return (
+    //work on displaying full songComponent
     <SafeAreaView>
-      <Button title="test" onPress={() => testFunc()} />
+      {display ?
+      ( 
+      <View style={[styles.view]}>
+      <Song SingleJsonSong={jsonBody} style={[styles.song]}/>
+      <Song SingleJsonSong={jsonBody} style={[styles.song]}/>
+      <Song SingleJsonSong={jsonBody} style={[styles.song]}/>
+         </View>):
+         (<View>
+            <Text >
+              RENDERING DATA
+              </Text>
+         </View>)}
+
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  song:{
+    padding:10,
+    margin: 100
+},
+view:{
+  justifyContent: "center",
+  alignItems: 'center'
+}
+});
 
 export default Test;
