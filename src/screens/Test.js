@@ -8,8 +8,8 @@ import {
   getUserFollowing,
 } from "../utils/Queries";
 import { Button, SafeAreaView, View } from "react-native";
-import Song from "../Components/Song";
-import NavBar from "../Components/NavBar";
+import Song from "../components/Song";
+import NavBar from "../components/NavBar";
 
 const payload = {
   seed_artists:
@@ -21,6 +21,7 @@ const payload = {
 
 async function testFunc() {
   const test = await getUserFollowing();
+  console.log(test);
 }
 
 const Test = ({ navigation }) => {
