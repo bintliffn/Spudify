@@ -9,7 +9,7 @@ import * as SecureStore from "expo-secure-store";
 import { useFocusEffect } from "@react-navigation/native";
 import { getNewToken } from "../../utils/RefreshToken";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
-import { SafeAreaView, Image, Text, View } from "react-native";
+import { SafeAreaView, Image, Text, View, processColor } from "react-native";
 import { Button } from "react-native-paper";
 import { styles } from "./utils";
 
@@ -17,8 +17,8 @@ const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
 
 const spotify_logo = "../../../assets/spotify_logo.png";
-const CLIENT_ID = "58c38efab4da4d3996627f385f337bd1";
-const CLIENT_SECRET = "79cd7ebaf39c4437a8418daa887b7fae";
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 function LoginScreen({ navigation }) {
   const [loggedInStatus, setLoggedInStatus] = React.useState(false);

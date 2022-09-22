@@ -25,7 +25,7 @@ const Test = ({ navigation }) => {
   const [jsonBody, setJsonBody] = React.useState();
 
   async function testFunc() {
-    const test = await getRecentlyPlayed(5);
+    const test = await getRecentlyPlayed();
     setJsonBody(test[0].track);
     setDisplay(true);
   }
@@ -39,8 +39,6 @@ const Test = ({ navigation }) => {
     <SafeAreaView>
       {display ? (
         <View style={[styles.view]}>
-          <Song SingleJsonSong={jsonBody} style={[styles.song]} />
-          <Song SingleJsonSong={jsonBody} style={[styles.song]} />
           <Song SingleJsonSong={jsonBody} style={[styles.song]} />
         </View>
       ) : (

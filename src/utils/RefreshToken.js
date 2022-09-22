@@ -4,8 +4,8 @@ import * as SecureStore from "expo-secure-store";
 const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
 
-const CLIENT_ID = "58c38efab4da4d3996627f385f337bd1";
-const CLIENT_SECRET = "79cd7ebaf39c4437a8418daa887b7fae";
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 //function to get a new access token using the refresh token
 export const getNewToken = async () => {
