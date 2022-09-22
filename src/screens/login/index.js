@@ -137,7 +137,7 @@ function LoginScreen({ navigation }) {
             mode="contained"
             contentStyle={{ height: "100%" }}
             style={[styles.button]}
-            onPress={() => navigation.navigate("Test")}
+            onPress={() => navigation.navigate("NavBarRouter")}
           >
             {"Test"}
           </Button>

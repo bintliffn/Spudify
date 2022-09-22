@@ -14,12 +14,9 @@ function Song({ SingleJsonSong }) {
   let artistName = SingleJsonSong.artists[0].name;
   let albumName = SingleJsonSong.album.name;
   let durationSec = Math.round((SingleJsonSong.duration_ms / 1000) % 60);
-<<<<<<< HEAD
-=======
   if (durationSec < 10) {
     durationSec = "0" + durationSec;
   }
->>>>>>> d1ae80b4cb294a9e3728be783ed9bc82be026fb9
   let durationMin = Math.floor(SingleJsonSong.duration_ms / 1000 / 60);
 
   //extract album cover image of 300 x 300 size ( for higher resolution)
