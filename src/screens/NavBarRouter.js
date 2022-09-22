@@ -37,7 +37,7 @@ export default function NavBarRouter() {
             iconName = focused ? "alert-circle" : "alert-circle-outline";
           }
 
-          return <Ionicons name={iconName} size={size} color={color} />
+          return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
       barStyle={{ backgroundColor: "transparent" }}
