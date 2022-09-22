@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { db } from "../../firebase-config";
+import { db } from "@root/firebase-config";
 import { collection, doc, getDocs, serverTimestamp } from "firebase/firestore";
 /**
  * Custom hook for fetching users from Firebase
