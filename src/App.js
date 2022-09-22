@@ -1,8 +1,12 @@
-import { StatusBar } from "react-native";
-import { DefaultTheme } from "react-native-paper";
+import LoginScreen from "@src/screens/LoginScreen";
+import Test from "@src/screens/Test";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { UserProvider } from "./src/components/contexts/UserProvider";
+import { DefaultTheme } from "react-native-paper";
+import { SafeAreaView } from "react-native";
+import { StatusBar } from "react-native";
+import { UserProvider } from "@src/components/contexts/UserProvider";
+import { registerRootComponent } from "expo";
 
 // Screens
 import LoginScreen from "./src/screens/login";
@@ -36,3 +40,5 @@ export default function App() {
     </UserProvider>
   );
 }
+
+registerRootComponent(App);

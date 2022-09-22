@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Button, SafeAreaView, Image } from "react-native";
+import { View, SafeAreaView, Image } from "react-native";
 import { Text } from "react-native-paper";
-import { styles } from "./Utils";
+import { styles } from "@src/components/DisplaySong/utils";
 
 //MUST PASS IN A SINGLE SONG FOR CODE TO WORK
 //THIS IS DIFFERENT FOR DIFFERENT ENDPOINTS
