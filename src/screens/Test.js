@@ -8,7 +8,7 @@ import {
   getUserFollowing,
 } from "../utils/Queries";
 import { Button, SafeAreaView, View, Text } from "react-native";
-import Song from "../components/DisplaySong/Song";
+import Song from "@src/components/DisplaySong/Song";
 import React from "react";
 import { StyleSheet } from "react-native";
 
