@@ -156,6 +156,6 @@ export async function getUserFollowing () {
         type : 'artist',
       },
     });
-    const dataPromise = promise.then((response) => response.data.artists.items)
+    const dataPromise = promise.then((response) => response.data)
     return dataPromise;
 }
