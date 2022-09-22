@@ -11,7 +11,7 @@ import { getNewToken } from "@src/utils/RefreshToken";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import { SafeAreaView, Image, Text, View, processColor } from "react-native";
 import { Button } from "react-native-paper";
-import { styles } from "@src/screens/LoginScreen/utils";
+import { styles } from "@src/screens/login/utils";
 
 const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
