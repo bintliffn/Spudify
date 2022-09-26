@@ -8,23 +8,29 @@ export const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "column",
-    padding: 10,
+    margin: 10,
+    flex: 1
   },
   welcomeText: {
     color: "#FFFFFF",
     fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
-    fontSize: 16,
-    paddingLeft: 10
+    fontSize: 24,
+    fontWeight : "bold"
   },
   topItemText:{
     color: "#FFFFFF",
     fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
-    fontSize: 24,
+    fontSize: 20,
     paddingBottom: 10,
   },
   welcomeView: {
     alignItems: "center",
     flexDirection: "row",
+    paddingTop : 15
+  },
+  scrollView : {
+    showsVerticalScrollIndicator : false,
+    directionalLockEnabled : true,
   },
   renderingText: {
     color: "#FFFFFF",
@@ -34,10 +40,11 @@ export const styles = StyleSheet.create({
   songOrArtistView: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#434343",
+    backgroundColor: "#212121",
     width: windowWidth * 0.95,
     height: 80,
     borderRadius: 10,
+    
   },
   buffer: {
     height: 25,
