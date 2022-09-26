@@ -11,6 +11,7 @@ import { Button, SafeAreaView, View, Text } from "react-native";
 import Song from "@src/components/DisplaySong/Song";
 import React from "react";
 import { StyleSheet } from "react-native";
+import Artist from "@src/components/DisplayArtist/Artist";
 
 const payload = {
   seed_artists:
@@ -25,8 +26,8 @@ const Test = ({ navigation }) => {
   const [jsonBody, setJsonBody] = React.useState();
 
   async function testFunc() {
-    const test = await getRecentlyPlayed();
-    setJsonBody(test[0].track);
+    const test2 = await getTopArtistsOrTracks("artists","long_term",10);
+    setJsonBody(test2[1]);
     setDisplay(true);
   }
 
@@ -39,7 +40,7 @@ const Test = ({ navigation }) => {
     <SafeAreaView>
       {display ? (
         <View style={[styles.view]}>
-          <Song SingleJsonSong={jsonBody} style={[styles.song]} />
+          <Artist SingleJsonArtist={jsonBody}/>      
         </View>
       ) : (
         <View>

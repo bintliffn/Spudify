@@ -12,29 +12,17 @@ export const styles = StyleSheet.create({
     width: windowWidth * 0.9,
     padding: 10,
   },
+  artistNameView:{
+    paddingLeft: 20
+  },
   image: {
     width: 60,
     height: 60,
   },
-  songText: {
+  artistText: {
     color: "#FFFFFF",
     fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     fontWeight: "bold",
     fontSize: 16,
-  },
-  artistText: {
-    color: "#B3B3B3",
-    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
-  },
-  innerView: {
-    alignItems: "flex-start",
-    justifyContent: "center",
-    flexDirection: "column",
-    flex: 1,
-    paddingLeft: 20,
-  },
-  DurationView: {
-    alignItems: "flex-end",
-    justifyContent: "center",
   },
 });
