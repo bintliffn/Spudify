@@ -10,22 +10,28 @@ import {
   getUserInfo,
   getTopArtistsOrTracks,
   getRecentlyPlayed,
+  getCurrentSongPlaying,
 } from "@src/utils/Queries";
 import React from "react";
 import { styles } from "@src/screens/home/homeStyles";
 import Song from "@src/components/DisplaySong/Song";
 import Artist from "@src/components/DisplayArtist/Artist";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useFocusEffect } from "@react-navigation/native";
+
 
 export default function Home({ navigation }) {
   const [display, setDisplay] = React.useState();
+  const [isPlaying, setIsPlaying] = React.useState(false);
 
   const [username, setUsername] = React.useState();
   const [topSong, setTopSong] = React.useState();
   const [topArtist, setTopArtist] = React.useState();
+  const [currentSongPlaying, setCurrentSongPlaying] = React.useState();
   const [recentlyPlayedTracks, setRecentlyPlayedTracks] = React.useState();
 
-  async function fetchData() {
+  async function fetchData(dataToFetch) {
+    if(dataToFetch == 1){
     const userInfo = await getUserInfo();
     setUsername(userInfo.display_name);
     const topSongsResponse = await getTopArtistsOrTracks(
@@ -40,13 +46,27 @@ export default function Home({ navigation }) {
       10
     );
     setTopArtist(topArtistsResponse[0]);
+    setDisplay(true);
+    }
     const recentlyPlayedTracksResponse = await getRecentlyPlayed();
     setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
-    setDisplay(true);
+    var currentSongPlayingResponse = await getCurrentSongPlaying();
+    if(currentSongPlayingResponse != ""){
+      setCurrentSongPlaying(currentSongPlayingResponse.item);
+      setIsPlaying(true)
+    }
   }
 
+    useFocusEffect(
+    React.useCallback(() => {
+      //only fetch recently and currently played data
+      fetchData(0);
+    }, [])
+  );
+
   React.useEffect(() => {
-    fetchData();
+    //fetch all data
+    fetchData(1);
   }, []);
 
   return (
@@ -58,9 +78,18 @@ export default function Home({ navigation }) {
         {display ? (
           <View>
             <View style={[styles.welcomeView]}>
-              <Text style={[styles.welcomeText]}>Welcome {username}</Text>
+              <Text style={[styles.welcomeText]}>Welcome {username}!</Text>
             </View>
             <View style={[styles.buffer]} />
+            <Text style={[styles.topItemText]}>Current Song Playing</Text>
+            <View style={[styles.songOrArtistView]}>
+              {isPlaying ? (
+              <Song SingleJsonSong={currentSongPlaying} />) : 
+              (
+                <Text style={[styles.noContentText]}> No Song Currently Playing</Text>
+              )
+              }
+            </View>            
             <Text style={[styles.topItemText]}>Your Top Song</Text>
             <View style={[styles.songOrArtistView]}>
               <Song SingleJsonSong={topSong} />

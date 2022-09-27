@@ -112,7 +112,6 @@ function LoginScreen({ navigation }) {
   //when Screen is in focus
   useFocusEffect(
     React.useCallback(() => {
-      console.log("called");
       //if the accessToken is stored
       SecureStore.getItemAsync("access_token").then((data) => {
         if (data != null) {
