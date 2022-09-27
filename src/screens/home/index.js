@@ -58,7 +58,7 @@ export default function Home({ navigation }) {
         {display ? (
           <View>
             <View style={[styles.welcomeView]}>
-              <Text style={[styles.welcomeText]}>Welcome {username}!</Text>
+              <Text style={[styles.welcomeText]}>Welcome {username}</Text>
             </View>
             <View style={[styles.buffer]} />
             <Text style={[styles.topItemText]}>Your Top Song</Text>
@@ -79,7 +79,7 @@ export default function Home({ navigation }) {
             <Song SingleJsonSong={recentlyPlayedTracks[4].track} />
           </View>
         ) : (
-          <Text style={[styles.renderingText]}>RENDERING DATA</Text>
+          <Text style={[styles.renderingText]}>Loading...</Text>
         )}
       </ScrollView>
     </SafeAreaView>
