@@ -23,6 +23,12 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     paddingBottom: 10,
   },
+  noContentText:{
+    color: "#B3B3B3",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontSize: 20,
+    paddingBottom: 10,
+  },
   welcomeView: {
     alignItems: "center",
     flexDirection: "row",

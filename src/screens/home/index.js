@@ -10,6 +10,7 @@ import {
   getUserInfo,
   getTopArtistsOrTracks,
   getRecentlyPlayed,
+  getCurrentSongPlaying
 } from "@src/utils/Queries";
 import React from "react";
 import { styles } from "@src/screens/home/homeStyles";
@@ -18,8 +19,10 @@ import Artist from "@src/components/DisplayArtist/Artist";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function Home({ navigation }) {
-  const [display, setDisplay] = React.useState();
+  const [display, setDisplay] = React.useState(false);
+  const [isPlaying, setIsPlaying] = React.useState(false);
 
+  const [currentSongPlaying, setCurrentSongPlaying] = React.useState();
   const [username, setUsername] = React.useState();
   const [topSong, setTopSong] = React.useState();
   const [topArtist, setTopArtist] = React.useState();
@@ -43,6 +46,11 @@ export default function Home({ navigation }) {
     const recentlyPlayedTracksResponse = await getRecentlyPlayed();
     setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
     setDisplay(true);
+    var currentSongPlayingResponse = await getCurrentSongPlaying();
+    if(currentSongPlayingResponse != ""){
+      setCurrentSongPlaying(currentSongPlayingResponse.item);
+      setIsPlaying(true)
+    }
   }
 
   React.useEffect(() => {
@@ -61,6 +69,16 @@ export default function Home({ navigation }) {
               <Text style={[styles.welcomeText]}>Welcome {username}!</Text>
             </View>
             <View style={[styles.buffer]} />
+            <Text style={[styles.topItemText]}>Current Song Playing</Text>
+            <View style={[styles.songOrArtistView]}>
+              {isPlaying ? (
+              <Song SingleJsonSong={currentSongPlaying} />) : 
+              (
+                <Text style={[styles.noContentText]}> No Song Currently Playing</Text>
+              )
+              }
+            </View>        
+            <View style={[styles.buffer]}></View>
             <Text style={[styles.topItemText]}>Your Top Song</Text>
             <View style={[styles.songOrArtistView]}>
               <Song SingleJsonSong={topSong} />

@@ -159,3 +159,23 @@ export async function getUserFollowing () {
     const dataPromise = promise.then((response) => response.data)
     return dataPromise;
 }
+
+//returns info about what song the user is currently playing
+//More info about response here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-the-users-currently-playing-track
+//Only works if there is a song currently playing otherwise returns 204 (need to handle this)
+export async function getCurrentSongPlaying() {
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
+  const promise = axios({
+    method: "get",
+    url: `${baseURL}me/player/currently-playing`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+  const dataPromise = promise.then((response) => response.data);
+  return dataPromise;
+}
