@@ -29,6 +29,11 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     paddingBottom: 10,
   },
+  renderingText: {
+    color: "#FFFFFF",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontSize: 16,
+  },
   welcomeView: {
     alignItems: "center",
     flexDirection: "row",

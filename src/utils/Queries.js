@@ -52,7 +52,7 @@ export async function getTopArtistsOrTracks(
 
 //returns attribute values for a song (ex. dancability: .67)
 //must pass in a trackid
-export async function getAudioAnalysisOfSong(trackId) {
+export async function getAudioFeaturesOfSong(trackId) {
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);

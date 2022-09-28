@@ -10,13 +10,15 @@ import {
   getUserInfo,
   getTopArtistsOrTracks,
   getRecentlyPlayed,
-  getCurrentSongPlaying
+  getCurrentSongPlaying,
 } from "@src/utils/Queries";
+import { getStatisticsFromTopSongs } from "@src/utils/statistics";
 import React from "react";
 import { styles } from "@src/screens/home/homeStyles";
 import Song from "@src/components/DisplaySong/Song";
 import Artist from "@src/components/DisplayArtist/Artist";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Home({ navigation }) {
   const [display, setDisplay] = React.useState(false);
@@ -28,33 +30,48 @@ export default function Home({ navigation }) {
   const [topArtist, setTopArtist] = React.useState();
   const [recentlyPlayedTracks, setRecentlyPlayedTracks] = React.useState();
 
-  async function fetchData() {
-    const userInfo = await getUserInfo();
-    setUsername(userInfo.display_name);
-    const topSongsResponse = await getTopArtistsOrTracks(
-      "tracks",
-      "long_term",
-      10
-    );
-    setTopSong(topSongsResponse[0]);
-    const topArtistsResponse = await getTopArtistsOrTracks(
-      "artists",
-      "long_term",
-      10
-    );
-    setTopArtist(topArtistsResponse[0]);
+  //need to refactor this method so it doesnt repeat code (ex. recommendations called twice)
+  async function fetchData(dataToFetch) {
+    if (dataToFetch == 1) {
+      const userInfo = await getUserInfo();
+      setUsername(userInfo.display_name);
+      const topSongsResponse = await getTopArtistsOrTracks(
+        "tracks",
+        "long_term",
+        50
+      );
+      setTopSong(topSongsResponse[0]);
+      const topArtistsResponse = await getTopArtistsOrTracks(
+        "artists",
+        "long_term",
+        50
+      );
+      setTopArtist(topArtistsResponse[0]);
+      const recentlyPlayedTracksResponse = await getRecentlyPlayed();
+      setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
+      //uncomment this once we have functionality
+      //getStatisticsFromTopSongs(topSongsResponse);
+      setDisplay(true);
+    }
     const recentlyPlayedTracksResponse = await getRecentlyPlayed();
     setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
-    setDisplay(true);
     var currentSongPlayingResponse = await getCurrentSongPlaying();
-    if(currentSongPlayingResponse != ""){
+    if (currentSongPlayingResponse != "") {
       setCurrentSongPlaying(currentSongPlayingResponse.item);
-      setIsPlaying(true)
+      setIsPlaying(true);
     }
   }
 
+  useFocusEffect(
+    React.useCallback(() => {
+      //only fetch recently and currently played data
+      fetchData(0);
+    }, [])
+  );
+
   React.useEffect(() => {
-    fetchData();
+    //fetch all data
+    fetchData(1);
   }, []);
 
   return (
@@ -72,12 +89,14 @@ export default function Home({ navigation }) {
             <Text style={[styles.topItemText]}>Current Song Playing</Text>
             <View style={[styles.songOrArtistView]}>
               {isPlaying ? (
-              <Song SingleJsonSong={currentSongPlaying} />) : 
-              (
-                <Text style={[styles.noContentText]}> No Song Currently Playing</Text>
-              )
-              }
-            </View>        
+                <Song SingleJsonSong={currentSongPlaying} />
+              ) : (
+                <Text style={[styles.noContentText]}>
+                  {" "}
+                  No Song Currently Playing
+                </Text>
+              )}
+            </View>
             <View style={[styles.buffer]}></View>
             <Text style={[styles.topItemText]}>Your Top Song</Text>
             <View style={[styles.songOrArtistView]}>
@@ -97,7 +116,7 @@ export default function Home({ navigation }) {
             <Song SingleJsonSong={recentlyPlayedTracks[4].track} />
           </View>
         ) : (
-          <Text style={[styles.renderingText]}>RENDERING DATA</Text>
+          <Text style={[styles.renderingText]}>Loading...</Text>
         )}
       </ScrollView>
     </SafeAreaView>
