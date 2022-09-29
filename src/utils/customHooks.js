@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { db } from "@root/firebase-config";
 import { collection, doc, getDocs, serverTimestamp } from "firebase/firestore";
+
+const usersCollectionRef = collection(db, "users");
+
 /**
  * Custom hook for fetching users from Firebase
  *
  */
-const usersCollectionRef = collection(db, "users");
-
 export function useRetrieveUsers() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(null);
   useEffect(() => {
     const getUsers = async () => {
       const querySnapshot = await getDocs(usersCollectionRef);
