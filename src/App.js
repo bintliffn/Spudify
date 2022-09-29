@@ -32,14 +32,8 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Login" component={LoginScreen} />
-<<<<<<< HEAD:App.js
-          <Stack.Screen name="test" component={Test} />
-          <Stack.Screen name="profile" component={Profile} />
-          <Stack.Screen name="User" component={User} />
-=======
           <Stack.Screen name="NavBarRouter" component={NavBarRouter} />
           {/*<Stack.Screen name="User" component={User} /> */}
->>>>>>> fc8b03768a39b2803837b5748f607a65c64b7578:src/App.js
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
