@@ -12,6 +12,7 @@ import {
   getRecentlyPlayed,
   getCurrentSongPlaying,
 } from "@src/utils/Queries";
+import { getStatisticsFromTopSongs } from "@src/utils/statistics";
 import React from "react";
 import { styles } from "@src/screens/home/homeStyles";
 import Song from "@src/components/DisplaySong/Song";
@@ -21,7 +22,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 
 export default function Home({ navigation }) {
-  const [display, setDisplay] = React.useState();
+  const [display, setDisplay] = React.useState(false);
   const [isPlaying, setIsPlaying] = React.useState(false);
 
   const [username, setUsername] = React.useState();
@@ -29,33 +30,37 @@ export default function Home({ navigation }) {
   const [topArtist, setTopArtist] = React.useState();
   const [currentSongPlaying, setCurrentSongPlaying] = React.useState();
   const [recentlyPlayedTracks, setRecentlyPlayedTracks] = React.useState();
+  const [topAttributes, setTopAttributes] = React.useState();
 
   async function fetchData(dataToFetch) {
     if(dataToFetch == 1){
     const userInfo = await getUserInfo();
     setUsername(userInfo.display_name);
+    //need to have error handling here incase they do not have top 10 songs (so app wont crash)
     const topSongsResponse = await getTopArtistsOrTracks(
       "tracks",
       "long_term",
-      10
+      50
     );
     setTopSong(topSongsResponse[0]);
     const topArtistsResponse = await getTopArtistsOrTracks(
       "artists",
       "long_term",
-      10
+      50
     );
-    setTopArtist(topArtistsResponse[0]);
-    setDisplay(true);
-    }
+    setTopArtist (topArtistsResponse[0]);
+    //getStatisticsFromTopSongs(topSongsResponse);
     const recentlyPlayedTracksResponse = await getRecentlyPlayed();
     setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
+    setDisplay(true);
+    }
     var currentSongPlayingResponse = await getCurrentSongPlaying();
     if(currentSongPlayingResponse != ""){
       setCurrentSongPlaying(currentSongPlayingResponse.item);
       setIsPlaying(true)
     }
   }
+
 
     useFocusEffect(
     React.useCallback(() => {
