@@ -20,15 +20,14 @@ import Artist from "@src/components/DisplayArtist/Artist";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
 
-
 export default function Home({ navigation }) {
   const [display, setDisplay] = React.useState(false);
   const [isPlaying, setIsPlaying] = React.useState(false);
 
+  const [currentSongPlaying, setCurrentSongPlaying] = React.useState();
   const [username, setUsername] = React.useState();
   const [topSong, setTopSong] = React.useState();
   const [topArtist, setTopArtist] = React.useState();
-  const [currentSongPlaying, setCurrentSongPlaying] = React.useState();
   const [recentlyPlayedTracks, setRecentlyPlayedTracks] = React.useState();
   const [topAttributes, setTopAttributes] = React.useState();
 
