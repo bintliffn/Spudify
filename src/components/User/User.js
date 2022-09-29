@@ -1,9 +1,6 @@
-import { collection, doc, getDocs, serverTimestamp } from "firebase/firestore";
+import { useUserProvider } from "@src/components/contexts/UserProvider";
+import { useRetrieveUsers } from "@src/utils/customHooks";
 import { StyleSheet, Text, View } from "react-native";
-
-import React, { useEffect, useState } from "react";
-import { useRetrieveUsers } from "../utils/customHooks";
-import { useUserProvider } from "./contexts/UserProvider";
 
 // FOR TESTING PURPOSES
 

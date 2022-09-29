@@ -7,18 +7,17 @@ import * as React from "react";
 import * as WebBrowser from "expo-web-browser";
 import * as SecureStore from "expo-secure-store";
 import { useFocusEffect } from "@react-navigation/native";
-import { getNewToken } from "../../utils/RefreshToken";
+import { getNewToken } from "@src/utils/RefreshToken";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
-import { SafeAreaView, Image, Text, View } from "react-native";
+import { SafeAreaView, Image, Text, View, processColor } from "react-native";
 import { Button } from "react-native-paper";
-import { styles } from "./utils";
+import { styles } from "@src/screens/login/utils";
 
 const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
 
-const spotify_logo = "../../../assets/spotify_logo.png";
-const CLIENT_ID = "58c38efab4da4d3996627f385f337bd1";
-const CLIENT_SECRET = "79cd7ebaf39c4437a8418daa887b7fae";
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 function LoginScreen({ navigation }) {
   const [loggedInStatus, setLoggedInStatus] = React.useState(false);
@@ -140,7 +139,7 @@ function LoginScreen({ navigation }) {
             mode="contained"
             contentStyle={{ height: "100%" }}
             style={[styles.button]}
-            onPress={() => navigation.navigate("test")}
+            onPress={() => navigation.navigate("NavBarRouter")}
           >
             {"Test"}
           </Button>
@@ -167,7 +166,10 @@ function LoginScreen({ navigation }) {
         </View>
       ) : (
         <View style={[styles.view]}>
-          <Image style={[styles.logo]} source={require(spotify_logo)}></Image>
+          <Image
+            style={[styles.logo]}
+            source={require("@assets/spotify_logo.png")}
+          ></Image>
           <Text style={[styles.titleText]}>Spudify</Text>
           <Text style={[styles.bodyText]}>Login to start your journey!</Text>
           <Button

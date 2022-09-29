@@ -4,14 +4,14 @@
 //For recently played tracks pass returnedArray[indexOfSongYouWantDataFor].track
 
 const song = (SingleJsonSong) => {
-    //extract the song name, album name, and artist name for a track
-    songName = SingleJsonSong.name;
-    artistName = SingleJsonSong.artists[0].name;
-    albumName = SingleJsonSong.album.name;
+  //extract the song name, album name, and artist name for a track
+  songName = SingleJsonSong.name;
+  artistName = SingleJsonSong.artists[0].name;
+  albumName = SingleJsonSong.album.name;
 
-    //extract album cover image of 300 x 300 size
-    albumCoverUrl = SingleJsonSong.album.images[2].url;
-    console.log(albumCoverUrl)
-}
+  //extract album cover image of 300 x 300 size
+  albumCoverUrl = SingleJsonSong.album.images[2].url;
+  console.log(albumCoverUrl);
+};
 
 export default song;

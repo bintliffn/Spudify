@@ -1,13 +1,15 @@
-import LoginScreen from "./src/screens/LoginScreen";
-import Test from "./src/screens/Test";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DefaultTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
-import User from "./src/components/User";
-import Profile from "./src/screens/ProfileScreen";
-import { UserProvider } from "./src/components/contexts/UserProvider";
+import { UserProvider } from "@src/components/contexts/UserProvider";
+import { registerRootComponent } from "expo";
+
+// Screens
+import Test from "@src/screens/Test";
+import LoginScreen from "@src/screens/login";
+import NavBarRouter from "@src/screens/NavBarRouter";
 
 const Stack = createNativeStackNavigator();
 StatusBar.setBarStyle("light-content", true);
@@ -30,11 +32,18 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Login" component={LoginScreen} />
+<<<<<<< HEAD:App.js
           <Stack.Screen name="test" component={Test} />
           <Stack.Screen name="profile" component={Profile} />
           <Stack.Screen name="User" component={User} />
+=======
+          <Stack.Screen name="NavBarRouter" component={NavBarRouter} />
+          {/*<Stack.Screen name="User" component={User} /> */}
+>>>>>>> fc8b03768a39b2803837b5748f607a65c64b7578:src/App.js
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
   );
 }
+
+registerRootComponent(App);
