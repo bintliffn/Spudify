@@ -9,6 +9,8 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@mdi/js": "^7.0.96",
+    "@mdi/react": "^1.6.1",
     "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-navigation/native": "^6.0.12",
     "@react-navigation/native-stack": "^6.8.0",
@@ -25,12 +27,14 @@
     "firebase": "^9.9.4",
     "querystring": "^0.2.1",
     "react": "18.0.0",
-    "react-native": "0.69.5",
+    "react-native": "0.69.6",
     "react-native-app-auth": "^6.4.3",
     "react-native-dotenv": "^3.3.1",
+    "react-native-fast-image": "^8.6.1",
     "react-native-paper": "^4.12.4",
     "react-native-safe-area-context": "4.3.1",
-    "react-native-screens": "~3.15.0"
+    "react-native-screens": "~3.15.0",
+    "react-native-vector-icons": "^9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

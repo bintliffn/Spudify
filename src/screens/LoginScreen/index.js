@@ -32,6 +32,7 @@ function LoginScreen({ navigation }) {
 
   function login() {
     promptAsync();
+    console.log(makeRedirectUri());
     //setLoggedInStatus(true);
   }
 
@@ -51,6 +52,7 @@ function LoginScreen({ navigation }) {
         "user-follow-read",
         "user-read-recently-played",
         "user-top-read",
+        "playlist-read-private",
       ],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
@@ -65,6 +67,7 @@ function LoginScreen({ navigation }) {
     if (response?.type === "success") {
       setLoggedInStatus(true);
       console.log("RESPONSE SUCCESS");
+
       //retreive authentication code if user successfully logged in
       const { code } = response.params;
       //send post request using authentication code to get authentication token
@@ -137,9 +140,19 @@ function LoginScreen({ navigation }) {
             mode="contained"
             contentStyle={{ height: "100%" }}
             style={[styles.button]}
-            onPress={() => navigation.navigate("Test")}
+            onPress={() => navigation.navigate("test")}
           >
             {"Test"}
+          </Button>
+          <Button
+            title="profile"
+            compact
+            mode="contained"
+            contentStyle={{ height: "100%" }}
+            style={[styles.button]}
+            onPress={() => navigation.navigate("profile")}
+          >
+            {"Profile"}
           </Button>
           <Button
             title="logout"

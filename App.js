@@ -6,6 +6,7 @@ import { DefaultTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
 import User from "./src/components/User";
+import Profile from "./src/screens/ProfileScreen";
 import { UserProvider } from "./src/components/contexts/UserProvider";
 
 const Stack = createNativeStackNavigator();
@@ -29,7 +30,8 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Login" component={LoginScreen} />
-          {/* <Stack.Screen name="Test" component={Test} /> */}
+          <Stack.Screen name="test" component={Test} />
+          <Stack.Screen name="profile" component={Profile} />
           <Stack.Screen name="User" component={User} />
         </Stack.Navigator>
       </NavigationContainer>

@@ -25,7 +25,7 @@ async function testFunc() {
 const Test = ({ navigation }) => {
   return (
     <SafeAreaView>
-      <Button title="test" onPress={() => testFunc()} />
+      <Button title="Test" onPress={() => testFunc()} />
     </SafeAreaView>
   );
 };
