@@ -29,8 +29,30 @@ export default function Home({ navigation }) {
   const [topSong, setTopSong] = React.useState();
   const [topArtist, setTopArtist] = React.useState();
   const [recentlyPlayedTracks, setRecentlyPlayedTracks] = React.useState();
-  const [topAttributes, setTopAttributes] = React.useState();
+  
+  var attributes;
+  var danceabilityKeyword, popularityKeyword, valenceKeyword, energyKeyword;
 
+  function getKeyword(lowKeyword,midKeyword,highKeyword, value){
+    if(value <= .33){
+      return lowKeyword;
+    }else if(value >.33 && value <= .66){
+      return midKeyword;
+    }else{
+      return highKeyword;
+    }
+  }
+
+  function setKeywords(){
+    danceabilityKeyword = getKeyword("non-rhythmic","semi-danceable","highly-danceable",attributes.danceability);
+    popularityKeyword = getKeyword("obscure","niche","mainstream", (attributes.popularity)/100);
+    valenceKeyword = getKeyword("sad","mixed between happy and sad","happy", attributes.valence);
+    energyKeyword = getKeyword("laid-back","semi-energetic","fully of energy",attributes.energy)
+    console.log(energyKeyword);
+  }
+
+  //divide this into different functions for each api call we want to make?
+  //displa items as they are rendered not all at once (slow loading times)
   async function fetchData(dataToFetch) {
     if(dataToFetch == 1){
     const userInfo = await getUserInfo();
@@ -52,6 +74,9 @@ export default function Home({ navigation }) {
     const recentlyPlayedTracksResponse = await getRecentlyPlayed();
     setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
     setDisplay(true);
+    const statisticsResponse = await getStatisticsFromTopSongs(topSongsResponse);
+    attributes = statisticsResponse;
+    setKeywords();
     }
     var currentSongPlayingResponse = await getCurrentSongPlaying();
     if(currentSongPlayingResponse != ""){
