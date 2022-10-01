@@ -55,4 +55,11 @@ export const styles = StyleSheet.create({
   buffer: {
     height: 25,
   },
+  statsView: {
+    marginLeft : 20,
+    width : windowWidth*.9,
+  },
+  highlightedWord:{
+    color : "#1DB954"
+  }
 });

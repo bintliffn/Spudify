@@ -83,7 +83,7 @@ function LoginScreen({ navigation }) {
         },
       }) //handle the response
         .then((response) => {
-          console.log(request.status);
+          console.log(response.status);
           if (response.status === 200) {
             SecureStore.setItemAsync(
               "access_token",
@@ -104,7 +104,7 @@ function LoginScreen({ navigation }) {
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.message);
         });
     }
   }, [response]);
