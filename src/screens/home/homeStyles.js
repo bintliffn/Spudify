@@ -38,11 +38,6 @@ export const styles = StyleSheet.create({
     showsVerticalScrollIndicator : false,
     directionalLockEnabled : true,
   },
-  renderingText: {
-    color: "#FFFFFF",
-    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
-    fontSize: 16,
-  },
   songOrArtistView: {
     justifyContent: "center",
     alignItems: "center",

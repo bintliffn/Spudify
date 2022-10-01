@@ -42,12 +42,16 @@ export default function Home({ navigation }) {
 
   var attributes;
 
-  function getKeyword(lowKeyword, midKeyword, highKeyword, value) {
-    if (value <= 0.33) {
+  function getKeyword(lowKeyword,midLowKeyword, midKeyword, midHighKeyword, highKeyword, value) {
+    if (value <= 0.20) {
       return lowKeyword;
-    } else if (value > 0.33 && value <= 0.66) {
+    } else if (value > 0.20 && value <= 0.40) {
+      return midLowKeyword;
+    } else if(value > .40 && value <=.60) {
       return midKeyword;
-    } else {
+    }else if(value > .60 && value <=.80){
+      return midHighKeyword;
+    }else{
       return highKeyword;
     }
   }
@@ -55,29 +59,42 @@ export default function Home({ navigation }) {
   function setKeywords() {
     var keyword = getKeyword(
       "Non-Rhythmic",
+      "Lacking rhythym",
       "Semi-Danceable",
-      "Highly-Danceable",
+      "Danceable",
+      "Extremely-Danceable",
       attributes.danceability
     );
     setDanceabilityKeyword(keyword);
     setDanceabilityValue(attributes.danceability);
     keyword = getKeyword(
       "Obscure",
+      "Off the beaten path",
       "Niche",
       "Mainstream",
+      "Smash-Hits",
       attributes.popularity / 100
     );
     setpopularityKeyword(keyword);
     setpopularityValue(attributes.popularity);
     keyword = getKeyword(
+      "Sorrowful",
       "Sad",
       "Mixed between happy and sad",
       "Happy",
+      "Cheerful",
       attributes.valence
     );
     setValenceKeyword(keyword);
     setValenceValue(attributes.valence);
-    keyword = getKeyword("Laid-Back","Semi-Energetic","Full of energy",attributes.energy);
+    keyword = getKeyword(
+      "Lethargic",
+      "Laid-Back",
+      "Semi-Energetic",
+      "Lively",
+      "Full of energy",
+      attributes.energy
+    );
     setEnergyKeyword(keyword);
     setEnergyValue(attributes.energy);
     setShowStatistics(true);
@@ -230,7 +247,7 @@ export default function Home({ navigation }) {
             )}
           </View>
         ) : (
-          <Text style={[styles.renderingText]}>Loading...</Text>
+          <Text style={[styles.noContentText]}>Loading...</Text>
         )}
       </ScrollView>
     </SafeAreaView>
