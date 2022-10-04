@@ -9,7 +9,8 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
     margin: 10,
-    flex: 1
+    flex: 1,
+    width : windowWidth*.95
   },
   welcomeText: {
     color: "#FFFFFF",

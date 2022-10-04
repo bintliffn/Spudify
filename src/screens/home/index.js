@@ -21,10 +21,14 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function Home({ navigation }) {
+  //Variable to determine whether to display dahsboard or not
   const [display, setDisplay] = React.useState(false);
+  //Variable to determine whether a song is currently playing on users account or not
   const [isPlaying, setIsPlaying] = React.useState(false);
+  //Variable to determine whether to display statistics or not
   const [showStatistics, setShowStatistics] = React.useState(false);
 
+  //Stores keyword to display and values for various statistics regarding users top songs
   const [danceabilityKeyword, setDanceabilityKeyword] = React.useState();
   const [danceabilityValue, setDanceabilityValue] = React.useState();
   const [popularityKeyword, setpopularityKeyword] = React.useState();
@@ -34,28 +38,45 @@ export default function Home({ navigation }) {
   const [energyKeyword, setEnergyKeyword] = React.useState();
   const [energyValue, setEnergyValue] = React.useState();
 
+  //Store current song playing on users account
   const [currentSongPlaying, setCurrentSongPlaying] = React.useState();
+  //Store username associated with users account
   const [username, setUsername] = React.useState();
+  //Store users top song
   const [topSong, setTopSong] = React.useState();
+  //Store users top artist
   const [topArtist, setTopArtist] = React.useState();
+  //Store users recently played tracks
   const [recentlyPlayedTracks, setRecentlyPlayedTracks] = React.useState();
-
+  //Store text to display if dashboard is loading/user does not have enough play history to display dashboard
+  const [displayText, setDisplayText] = React.useState("Loading...");
+  //Store attributes of users top songs found from statistics method
   var attributes;
 
-  function getKeyword(lowKeyword,midLowKeyword, midKeyword, midHighKeyword, highKeyword, value) {
-    if (value <= 0.20) {
+  //Function to get the keyword to display for a statistical attribute based on it's numerical value
+  //Takes in 5 keywords and the value of the attribute
+  function getKeyword(
+    lowKeyword,
+    midLowKeyword,
+    midKeyword,
+    midHighKeyword,
+    highKeyword,
+    value
+  ) {
+    if (value <= 0.2) {
       return lowKeyword;
-    } else if (value > 0.20 && value <= 0.40) {
+    } else if (value > 0.2 && value <= 0.4) {
       return midLowKeyword;
-    } else if(value > .40 && value <=.60) {
+    } else if (value > 0.4 && value <= 0.6) {
       return midKeyword;
-    }else if(value > .60 && value <=.80){
+    } else if (value > 0.6 && value <= 0.8) {
       return midHighKeyword;
-    }else{
+    } else {
       return highKeyword;
     }
   }
 
+  //Sets the keywords to be displayed on the dashboard using the getKeyword function
   function setKeywords() {
     var keyword = getKeyword(
       "Non-Rhythmic",
@@ -100,38 +121,64 @@ export default function Home({ navigation }) {
     setShowStatistics(true);
   }
 
-  //divide this into different functions for each api call we want to make?
-  //displa items as they are rendered not all at once (slow loading times)
+  //Fetches data to be displayed on the dashboard
+  //Takes in dataToFetch paramter which tells the function which data it needs to fetch
   async function fetchData(dataToFetch) {
+    //If function is called from initial useState function
     if (dataToFetch == 1) {
+      //Retrieve information about current user
       const userInfo = await getUserInfo();
+      //Set current user's username
       setUsername(userInfo.display_name);
-      //need to have error handling here incase they do not have top 10 songs (so app wont crash)
+      //Retrieve up to top 50 tracks from user
       const topSongsResponse = await getTopArtistsOrTracks(
         "tracks",
         "long_term",
         50
       );
-      setTopSong(topSongsResponse[0]);
+      //if user has listened to less than 5 songs total
+      if (topSongsResponse.length < 5) {
+        //Don't display dashboard and instruct the user to listen to more music
+        setDisplayText(
+          "Please listen to at least 5 songs to have the dashboard displayed"
+        );
+        return;
+      } else {
+        //otherwise set the users top song to the variable topSong
+        setTopSong(topSongsResponse[0]);
+      }
+      //Same as above but with top artists
       const topArtistsResponse = await getTopArtistsOrTracks(
         "artists",
         "long_term",
         50
       );
       setTopArtist(topArtistsResponse[0]);
-      //getStatisticsFromTopSongs(topSongsResponse);
+      //Get the users recently played tracks
       const recentlyPlayedTracksResponse = await getRecentlyPlayed();
+      //Assign them to the recently played tracks variable
       setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
+      //Display initial Dashboard (This allows user to view info while statistics query is called which takes a while)
       setDisplay(true);
+      //Get statistics from users top songs
       const statisticsResponse = await getStatisticsFromTopSongs(
         topSongsResponse
       );
+      //Assign attributes to statistics response
       attributes = statisticsResponse;
+      //Call setKeywords function to set keywords to display on dashboard
       setKeywords();
     }
+    const recentlyPlayedTracksResponse = await getRecentlyPlayed();
+    //Assign them to the recently played tracks variable
+    setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
+    //Get the current song playing
     var currentSongPlayingResponse = await getCurrentSongPlaying();
+    //If there is actually a song playing
     if (currentSongPlayingResponse != "") {
+      //Assign it to the variable currentSongPlaying
       setCurrentSongPlaying(currentSongPlayingResponse.item);
+      //Set is playing to true which will re render the dashboard with the current song playing
       setIsPlaying(true);
     }
   }
@@ -171,6 +218,7 @@ export default function Home({ navigation }) {
                 </Text>
               )}
             </View>
+            <View style={[styles.buffer]} />
             <Text style={[styles.topItemText]}>Your Top Song</Text>
             <View style={[styles.songOrArtistView]}>
               <Song SingleJsonSong={topSong} />
@@ -247,7 +295,7 @@ export default function Home({ navigation }) {
             )}
           </View>
         ) : (
-          <Text style={[styles.noContentText]}>Loading...</Text>
+          <Text style={[styles.noContentText]}>{displayText}</Text>
         )}
       </ScrollView>
     </SafeAreaView>

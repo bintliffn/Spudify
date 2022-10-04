@@ -1,12 +1,9 @@
 import { getAudioFeaturesOfSong } from "@src/utils/Queries";
 
-//function that returns the top 5 attributes from a users top 50 track
+//function that returns average values of certain attributes from a users top 50 tracks
 //topTracks is an array of tracks
-//numTopAttributes is the number of top attributes you want returned ex. 5 would return top 5 attributes
-export async function getStatisticsFromTopSongs(topTracks, numTopAttributes) {
+export async function getStatisticsFromTopSongs(topTracks) {
   const topTracksAttributes = [];
-  const topAttributes = [];
-  const topAttributesValues = [];
   var avgAcousticness = 0;
   var avgDanceability = 0;
   var avgDurationMs = 0;
@@ -18,6 +15,7 @@ export async function getStatisticsFromTopSongs(topTracks, numTopAttributes) {
   var avgValence = 0;
   var avgPopularity = 0;
   for (var i = 0; i < topTracks.length; i++) {
+
     topTracksAttributes[i] = await getAudioFeaturesOfSong(topTracks[i].id);
     avgPopularity += topTracks[i].popularity;
     avgValence += topTracksAttributes[i].valence;
@@ -46,11 +44,11 @@ export async function getStatisticsFromTopSongs(topTracks, numTopAttributes) {
     valence: avgValence,
     tempo: avgTempo,
     liveness: avgLiveness,
-    loudness: avgLoudness ,
+    loudness: avgLoudness,
     instrumentalness: avgIntrumentalness,
-    energy: avgEnergy ,
+    energy: avgEnergy,
     duration_ms: avgDurationMs,
-    danceability: avgDanceability ,
+    danceability: avgDanceability,
     acousticness: avgAcousticness,
   };
   return attributes;
