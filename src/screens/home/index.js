@@ -305,7 +305,9 @@ export default function Home({ navigation }) {
             )}
           </View>
         ) : (
-          <Text style={[styles.noContentText]}>{displayText}</Text>
+          <View style={[styles.welcomeView]}>
+            <Text style={[styles.noContentText]}>{displayText}</Text>
+          </View>
         )}
       </ScrollView>
     </SafeAreaView>
