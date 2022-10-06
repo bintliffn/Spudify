@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import { db } from "@root/firebase-config";
 import {
   addDoc,
@@ -25,22 +24,29 @@ async function createUser(id, userObject) {
 
 //id is a string
 export function useReadUser(id) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
   const [dataError, setDataError] = useState(false);
-  const userDoc = doc(db, "users", id);
-  useEffect(async () => {
-    const docSnap = await getDoc(userDoc);
 
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      return setData(data);
-    } else {
-      // docSnap.data() will be undefined in this case
-      console.log(
-        `Error: the user ${id} doesn't exist or has failed to load.\nPlease try again.`
-      );
-      setDataError(true);
+  useEffect(() => {
+    async function fetchData() {
+      const userDoc = doc(db, "users", id);
+
+      const docSnap = await getDoc(userDoc);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        console.log("Success");
+        return setData(data);
+      } else {
+        // docSnap.data() will be undefined in this case
+        console.log(
+          `Error: the user ${id} doesn't exist or has failed to load.\nPlease try again.`
+        );
+        setDataError(true);
+      }
     }
+    // loading();
+    fetchData();
   }, [id]);
 
   //returns an object {} and boolean error state
@@ -48,13 +54,13 @@ export function useReadUser(id) {
 }
 
 export function useReadAllUsers() {
-  const [users, setUsers] = useState([]);
-  const [usersError, setUsersError] = useState(false);
+  const [data, setData] = useState([null]);
+  const [dataError, setDataError] = useState(false);
 
-  useEffect(async () => {
-    const querySnapshot = await getDocs(usersCollectionRef);
-
-    if (querySnapshot.exists()) {
+  useEffect(() => {
+    async function fetchData() {
+      // doc.data() is never undefined for query doc snapshots via FIREBASE DOCS
+      const querySnapshot = await getDocs(usersCollectionRef);
       const dataArray = querySnapshot.docs.map((doc) => {
         return {
           ...doc.data(),
@@ -62,15 +68,19 @@ export function useReadAllUsers() {
         };
       });
 
-      setUsers(dataArray);
-    } else {
-      setUsersError(true);
-      console("Error: Failed to retrieve all users.");
+      if (dataArray[0] != null) {
+        setData(dataArray);
+        console.log("Success");
+      } else {
+        setDataError(true);
+        console.log("Error: Failed to retrieve all users.");
+      }
     }
-  }, [usersCollectionRef]);
+    fetchData();
+  }, []);
 
   //returns users array containing objects {} and boolean error state
-  return { users, usersError };
+  return { data, dataError };
 }
 
 //id is a string

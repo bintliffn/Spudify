@@ -1,24 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
-import {
-  createUser,
-  deleteUser,
-  readUser,
-  readUsers,
-  useReadAllUsers,
-  useReadUser,
-} from "@src/utils/api/FirebaseCrud";
 import { useUserProvider } from "@src/components/contexts/UserProvider";
+import { useReadAllUsers, useReadUser } from "@src/utils/api/FirebaseCrud";
+import { useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 const UserScreen = () => {
   const { user, setUser } = useUserProvider();
 
   const { data, dataError } = useReadUser("PrettyLegit");
+  // const { data, dataError } = useReadAllUsers();
 
-  if (user) {
+  useEffect(() => {
     setUser(data);
+    // console.log(data);
     console.log(user);
-  }
+  }, [data]);
 
   return user ? (
     <View style={styles.root}>
@@ -29,7 +24,9 @@ const UserScreen = () => {
       <Text style={styles.text}>{user?.top_music_genre_3}</Text>
     </View>
   ) : (
-    <Text>loading..</Text>
+    <View style={styles.root}>
+      <Text style={styles.text}>loading..</Text>
+    </View>
   );
 };
 
