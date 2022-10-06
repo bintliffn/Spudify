@@ -11,9 +11,10 @@ const UserScreen = () => {
 
   useEffect(() => {
     setUser(data);
-    // console.log(data);
-    console.log(user);
   }, [data]);
+
+  // console.log(data);
+  console.log(user);
 
   return user ? (
     <View style={styles.root}>
