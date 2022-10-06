@@ -11,7 +11,7 @@ import { getNewToken } from "@src/utils/RefreshToken";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import { SafeAreaView, Image, Text, View, processColor } from "react-native";
 import { Button } from "react-native-paper";
-import { styles } from "@src/screens/LoginScreen/utils";
+import { styles } from "@src/screens/login/utils";
 
 const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
@@ -83,7 +83,7 @@ function LoginScreen({ navigation }) {
         },
       }) //handle the response
         .then((response) => {
-          console.log(request.status);
+          console.log(response.status);
           if (response.status === 200) {
             SecureStore.setItemAsync(
               "access_token",
@@ -104,7 +104,7 @@ function LoginScreen({ navigation }) {
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.message);
         });
     }
   }, [response]);
@@ -112,7 +112,6 @@ function LoginScreen({ navigation }) {
   //when Screen is in focus
   useFocusEffect(
     React.useCallback(() => {
-      console.log("called");
       //if the accessToken is stored
       SecureStore.getItemAsync("access_token").then((data) => {
         if (data != null) {
@@ -136,7 +135,7 @@ function LoginScreen({ navigation }) {
             mode="contained"
             contentStyle={{ height: "100%" }}
             style={[styles.button]}
-            onPress={() => navigation.navigate("Test")}
+            onPress={() => navigation.navigate("NavBarRouter")}
           >
             {"Test"}
           </Button>
