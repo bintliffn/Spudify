@@ -5,47 +5,31 @@ import {
   deleteUser,
   readUser,
   readUsers,
+  useReadAllUsers,
+  useReadUser,
 } from "@src/utils/api/FirebaseCrud";
-import { useRetrieveUsers } from "@src/utils/customHooks";
 import { useUserProvider } from "@src/components/contexts/UserProvider";
 
 const UserScreen = () => {
   const { user, setUser } = useUserProvider();
 
-  let userObject = {
-    id: "hello",
-    name: "New User",
-    age: 22,
-  };
+  const { data, dataError } = useReadUser("PrettyLegit");
 
-  //   const users = useRetrieveUsers();
+  if (user) {
+    setUser(data);
+    console.log(user);
+  }
 
-  //   //   createUser(userObject);
-  //   if (users != null) {
-  //     console.log(users);
-
-  //     const first_user = users[0];
-
-  //     console.log(first_user);
-  //     // console.log("deleted", first_user?.id);
-  //     // deleteUser(first_user?.id);
-  //   }
-
-  //   createUser(userObject);
-
-  //   useEffect(() => {
-  //     const data = readUsers();
-  //     data.then(() => setUser(data));
-  //   }, [readUsers]);
-
-  //   console.log(user);
-
-  readUser("PrettyLegit");
-
-  return (
+  return user ? (
     <View style={styles.root}>
-      <Text style={styles.text}>UserScreen</Text>
+      <Text style={styles.text}>{user?.name}</Text>
+      <Text style={styles.text}>{user?.age}</Text>
+      <Text style={styles.text}>{user?.top_music_genre_1}</Text>
+      <Text style={styles.text}>{user?.top_music_genre_2}</Text>
+      <Text style={styles.text}>{user?.top_music_genre_3}</Text>
     </View>
+  ) : (
+    <Text>loading..</Text>
   );
 };
 
