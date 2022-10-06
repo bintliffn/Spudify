@@ -10,6 +10,7 @@ import { registerRootComponent } from "expo";
 import Test from "@src/screens/Test";
 import LoginScreen from "@src/screens/login";
 import NavBarRouter from "@src/screens/NavBarRouter";
+import SpotifyPlaylists from "@src/screens/profile/spotifyPlaylists";
 
 const Stack = createNativeStackNavigator();
 StatusBar.setBarStyle("light-content", true);
@@ -32,6 +33,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="spotifyPlaylists" component={SpotifyPlaylists} />
           <Stack.Screen name="NavBarRouter" component={NavBarRouter} />
           {/*<Stack.Screen name="User" component={User} /> */}
         </Stack.Navigator>

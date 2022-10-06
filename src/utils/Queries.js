@@ -176,3 +176,20 @@ export async function getUserPlaylist() {
   const dataPromise = promise.then((response) => response.data);
   return dataPromise;
 }
+
+export async function getRequestedPlaylist(playlist_id) {
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
+  const promise = axios({
+    method: "get",
+    url: `${baseURL}playlists/${playlist_id}`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+  const dataPromise = promise.then((response) => response.data);
+  return dataPromise;
+}

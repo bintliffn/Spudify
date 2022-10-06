@@ -107,7 +107,7 @@ function LoginScreen({ navigation }) {
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.message);
         });
     }
   }, [response]);
@@ -143,16 +143,7 @@ function LoginScreen({ navigation }) {
           >
             {"Test"}
           </Button>
-          <Button
-            title="profile"
-            compact
-            mode="contained"
-            contentStyle={{ height: "100%" }}
-            style={[styles.button]}
-            onPress={() => navigation.navigate("profile")}
-          >
-            {"Profile"}
-          </Button>
+
           <Button
             title="logout"
             compact
