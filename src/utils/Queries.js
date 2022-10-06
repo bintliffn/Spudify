@@ -52,7 +52,7 @@ export async function getTopArtistsOrTracks(
 
 //returns attribute values for a song (ex. dancability: .67)
 //must pass in a trackid
-export async function getAudioAnalysisOfSong(trackId) {
+export async function getAudioFeaturesOfSong(trackId) {
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
@@ -158,6 +158,7 @@ export async function getUserFollowing() {
   });
   const dataPromise = promise.then((response) => response.data);
   return dataPromise;
+<<<<<<< HEAD
 }
 
 export async function getUserPlaylist() {
@@ -192,4 +193,28 @@ export async function getRequestedPlaylist(playlist_id) {
   });
   const dataPromise = promise.then((response) => response.data);
   return dataPromise;
+=======
+>>>>>>> 965cbf787c0f54668e1384b5f0a0aa39c4549c35
 }
+
+//returns info about what song the user is currently playing
+//More info about response here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-the-users-currently-playing-track
+//Only works if there is a song currently playing otherwise returns 204 (need to handle this)
+export async function getCurrentSongPlaying() {
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
+  const promise = axios({
+    method: "get",
+    url: `${baseURL}me/player/currently-playing`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+  const dataPromise = promise.then((response) => response.data);
+  return dataPromise;
+}
+
+

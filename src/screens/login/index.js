@@ -86,7 +86,7 @@ function LoginScreen({ navigation }) {
         },
       }) //handle the response
         .then((response) => {
-          console.log(request.status);
+          console.log(response.status);
           if (response.status === 200) {
             SecureStore.setItemAsync(
               "access_token",
@@ -115,7 +115,6 @@ function LoginScreen({ navigation }) {
   //when Screen is in focus
   useFocusEffect(
     React.useCallback(() => {
-      console.log("called");
       //if the accessToken is stored
       SecureStore.getItemAsync("access_token").then((data) => {
         if (data != null) {
