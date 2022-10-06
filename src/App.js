@@ -7,7 +7,6 @@ import { UserProvider } from "@src/components/contexts/UserProvider";
 import { registerRootComponent } from "expo";
 
 // Screens
-import Test from "@src/screens/Test";
 import LoginScreen from "@src/screens/login";
 import NavBarRouter from "@src/screens/NavBarRouter";
 
@@ -33,7 +32,6 @@ export default function App() {
         >
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="NavBarRouter" component={NavBarRouter} />
-          {/*<Stack.Screen name="User" component={User} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
