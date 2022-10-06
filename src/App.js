@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
 import { UserProvider } from "@src/components/contexts/UserProvider";
 import { registerRootComponent } from "expo";
+import UserScreen from "@src/screens/UserScreen";
 
 const Stack = createNativeStackNavigator();
 StatusBar.setBarStyle("light-content", true);
@@ -30,6 +31,7 @@ export default function App() {
         >
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Test" component={Test} />
+          <Stack.Screen name="User" component={UserScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
