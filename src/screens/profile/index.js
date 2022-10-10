@@ -11,6 +11,8 @@ import {
   View,
   Pressable,
   TouchableHighlight,
+  FlatList,
+  Button,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { styles } from "./utils";
@@ -47,7 +49,7 @@ const Profile = ({ navigation }) => {
 
     const test3 = await getUserPlaylist();
     setUserPlaylists(test3.items);
-
+    console.log(test3.total);
     if (test3.total > 0) {
       setHasPlaylists(true);
       for (let a = 0; a < test3.total; a++) {
@@ -55,11 +57,10 @@ const Profile = ({ navigation }) => {
           playlistTracksTotalTemp[a] = true;
         } else playlistTracksTotalTemp[a] = false;
       }
+      setPlaylistTracksTotal(playlistTracksTotalTemp);
+      setDisplay(true);
     }
     setPlaylistTracksTotal(playlistTracksTotalTemp);
-
-    console.log(playlistTracksTotal);
-    console.log(playlistTracksTotal[0]);
     setDisplay(true);
   }
 
@@ -96,25 +97,43 @@ const Profile = ({ navigation }) => {
             <Text style={[styles.profileText]}> Following </Text>
           </View>
           {hasPlaylists ? (
-            <View style={[styles.container]}>
-              {playlistTracksTotal[0] ? (
-                <Image
-                  style={[styles.image]}
-                  source={{ uri: userPlaylists[0].images[0].url }}
-                />
-              ) : (
-                <Ionicons
-                  name="person"
-                  color="white"
-                  style={[styles.image]}
-                  size={60}
-                />
-              )}
-              <TouchableHighlight
-                onPress={() => navigation.navigate("spotifyPlaylists")}
-              >
-                <Text style={[styles.playlistText]}>Spotify Playlists</Text>
-              </TouchableHighlight>
+            <View>
+              <FlatList
+                data={userPlaylists}
+                renderItem={(item) => {
+                  return (
+                    <View style={[styles.container]}>
+                      {playlistTracksTotal[item.index] ? (
+                        <TouchableHighlight
+                          onPress={() =>
+                            navigation.navigate("spotifyPlaylists", {
+                              playlistId: item.item.id,
+                            })
+                          }
+                        >
+                          <View style={[styles.container]}>
+                            <Image
+                              style={[styles.image]}
+                              source={{ uri: item.item.images[0].url }}
+                            />
+
+                            <Text style={[styles.playlistText]}>
+                              {item.item.name}
+                            </Text>
+                          </View>
+                        </TouchableHighlight>
+                      ) : (
+                        <Ionicons
+                          name="person"
+                          color="white"
+                          style={[styles.image]}
+                          size={60}
+                        />
+                      )}
+                    </View>
+                  );
+                }}
+              />
             </View>
           ) : (
             <View style={[styles.container]}>
