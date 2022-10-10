@@ -158,7 +158,6 @@ export async function getUserFollowing() {
   });
   const dataPromise = promise.then((response) => response.data);
   return dataPromise;
-<<<<<<< HEAD
 }
 
 export async function getUserPlaylist() {
@@ -193,8 +192,6 @@ export async function getRequestedPlaylist(playlist_id) {
   });
   const dataPromise = promise.then((response) => response.data);
   return dataPromise;
-=======
->>>>>>> 965cbf787c0f54668e1384b5f0a0aa39c4549c35
 }
 
 //returns info about what song the user is currently playing
@@ -216,5 +213,3 @@ export async function getCurrentSongPlaying() {
   const dataPromise = promise.then((response) => response.data);
   return dataPromise;
 }
-
-

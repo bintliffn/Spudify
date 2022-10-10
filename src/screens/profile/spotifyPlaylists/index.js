@@ -36,6 +36,8 @@ const SpotifyPlaylists = ({ navigation }) => {
     testFunc();
   }, []);
 
+  // requestedPlaylist.tracks.items
+
   return (
     <SafeAreaView>
       {display ? (
