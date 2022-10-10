@@ -30,7 +30,7 @@ function LoginScreen({ navigation }) {
   };
 
   function login() {
-    promptAsync();
+    promptAsync();  
     //setLoggedInStatus(true);
   }
 
