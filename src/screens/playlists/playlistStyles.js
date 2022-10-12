@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         justifyContent: "flex-start",
         flexDirection: "column",
         margin : 10,
-        flex: 1,
+        flexGrow: 1,
         width : windowWidth*.95,
       },
       welcomeText: {
@@ -19,6 +19,9 @@ export const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight : "bold",
         paddingTop: 10,
+      },
+      buffer: {
+        height: 25,
       },
       buttonText: {
         color: "#B3B3B3",
@@ -59,5 +62,27 @@ export const styles = StyleSheet.create({
         //justifyContent: "flex-start",
         flex: 1
       },
-
+      container: {
+        alignItems: "center",
+        justifyContent: "flex-start",
+        flexDirection: "row",
+        height: 70,
+        width: windowWidth * 0.9,
+        padding: 20,
+      },
+      image: {
+        width: 60,
+        height: 60,
+      },
+      playlistText: {
+        color: "white",
+        fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+        fontWeight: "bold",
+        fontSize: 20,
+        paddingLeft: 20,
+      },
+      flatList : {
+      alignItems: "flex-start",
+      justifyContent : "flex-start",
+      }
 });

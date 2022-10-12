@@ -102,7 +102,6 @@ export async function getRecommendations(artists, genres, tracks, limit) {
 //This function will mainly be used in phase 2 when advanced recommendations can be used
 export async function getRecommendationsAdvanced(jsonBody) {
   var accessToken = await SecureStore.getItemAsync("access_token");
-  console.log(accessToken);
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
   }
