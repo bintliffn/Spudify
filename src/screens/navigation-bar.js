@@ -15,7 +15,7 @@ const playlistsScreen = "Playlists";
 const songsScreen = "Songs";
 const profileScreen = "Profile";
 
-export default function NavBarRouter() {
+export default function NavigationBar() {
   return (
     <Tab.Navigator
       initialRouteName={homeScreen}

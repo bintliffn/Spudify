@@ -179,5 +179,3 @@ export async function getCurrentSongPlaying() {
   const dataPromise = promise.then((response) => response.data);
   return dataPromise;
 }
-
-

@@ -9,15 +9,18 @@ export const styles = StyleSheet.create({
     backgroundColor: "#1DB954",
   },
   loginButtonText: {
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     fontSize: 30,
   },
   titleText: {
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     color: "white",
     fontSize: 50,
     paddingTop: 100,
     paddingBottom: 300,
   },
   bodyText: {
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     color: "white",
     fontSize: 15,
     paddingBottom: 10,
