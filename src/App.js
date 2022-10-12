@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
 import { UserProvider } from "@src/components/contexts/UserProvider";
 import { registerRootComponent } from "expo";
+import UserScreen from "@src/screens/UserScreen";
 
 // Screens
 import Test from "@src/screens/Test";
@@ -34,8 +35,9 @@ export default function App() {
         >
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="RecommendedPlaylists" component={RecommendedPlaylists} />
+          <Stack.Screen name="Test" component={Test} />
+          <Stack.Screen name="User" component={UserScreen} />
           <Stack.Screen name="NavBarRouter" component={NavBarRouter} />
-          {/*<Stack.Screen name="User" component={User} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
