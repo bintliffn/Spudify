@@ -51,30 +51,12 @@ export default function App() {
             ) : (
               <Stack.Screen name="Login" component={LoginScreen} />
             )}
-              <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="spotifyPlaylists" component={SpotifyPlaylists} />
               <Stack.Screen name="User" component={UserScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </UserProvider>
     </AuthContext.Provider>
-
-
-    // <UserProvider>
-    //   <NavigationContainer theme={MyTheme}>
-    //     <Stack.Navigator
-    //       initialRouteName="Login"
-    //       screenOptions={{
-    //         headerShown: false,
-    //       }}
-    //     >
-    //       <Stack.Screen name="Login" component={LoginScreen} />
-    //       <Stack.Screen name="spotifyPlaylists" component={SpotifyPlaylists} />
-    //       <Stack.Screen name="User" component={UserScreen} />
-    //       <Stack.Screen name="NavBarRouter" component={NavBarRouter} />
-    //     </Stack.Navigator>
-    //   </NavigationContainer>
-    // </UserProvider>
   );
 }
 
