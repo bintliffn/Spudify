@@ -252,4 +252,6 @@ export default function Playlists({ navigation }) {
       </ScrollView>
     </SafeAreaView>
   );
+
 }
+

@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import Song from "@src/components/DisplaySong/Song";
 import { styles } from "../playlistStyles";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 
 const RecommendedPlaylists = ({ route, navigation }) => {
   const [display, setDisplay] = React.useState(false);
@@ -31,14 +33,17 @@ const RecommendedPlaylists = ({ route, navigation }) => {
     <SafeAreaView style = {{flex : 1}}>
       {display ? (
         <View style={[styles.masterView]}>
+        <View style={{flexDirection: "row", alignItems : "center"}}>
+             <Ionicons
+              name="arrow-back-circle-outline"
+              color="white"
+              size={40}
+              onPress={() => {
+                navigation.navigate("Playlists");
+              }}
+            />
           <Text style={[styles.playlistText]}>Songs in your playlist</Text>
-          <Button
-            onPress={() => {
-              navigation.navigate("Playlists");
-            }}
-            title="Return"
-            color="#1DB954"
-          />
+          </View>
           <FlatList
             showsVerticalScrollIndicator={false}
             data={playlistSongs}

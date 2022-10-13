@@ -50,6 +50,7 @@ function LoginScreen({ navigation }) {
         "user-follow-read",
         "user-read-recently-played",
         "user-top-read",
+        "playlist-read-private",
       ],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
@@ -139,6 +140,7 @@ function LoginScreen({ navigation }) {
           >
             {"Test"}
           </Button>
+
           <Button
             title="logout"
             compact

@@ -82,7 +82,6 @@ export const styles = StyleSheet.create({
         paddingLeft: 20,
       },
       flatList : {
-      alignItems: "flex-start",
-      justifyContent : "flex-start",
+      paddingBottom : 20
       }
 });
