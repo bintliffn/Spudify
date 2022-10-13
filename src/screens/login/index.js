@@ -9,10 +9,10 @@ import * as SecureStore from "expo-secure-store";
 import { useFocusEffect } from "@react-navigation/native";
 import { getNewToken } from "@src/utils/RefreshToken";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
-import { SafeAreaView, Image, Text, View, processColor } from "react-native";
+import { SafeAreaView, Image, Text, View, LogBox } from "react-native";
 import { Button } from "react-native-paper";
 import { styles } from "@src/screens/login/utils";
-import { AuthContext } from "../../App"
+import { AuthContext } from "@src/App"
 
 const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
@@ -121,6 +121,12 @@ function LoginScreen({ navigation }) {
       });
     }, [])
   );
+
+  // Ignores the warning for cycle between App.js --> login/index.js --> App.js
+  // @TODO resolve error
+  React.useEffect(() => {
+    LogBox.ignoreLogs(['Require cycle:']);
+  }, []);
 
   /*display button
   when the button is pressed begin authentication process by calling promptAsync function*/

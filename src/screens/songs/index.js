@@ -1,11 +1,12 @@
 import * as React from "react";
-import { View, Text, SafeAreaView, FlatList, ScrollView } from "react-native";
+import { View, Text, SafeAreaView, FlatList, ScrollView, LogBox } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { styles } from "@src/screens/songs/utils";
 import Song from "@src/components/DisplaySong/Song";
 import { getTopArtistsOrTracks } from "@src/utils/Queries";
 import Artist from "@src/components/DisplayArtist/Artist";
 
+// Options for the 2 dropdown selectors for time range
 const dropdownItems = [
   { label: "Last Month", value: "short_term" },
   { label: "Last 6 Months", value: "medium_term" },
@@ -27,10 +28,10 @@ export default function Songs({ navigation }) {
   const [topSongsLoaded, setTopSongsLoaded] = React.useState(false);
 
   /**
-   * 
    * @param {String} artistsOrTracks either "artists" or "tracks"
    * @param {String} time_range short_term, medium_term, or long_term
-   * @returns the data from the query
+   * @returns doesn't return anything, sets the state of topSongs/topArtists
+   * to the data returned from the query
    */
   async function fetchData(artistsOrTracks, time_range) {
     const data = await getTopArtistsOrTracks(artistsOrTracks, time_range, 5);
@@ -44,14 +45,20 @@ export default function Songs({ navigation }) {
   }
 
   React.useEffect(() => {
-    // Calls async function to get data from the Spotify API
+    // Calls async function to get data from the Spotify API for user's top songs
     fetchData("tracks", value);
   }, [value]);
 
   React.useEffect(() => {
-    // Calls async function to get data from the Spotify API
+    // Calls async function to get data from the Spotify API for user's top artists
     fetchData("artists", artistsValue);
   }, [artistsValue]);
+
+  // Ignores the virtualized lists error with scroll view and flatlist
+  // TODO: fix the error vetween scrollview and flatlist
+  React.useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
 
   return (
     <SafeAreaView style={[styles.view]}>
