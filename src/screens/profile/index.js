@@ -159,9 +159,7 @@ const Profile = ({ navigation }) => {
             </View>
           )}
         </View>
-      ) : (
-        <Text style={[styles.playlistHeaderText]}> RENDERING DATA</Text>
-      )}
+      ) : null}
     </SafeAreaView>
   );
 };
