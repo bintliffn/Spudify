@@ -36,7 +36,7 @@ export function useReadUser(id) {
       if (docSnap.exists()) {
         const data = docSnap.data();
         console.log("Success");
-        return setData(data);
+        setData(data);
       } else {
         // docSnap.data() will be undefined in this case
         console.log(
