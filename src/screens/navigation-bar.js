@@ -7,7 +7,6 @@ import Home from "@src/screens/home";
 import Playlists from "@src/screens/playlists";
 import Songs from "@src/screens/songs";
 import Profile from "@src/screens/profile";
-import Test from "@src/screens/Test";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -16,7 +15,7 @@ const playlistsScreen = "Playlists";
 const songsScreen = "Songs";
 const profileScreen = "Profile";
 
-export default function NavBarRouter() {
+export default function NavigationBar() {
   return (
     <Tab.Navigator
       initialRouteName={homeScreen}
@@ -46,7 +45,6 @@ export default function NavBarRouter() {
       <Tab.Screen name={songsScreen} component={Songs} />
       <Tab.Screen name={playlistsScreen} component={Playlists} />
       <Tab.Screen name={profileScreen} component={Profile} />
-      <Tab.Screen name="Test" component={Test} />
     </Tab.Navigator>
   );
 }

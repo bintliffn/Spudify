@@ -53,9 +53,7 @@ const RecommendedPlaylists = ({ route, navigation }) => {
             }}
           />
         </View>
-      ) : (
-        <Text style={[styles.profileText]}>RENDERING DATA</Text>
-      )}
+      ) : null }
     </SafeAreaView>
   );
 };

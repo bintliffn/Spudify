@@ -9,9 +9,10 @@ import * as SecureStore from "expo-secure-store";
 import { useFocusEffect } from "@react-navigation/native";
 import { getNewToken } from "@src/utils/RefreshToken";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
-import { SafeAreaView, Image, Text, View, processColor } from "react-native";
+import { SafeAreaView, Image, Text, View, LogBox } from "react-native";
 import { Button } from "react-native-paper";
 import { styles } from "@src/screens/login/utils";
+import { AuthContext } from "@src/App"
 
 const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
@@ -20,7 +21,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 function LoginScreen({ navigation }) {
-  const [loggedInStatus, setLoggedInStatus] = React.useState(false);
+  const { signIn } = React.useContext(AuthContext);
 
   WebBrowser.maybeCompleteAuthSession();
   // Endpoint
@@ -30,15 +31,14 @@ function LoginScreen({ navigation }) {
   };
 
   function login() {
-    promptAsync();  
-    //setLoggedInStatus(true);
+    promptAsync();
   }
 
   function logout() {
     SecureStore.deleteItemAsync("access_token");
     SecureStore.deleteItemAsync("refresh_token");
     SecureStore.deleteItemAsync("token_expriration");
-    setLoggedInStatus(false);
+    signIn(false)
   }
 
   const [request, response, promptAsync] = useAuthRequest(
@@ -63,7 +63,7 @@ function LoginScreen({ navigation }) {
   //when response variable changes run the code below to exchange authenication code for authentication token /refresh token
   React.useEffect(() => {
     if (response?.type === "success") {
-      setLoggedInStatus(true);
+      signIn(true)
       //retreive authentication code if user successfully logged in
       const { code } = response.params;
       //send post request using authentication code to get authentication token
@@ -97,7 +97,7 @@ function LoginScreen({ navigation }) {
               "token_expriration",
               JSON.stringify(response.data.expires_in)
             );
-            setLoggedInStatus(true);
+            signIn(true)
           } else {
             // res.send(response);
             alert("Error signing in, Please ensure you are connected to the internet");
@@ -117,42 +117,22 @@ function LoginScreen({ navigation }) {
       SecureStore.getItemAsync("access_token").then((data) => {
         if (data != null) {
           getNewToken();
-          //set logged in to true
-          setLoggedInStatus(true);
+          signIn(true)
         }
       });
     }, [])
   );
 
+  // Ignores the warning for cycle between App.js --> login/index.js --> App.js
+  // @TODO resolve error
+  React.useEffect(() => {
+    LogBox.ignoreLogs(['Require cycle:']);
+  }, []);
+
   /*display button
   when the button is pressed begin authentication process by calling promptAsync function*/
   return (
     <SafeAreaView>
-      {loggedInStatus ? (
-        <View style={[styles.view]}>
-          <Button
-            title="test"
-            compact
-            mode="contained"
-            contentStyle={{ height: "100%" }}
-            style={[styles.button]}
-            onPress={() => navigation.navigate("NavBarRouter")}
-          >
-            {"Test"}
-          </Button>
-
-          <Button
-            title="logout"
-            compact
-            mode="contained"
-            contentStyle={{ height: "100%" }}
-            style={[styles.button]}
-            onPress={() => logout()}
-          >
-            {"Logout"}
-          </Button>
-        </View>
-      ) : (
         <View style={[styles.view]}>
           <Image
             style={[styles.logo]}
@@ -172,7 +152,6 @@ function LoginScreen({ navigation }) {
             <Text style={[styles.loginButtonText]}>Login</Text>
           </Button>
         </View>
-      )}
     </SafeAreaView>
   );
 }
