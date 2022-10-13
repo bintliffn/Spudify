@@ -50,6 +50,7 @@ function LoginScreen({ navigation }) {
         "user-follow-read",
         "user-read-recently-played",
         "user-top-read",
+        "playlist-read-private",
       ],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
@@ -64,6 +65,7 @@ function LoginScreen({ navigation }) {
     if (response?.type === "success") {
       signIn(true)
       console.log("RESPONSE SUCCESS");
+
       //retreive authentication code if user successfully logged in
       const { code } = response.params;
       //send post request using authentication code to get authentication token
