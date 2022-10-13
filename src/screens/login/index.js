@@ -31,7 +31,12 @@ function LoginScreen({ navigation }) {
   };
 
   function login() {
+<<<<<<< HEAD
     promptAsync();
+=======
+    promptAsync();  
+    //setLoggedInStatus(true);
+>>>>>>> fe4d22089205e95f35c722e37bfe8715e924c0e5
   }
 
   function logout() {
@@ -63,9 +68,13 @@ function LoginScreen({ navigation }) {
   //when response variable changes run the code below to exchange authenication code for authentication token /refresh token
   React.useEffect(() => {
     if (response?.type === "success") {
+<<<<<<< HEAD
       signIn(true)
       console.log("RESPONSE SUCCESS");
 
+=======
+      setLoggedInStatus(true);
+>>>>>>> fe4d22089205e95f35c722e37bfe8715e924c0e5
       //retreive authentication code if user successfully logged in
       const { code } = response.params;
       //send post request using authentication code to get authentication token
@@ -102,6 +111,7 @@ function LoginScreen({ navigation }) {
             signIn(true)
           } else {
             // res.send(response);
+            alert("Error signing in, Please ensure you are connected to the internet");
             console.log(response.data);
           }
         })

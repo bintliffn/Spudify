@@ -35,5 +35,6 @@ export const styles = StyleSheet.create({
   view: {
     alignItems: "center",
     justifyContent: "center",
+    color : "#B3B3B3"
   },
 });

@@ -125,61 +125,71 @@ export default function Home({ navigation }) {
   //Takes in dataToFetch paramter which tells the function which data it needs to fetch
   async function fetchData(dataToFetch) {
     //If function is called from initial useState function
-    if (dataToFetch == 1) {
-      //Retrieve information about current user
-      const userInfo = await getUserInfo();
-      //Set current user's username
-      setUsername(userInfo.display_name);
-      //Retrieve up to top 50 tracks from user
-      const topSongsResponse = await getTopArtistsOrTracks(
-        "tracks",
-        "long_term",
-        50
-      );
-      //if user has listened to less than 5 songs total
-      if (topSongsResponse.length < 5) {
-        //Don't display dashboard and instruct the user to listen to more music
-        setDisplayText(
-          "Please listen to at least 5 songs to have the dashboard displayed"
+    try {
+      if (dataToFetch == 1) {
+        //Retrieve information about current user
+        const userInfo = await getUserInfo();
+        //Set current user's username
+        setUsername(userInfo.display_name);
+        //Retrieve up to top 50 tracks from user
+        const topSongsResponse = await getTopArtistsOrTracks(
+          "tracks",
+          "long_term",
+          50
         );
-        return;
-      } else {
-        //otherwise set the users top song to the variable topSong
-        setTopSong(topSongsResponse[0]);
+        //if user has listened to less than 5 songs total
+        if (topSongsResponse.length < 5) {
+          //Don't display dashboard and instruct the user to listen to more music
+          setDisplayText(
+            "Please listen to at least 5 songs to have the dashboard displayed"
+          );
+          return;
+        } else {
+          //otherwise set the users top song to the variable topSong
+          setTopSong(topSongsResponse[0]);
+        }
+        //Same as above but with top artists
+        const topArtistsResponse = await getTopArtistsOrTracks(
+          "artists",
+          "long_term",
+          50
+        );
+        setTopArtist(topArtistsResponse[0]);
+        //Get the users recently played tracks
+        const recentlyPlayedTracksResponse = await getRecentlyPlayed();
+        //Assign them to the recently played tracks variable
+        setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
+        //Display initial Dashboard (This allows user to view info while statistics query is called which takes a while)
+        setDisplay(true);
+        //Get statistics from users top songs
+        const statisticsResponse = await getStatisticsFromTopSongs(
+          topSongsResponse
+        );
+        //Assign attributes to statistics response
+        attributes = statisticsResponse;
+        //Call setKeywords function to set keywords to display on dashboard
+        setKeywords();
       }
-      //Same as above but with top artists
-      const topArtistsResponse = await getTopArtistsOrTracks(
-        "artists",
-        "long_term",
-        50
-      );
-      setTopArtist(topArtistsResponse[0]);
-      //Get the users recently played tracks
       const recentlyPlayedTracksResponse = await getRecentlyPlayed();
       //Assign them to the recently played tracks variable
       setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
-      //Display initial Dashboard (This allows user to view info while statistics query is called which takes a while)
-      setDisplay(true);
-      //Get statistics from users top songs
-      const statisticsResponse = await getStatisticsFromTopSongs(
-        topSongsResponse
+      //Get the current song playing
+      var currentSongPlayingResponse = await getCurrentSongPlaying();
+      //If there is actually a song playing
+      if (currentSongPlayingResponse != "") {
+        //Assign it to the variable currentSongPlaying
+        setCurrentSongPlaying(currentSongPlayingResponse.item);
+        //Set is playing to true which will re render the dashboard with the current song playing
+        setIsPlaying(true);
+      }
+    } catch (error) {
+      setDisplay(false);
+      setDisplayText(
+        "Error fetching info please ensure you are connected to the internet and restart the app"
       );
-      //Assign attributes to statistics response
-      attributes = statisticsResponse;
-      //Call setKeywords function to set keywords to display on dashboard
-      setKeywords();
-    }
-    const recentlyPlayedTracksResponse = await getRecentlyPlayed();
-    //Assign them to the recently played tracks variable
-    setRecentlyPlayedTracks(recentlyPlayedTracksResponse);
-    //Get the current song playing
-    var currentSongPlayingResponse = await getCurrentSongPlaying();
-    //If there is actually a song playing
-    if (currentSongPlayingResponse != "") {
-      //Assign it to the variable currentSongPlaying
-      setCurrentSongPlaying(currentSongPlayingResponse.item);
-      //Set is playing to true which will re render the dashboard with the current song playing
-      setIsPlaying(true);
+      alert(error);
+      console.log(error.response.data);
+      return;
     }
   }
 
@@ -295,7 +305,9 @@ export default function Home({ navigation }) {
             )}
           </View>
         ) : (
-          <Text style={[styles.noContentText]}>{displayText}</Text>
+          <View style={[styles.welcomeView]}>
+            <Text style={[styles.noContentText]}>{displayText}</Text>
+          </View>
         )}
       </ScrollView>
     </SafeAreaView>
