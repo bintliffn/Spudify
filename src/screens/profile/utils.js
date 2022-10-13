@@ -4,38 +4,41 @@ import { authorize } from "react-native-app-auth";
 const windowWidth = Dimensions.get("window").width;
 
 export const styles = StyleSheet.create({
-  topView: {
+  upperProfileView: {
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-around",
-    paddingTop: 40,
+    paddingTop: 25,
   },
   profilepic: {
     width: 100,
     height: 100,
+    borderRadius: 75,
   },
   usernameText: {
     color: "white",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontWeight: "bold",
     fontSize: 25,
     textAlign: "center",
-    paddingBottom: 20,
+    paddingTop: 30,
   },
-  profileText: {
+  followersText: {
     color: "white",
-    fontSize: 25,
+    fontSize: 17,
     textAlign: "center",
   },
-  followTopView: {
+  numberOfFollowersView: {
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingTop: 20,
+    paddingTop: 25,
   },
-  followBottomView: {
+  followersView: {
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingBottom: 20,
+    paddingBottom: 40,
   },
   container: {
     alignItems: "center",
@@ -43,17 +46,79 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     height: 70,
     width: windowWidth * 0.9,
-    padding: 20,
+    padding: 15,
   },
-  image: {
+  innerContainer: {
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    height: 70,
+    width: windowWidth * 0.9,
+    padding: 10,
+  },
+  // emptyPlaylistContainer: {
+  //   alignItems: "flex-start",
+  //   justifyContent: "center",
+  //   flexDirection: "column",
+  //   flex: 1,
+  //   paddingLeft: 20,
+  // },
+  // emptyPlaylistUpperText: {
+  //   color: "white",
+  //   fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+  //   fontSize: 20,
+  //   paddingRight: 20,
+  // },
+  // emptyPlaylistLowerText: {
+  //   color: "white",
+  //   fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+  // },
+  coverImage: {
     width: 60,
     height: 60,
   },
-  playlistText: {
+  defaultCoverAlbum: {
+    width: 60,
+    height: 60,
+    backgroundColor: "gray",
+  },
+  playlistHeaderText: {
     color: "white",
     fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 22,
+    paddingLeft: 10,
+    paddingBottom: 15,
+  },
+  playlistText: {
+    color: "#FFFFFF",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  artistText: {
+    color: "#B3B3B3",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+  },
+  innerView: {
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flexDirection: "column",
+    flex: 1,
+    paddingLeft: 20,
+  },
+  upperPlaylistSongsView: {
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    width: windowWidth * 0.9,
+    padding: 10,
+  },
+  innerPlaylistSongsView: {
+    color: "white",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontWeight: "bold",
+    fontSize: 23,
     paddingLeft: 20,
   },
 });

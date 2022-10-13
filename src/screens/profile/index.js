@@ -9,15 +9,13 @@ import {
   Image,
   Text,
   View,
-  Pressable,
   TouchableHighlight,
   FlatList,
-  Button,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { styles } from "./utils";
 
-const spotify_logo = "../../../assets/spotify_logo.png";
 const playlistTracksTotalTemp = new Array();
 
 const Profile = ({ navigation }) => {
@@ -49,7 +47,6 @@ const Profile = ({ navigation }) => {
 
     const test3 = await getUserPlaylist();
     setUserPlaylists(test3.items);
-    console.log(test3.total);
     if (test3.total > 0) {
       setHasPlaylists(true);
       for (let a = 0; a < test3.total; a++) {
@@ -72,8 +69,7 @@ const Profile = ({ navigation }) => {
     <SafeAreaView>
       {display ? (
         <View>
-          <View style={[styles.topView]}>
-            <Text style={[styles.usernameText]}>{userName}</Text>
+          <View style={[styles.upperProfileView]}>
             {hasProfilePic ? (
               <Image
                 style={[styles.profilepic]}
@@ -87,17 +83,22 @@ const Profile = ({ navigation }) => {
                 size={100}
               />
             )}
+            <Text style={[styles.usernameText]}>{userName}</Text>
           </View>
-          <View style={[styles.followTopView]}>
-            <Text style={[styles.profileText]}> {userFollowers} </Text>
-            <Text style={[styles.profileText]}> {userFollowing} </Text>
+          <View style={[styles.numberOfFollowersView]}>
+            <Text style={[styles.followersText]}> {userFollowers} </Text>
+            <Text style={[styles.followersText]}> {userFollowing} </Text>
           </View>
-          <View style={[styles.followBottomView]}>
-            <Text style={[styles.profileText]}> Followers </Text>
-            <Text style={[styles.profileText]}> Following </Text>
+          <View style={[styles.followersView]}>
+            <Text style={[styles.followersText]}> Followers </Text>
+            <Text style={[styles.followersText]}> Following </Text>
           </View>
           {hasPlaylists ? (
             <View>
+              <Text style={[styles.playlistHeaderText]}>
+                {" "}
+                Spotify Playlists{" "}
+              </Text>
               <FlatList
                 data={userPlaylists}
                 renderItem={(item) => {
@@ -111,24 +112,35 @@ const Profile = ({ navigation }) => {
                             })
                           }
                         >
-                          <View style={[styles.container]}>
+                          <View style={[styles.innerContainer]}>
                             <Image
-                              style={[styles.image]}
+                              style={[styles.coverImage]}
                               source={{ uri: item.item.images[0].url }}
                             />
-
-                            <Text style={[styles.playlistText]}>
-                              {item.item.name}
-                            </Text>
+                            <View style={[styles.innerView]}>
+                              <Text style={[styles.playlistText]}>
+                                {item.item.name}
+                              </Text>
+                            </View>
                           </View>
                         </TouchableHighlight>
                       ) : (
-                        <Ionicons
-                          name="person"
-                          color="white"
-                          style={[styles.image]}
-                          size={60}
-                        />
+                        <View style={[styles.innerContainer]}>
+                          <MaterialCommunityIcons
+                            name="album"
+                            style={[styles.defaultCoverAlbum]}
+                            size={60}
+                            color="white"
+                          />
+                          <View style={[styles.innerView]}>
+                            <Text style={[styles.playlistText]}>
+                              {item.item.name}
+                            </Text>
+                            <Text style={[styles.artistText]}>
+                              Empty Playlist
+                            </Text>
+                          </View>
+                        </View>
                       )}
                     </View>
                   );
@@ -137,18 +149,18 @@ const Profile = ({ navigation }) => {
             </View>
           ) : (
             <View style={[styles.container]}>
-              <Ionicons
-                name="person"
-                color="white"
-                style={[styles.image]}
+              <MaterialCommunityIcons
+                name="album"
+                style={[styles.defaultCoverAlbum]}
                 size={60}
+                color="white"
               />
-              <Text style={[styles.playlistText]}>No Playlists</Text>
+              <Text style={[styles.playlistText]}> No Playlists </Text>
             </View>
           )}
         </View>
       ) : (
-        <Text style={[styles.profileText]}> RENDERING DATA</Text>
+        <Text style={[styles.playlistHeaderText]}> RENDERING DATA</Text>
       )}
     </SafeAreaView>
   );
