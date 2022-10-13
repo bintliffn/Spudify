@@ -11,6 +11,7 @@ import UserScreen from "@src/screens/UserScreen";
 import Test from "@src/screens/Test";
 import LoginScreen from "@src/screens/login";
 import NavBarRouter from "@src/screens/NavBarRouter";
+import RecommendedPlaylists from "@src/screens/playlists/ViewPlaylists"
 import SpotifyPlaylists from "@src/screens/profile/spotifyPlaylists";
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="RecommendedPlaylists" component={RecommendedPlaylists} />
           <Stack.Screen name="spotifyPlaylists" component={SpotifyPlaylists} />
           <Stack.Screen name="Test" component={Test} />
           <Stack.Screen name="User" component={UserScreen} />

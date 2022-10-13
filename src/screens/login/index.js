@@ -30,8 +30,7 @@ function LoginScreen({ navigation }) {
   };
 
   function login() {
-    promptAsync();
-    console.log(makeRedirectUri());
+    promptAsync();  
     //setLoggedInStatus(true);
   }
 
@@ -65,8 +64,6 @@ function LoginScreen({ navigation }) {
   React.useEffect(() => {
     if (response?.type === "success") {
       setLoggedInStatus(true);
-      console.log("RESPONSE SUCCESS");
-
       //retreive authentication code if user successfully logged in
       const { code } = response.params;
       //send post request using authentication code to get authentication token
@@ -103,6 +100,7 @@ function LoginScreen({ navigation }) {
             setLoggedInStatus(true);
           } else {
             // res.send(response);
+            alert("Error signing in, Please ensure you are connected to the internet");
             console.log(response.data);
           }
         })

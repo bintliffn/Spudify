@@ -57,5 +57,5 @@ export const styles = StyleSheet.create({
   },
   highlightedWord:{
     color : "#1DB954"
-  }
+  },
 });
