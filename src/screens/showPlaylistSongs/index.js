@@ -1,21 +1,26 @@
+//Screen to display the songs in  playlist
+//Can be used by both recommendations and profile screen
 import * as React from "react";
-import { getRequestedPlaylist } from "../../../utils/Queries";
+import { getRequestedPlaylist } from "../../utils/Queries";
 import { SafeAreaView, Text, View, FlatList } from "react-native";
 import Song from "@src/components/DisplaySong/Song";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { styles } from "../utils";
+import { styles } from "../profile/utils";
 
-const SpotifyPlaylists = ({ route, navigation }) => {
+const DisplayPlaylist = ({ route, navigation }) => {
   const [display, setDisplay] = React.useState(false);
 
   const [requestedPlaylist, setRequestedPlaylist] = React.useState();
 
   async function testFunc() {
-    const requestedPlaylistResponse = await getRequestedPlaylist(
-      route.params.playlistId
-    );
-
-    setRequestedPlaylist(requestedPlaylistResponse);
+    if (route.params.isUserPlaylist) {
+      const requestedPlaylistResponse = await getRequestedPlaylist(
+        route.params.playlistId
+      );
+      setRequestedPlaylist(requestedPlaylistResponse);
+    } else {
+      setRequestedPlaylist(route.params.playlistSongs);
+    }
 
     setDisplay(true);
   }
@@ -34,7 +39,7 @@ const SpotifyPlaylists = ({ route, navigation }) => {
               color="white"
               size={40}
               onPress={() => {
-                navigation.navigate("Profile");
+                route.params.isUserPlaylist ? navigation.navigate("Profile") : navigation.navigate("Recommend")
               }}
             />
             <Text style={[styles.innerPlaylistSongsView]}>
@@ -43,18 +48,27 @@ const SpotifyPlaylists = ({ route, navigation }) => {
           </View>
 
           <FlatList
-            data={requestedPlaylist.tracks.items}
+            data={
+              route.params.isUserPlaylist
+                ? requestedPlaylist.tracks.items
+                : requestedPlaylist
+            }
+            contentContainerStyle={{ paddingBottom: 125 }}
             renderItem={(item) => {
               return (
                 <View style={[styles.container]}>
-                  <Song SingleJsonSong={item.item.track} />
+                  <Song
+                    SingleJsonSong={
+                      route.params.isUserPlaylist ? item.item.track : item.item
+                    }
+                  />
                 </View>
               );
             }}
           />
         </View>
-      ) : null }
+      ) : null}
     </SafeAreaView>
   );
 };
-export default SpotifyPlaylists;
+export default DisplayPlaylist;

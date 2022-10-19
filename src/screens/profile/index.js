@@ -15,6 +15,7 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { styles } from "./utils";
+import Playlist from "@src/components/DisplayPlaylist/Playlist";
 
 const playlistTracksTotalTemp = new Array();
 
@@ -103,46 +104,20 @@ const Profile = ({ navigation }) => {
                 data={userPlaylists}
                 renderItem={(item) => {
                   return (
-                    <View style={[styles.container]}>
-                      {playlistTracksTotal[item.index] ? (
-                        <TouchableHighlight
-                          onPress={() =>
-                            navigation.navigate("spotifyPlaylists", {
-                              playlistId: item.item.id,
-                            })
-                          }
-                        >
-                          <View style={[styles.innerContainer]}>
-                            <Image
-                              style={[styles.coverImage]}
-                              source={{ uri: item.item.images[0].url }}
-                            />
-                            <View style={[styles.innerView]}>
-                              <Text style={[styles.playlistText]}>
-                                {item.item.name}
-                              </Text>
-                            </View>
-                          </View>
-                        </TouchableHighlight>
-                      ) : (
-                        <View style={[styles.innerContainer]}>
-                          <MaterialCommunityIcons
-                            name="album"
-                            style={[styles.defaultCoverAlbum]}
-                            size={60}
-                            color="white"
-                          />
-                          <View style={[styles.innerView]}>
-                            <Text style={[styles.playlistText]}>
-                              {item.item.name}
-                            </Text>
-                            <Text style={[styles.artistText]}>
-                              Empty Playlist
-                            </Text>
-                          </View>
-                        </View>
-                      )}
-                    </View>
+                    <TouchableHighlight
+                      onPress={() =>
+                        navigation.navigate("DisplayPlaylist", {
+                          playlistId: item.item.id,
+                          isUserPlaylist : true,
+                        })
+                      }
+                    >
+                      <Playlist
+                        playlistTracksTotal={playlistTracksTotal}
+                        item={item}
+                        isUserPlaylist={true}
+                      />
+                    </TouchableHighlight>
                   );
                 }}
               />
