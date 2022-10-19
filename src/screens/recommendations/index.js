@@ -19,7 +19,8 @@ import {
   getRecommendations,
   getRecommendationsAdvanced,
 } from "@src/utils/Queries";
-import { styles } from "@src/screens/playlists/playlistStyles";
+import { styles } from "@src/screens/recommendations/playlistStyles";
+import Playlist from "@src/components/DisplayPlaylist/Playlist";
 export default function Playlists({ navigation }) {
   const [playlistCount, setPlaylistCount] = React.useState(1);
   const [playlists, setPlaylists] = React.useState([]);
@@ -50,6 +51,8 @@ export default function Playlists({ navigation }) {
   const toggleSwitchObscure = () => {
     setIsEnabledObscure((previousState) => !previousState);
   };
+
+  const[ playlistTracksTotal, setPlaylistTracksTotal] = React.useState([]);
 
   async function getSongRecommendationsByTracks() {
     try {
@@ -125,6 +128,11 @@ export default function Playlists({ navigation }) {
   }
 
   React.useEffect(() => {
+    var tempPlaylistTracksTotal = [];
+    for(var i=0;i<50;i++){
+      tempPlaylistTracksTotal.push(true);
+    }
+    setPlaylistTracksTotal(tempPlaylistTracksTotal)
     //fetch all data
     fetchData();
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -229,20 +237,17 @@ export default function Playlists({ navigation }) {
                 <View style={[styles.container]}>
                   <TouchableHighlight
                     onPress={() =>
-                      navigation.navigate("RecommendedPlaylists", {
+                      navigation.navigate("DisplayPlaylist", {
                         playlistSongs: item.item,
+                        isUserPlaylist: false,
                       })
                     }
                   >
-                    <View style={[styles.container]}>
-                      <Image
-                        style={[styles.image]}
-                        source={{ uri: item.item[0].album.images[0].url }}
-                      />
-                      <Text style={[styles.playlistText]}>
-                        {item.item.playlistName}
-                      </Text>
-                    </View>
+                    <Playlist
+                      item={item}
+                      playlistTracksTotal={playlistTracksTotal}
+                      isUserPlaylist={false}
+                    />
                   </TouchableHighlight>
                 </View>
               );
@@ -252,6 +257,4 @@ export default function Playlists({ navigation }) {
       </ScrollView>
     </SafeAreaView>
   );
-
 }
-

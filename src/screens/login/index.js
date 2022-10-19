@@ -31,6 +31,8 @@ function LoginScreen({ navigation }) {
   };
 
   function login() {
+
+    console.log(makeRedirectUri());
     promptAsync();
   }
 

@@ -4,14 +4,14 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 
 // Screens
 import Home from "@src/screens/home";
-import Playlists from "@src/screens/playlists";
+import Recommend from "@src/screens/recommendations";
 import Songs from "@src/screens/songs";
 import Profile from "@src/screens/profile";
 
 const Tab = createMaterialBottomTabNavigator();
 
 const homeScreen = "Home";
-const playlistsScreen = "Playlists";
+const recommendScreen = "Recommend";
 const songsScreen = "Songs";
 const profileScreen = "Profile";
 
@@ -26,7 +26,7 @@ export default function NavigationBar() {
 
           if (rn === homeScreen) {
             iconName = focused ? "home" : "home-outline";
-          } else if (rn === playlistsScreen) {
+          } else if (rn === recommendScreen) {
             iconName = focused ? "book" : "book-outline";
           } else if (rn === songsScreen) {
             iconName = focused ? "musical-notes" : "musical-notes-outline";
@@ -43,7 +43,7 @@ export default function NavigationBar() {
     >
       <Tab.Screen name={homeScreen} component={Home} />
       <Tab.Screen name={songsScreen} component={Songs} />
-      <Tab.Screen name={playlistsScreen} component={Playlists} />
+      <Tab.Screen name={recommendScreen} component={Recommend} />
       <Tab.Screen name={profileScreen} component={Profile} />
     </Tab.Navigator>
   );
