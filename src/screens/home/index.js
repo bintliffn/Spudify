@@ -22,9 +22,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
 import { getNewToken } from "@src/utils/RefreshToken";
 import { mdiCheckboxMultipleMarkedOutline, mdiSleep } from "@mdi/js";
-import * as SecureStore from  "expo-secure-store";
-
-
+import * as SecureStore from "expo-secure-store";
 
 export default function Home({ navigation }) {
   //Variable to determine whether to display dahsboard or not
@@ -59,8 +57,6 @@ export default function Home({ navigation }) {
   //Store attributes of users top songs found from statistics method
   var attributes;
   var tokenCounter;
-
-
 
   //Function to get the keyword to display for a statistical attribute based on it's numerical value
   //Takes in 5 keywords and the value of the attribute
@@ -200,22 +196,26 @@ export default function Home({ navigation }) {
     }
   }
 
-  async function checkToken(){
-    if(tokenCounter>5){
+  async function checkToken() {
+    const sleep = async () => await setTimeout(checkToken, 1000);
+    if (tokenCounter > 5) {
       Alert.alert("Error logging in");
       return;
     }
     SecureStore.getItemAsync("access_token").then((data) => {
       if (data != null) {
-       getNewToken().then(()=>
-       fetchData(1));
-      }else{
+        if (tokenCounter == 0) {
+          getNewToken();
+          tokenCounter++;
+          sleep();
+        } else {
+          fetchData(1);
+        }
+      } else {
         tokenCounter++;
-        const sleep = async ()=> await setTimeout(checkToken,1000);
         sleep();
       }
     });
-
   }
 
   useFocusEffect(
