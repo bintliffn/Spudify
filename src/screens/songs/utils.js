@@ -10,6 +10,10 @@ export const styles = StyleSheet.create({
     margin: 10,
     flex: 1,
     width: windowWidth * 0.95,
+    height: windowHeight
+  },
+  parentView: {
+    height: windowHeight
   },
   view: {
     flexDirection: "row",
@@ -29,7 +33,7 @@ export const styles = StyleSheet.create({
   dataView: {
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 10
+    paddingTop: 10,
   },
   titleText: {
     color: "#FFFFFF",

@@ -67,7 +67,7 @@ export default function Songs({ navigation }) {
         directionalLockEnabled={true}
         nestedScrollEnabled={true}
       >
-        <View>
+        <View style={[styles.parentView]}>
           <View style={[styles.view]}>
             <Text style={[styles.titleText]}>Top Songs</Text>
             <DropDownPicker
@@ -96,9 +96,7 @@ export default function Songs({ navigation }) {
                   }}
                 />
               </View>
-            ) : (
-              <Text style={{ color: "white", fontSize: 24 }}>Loading...</Text>
-            )}
+            ) : null }
           </View>
           <View style={[styles.view]}>
             <Text style={[styles.titleText]}>Top Artists</Text>
@@ -128,9 +126,7 @@ export default function Songs({ navigation }) {
                   }}
                 />
               </View>
-            ) : (
-              <Text style={{ color: "white", fontSize: 24 }}>Loading...</Text>
-            )}
+            ) : null }
           </View>
         </View>
       </ScrollView>
