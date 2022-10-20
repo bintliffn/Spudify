@@ -15,6 +15,9 @@ export const styles = StyleSheet.create({
   parentView: {
     height: windowHeight
   },
+  parentView :{
+    height : windowHeight
+  },
   view: {
     flexDirection: "row",
     alignItems: "center",

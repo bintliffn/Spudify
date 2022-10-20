@@ -1,7 +1,14 @@
 import * as React from "react";
-import { View, Text, SafeAreaView, FlatList, ScrollView, LogBox } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
+  ScrollView,
+  LogBox,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { styles } from "@src/screens/songs/utils";
+import { styles } from "@src/screens/Songs/songStyles";
 import Song from "@src/components/DisplaySong/Song";
 import { getTopArtistsOrTracks } from "@src/utils/Queries";
 import Artist from "@src/components/DisplayArtist/Artist";
@@ -96,7 +103,7 @@ export default function Songs({ navigation }) {
                   }}
                 />
               </View>
-            ) : null }
+            ) : null}
           </View>
           <View style={[styles.view]}>
             <Text style={[styles.titleText]}>Top Artists</Text>
@@ -126,7 +133,7 @@ export default function Songs({ navigation }) {
                   }}
                 />
               </View>
-            ) : null }
+            ) : null}
           </View>
         </View>
       </ScrollView>

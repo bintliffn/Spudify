@@ -1,4 +1,4 @@
-import { useUserProvider } from "@src/components/contexts/UserProvider";
+import { useUserProvider } from "@src/contexts/UserProvider";
 import { useReadAllUsers, useReadUser } from "@src/utils/api/FirebaseCrud";
 import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";

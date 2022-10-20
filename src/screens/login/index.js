@@ -10,7 +10,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import { SafeAreaView, Image, Text, View, LogBox } from "react-native";
 import { Button } from "react-native-paper";
-import { styles } from "@src/screens/login/utils";
+import { styles } from "@src/screens/Login/loginStyles";
 import { AuthContext } from "@src/App"
 
 const querystring = require("querystring");
