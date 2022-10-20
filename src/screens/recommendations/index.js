@@ -19,7 +19,7 @@ import {
   getRecommendations,
   getRecommendationsAdvanced,
 } from "@src/utils/Queries";
-import { styles } from "@src/screens/recommendations/playlistStyles";
+import { styles } from "@src/screens/Recommendations/recommendationStyles";
 import Playlist from "@src/components/DisplayPlaylist/Playlist";
 export default function Playlists({ navigation }) {
   const [playlistCount, setPlaylistCount] = React.useState(1);

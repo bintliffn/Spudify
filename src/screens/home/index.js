@@ -13,9 +13,9 @@ import {
   getRecentlyPlayed,
   getCurrentSongPlaying,
 } from "@src/utils/Queries";
-import { getStatisticsFromTopSongs } from "@src/utils/statistics";
+import { getStatisticsFromTopSongs } from "@src/utils/Statistics";
 import React from "react";
-import { styles } from "@src/screens/home/homeStyles";
+import { styles } from "@src/screens/Home/homeStyles";
 import Song from "@src/components/DisplaySong/Song";
 import Artist from "@src/components/DisplayArtist/Artist";
 import Ionicons from "react-native-vector-icons/Ionicons";

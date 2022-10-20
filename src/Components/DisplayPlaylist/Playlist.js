@@ -9,7 +9,7 @@ import {
   FlatList,
 } from "react-native";
 
-import { styles } from "@src/screens/profile/utils";
+import { styles } from "@src/screens/Profile/profileStyles";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 
