@@ -16,10 +16,13 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { styles } from "./utils";
 import Playlist from "@src/components/DisplayPlaylist/Playlist";
-
-const playlistTracksTotalTemp = new Array();
+import { AuthContext } from "@src/App";
+import * as SecureStore from "expo-secure-store";
+import { Button } from "react-native-paper";
 
 const Profile = ({ navigation }) => {
+  const playlistTracksTotalTemp = new Array();
+  const { signIn } = React.useContext(AuthContext);
   const [display, setDisplay] = React.useState(false);
   const [hasProfilePic, setHasProfilePic] = React.useState(false);
   const [hasPlaylists, setHasPlaylists] = React.useState(false);
@@ -62,6 +65,14 @@ const Profile = ({ navigation }) => {
     setDisplay(true);
   }
 
+  async function logout() {
+    setDisplay(false);
+    await SecureStore.deleteItemAsync("access_token");
+    await SecureStore.deleteItemAsync("refresh_token");
+    await SecureStore.deleteItemAsync("token_expriration");
+    signIn(false);
+  }
+
   React.useEffect(() => {
     testFunc();
   }, []);
@@ -71,6 +82,15 @@ const Profile = ({ navigation }) => {
       {display ? (
         <View>
           <View style={[styles.upperProfileView]}>
+            <Button
+              onPress={()=>logout()}
+              title="login"
+              compact
+              mode="contained"
+              contentStyle={{ height: "100%" }}
+              uppercase={false}
+              style={[styles.button]}
+            />
             {hasProfilePic ? (
               <Image
                 style={[styles.profilepic]}
@@ -108,7 +128,7 @@ const Profile = ({ navigation }) => {
                       onPress={() =>
                         navigation.navigate("DisplayPlaylist", {
                           playlistId: item.item.id,
-                          isUserPlaylist : true,
+                          isUserPlaylist: true,
                         })
                       }
                     >

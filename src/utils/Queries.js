@@ -76,26 +76,26 @@ export async function getAudioFeaturesOfSong(trackId) {
 //Artists/Genres/Tracks must be passed as comma seperated values ex. track1,track2,track3
 //limit is the number of recommended tracks you want to recieve (max: 50)
 export async function getRecommendations(artists, genres, tracks, limit) {
-    var accessToken = await SecureStore.getItemAsync("access_token");
-    if (accessToken.includes('"')) {
-      accessToken = JSON.parse(accessToken);
-    }
-    const promise = axios({
-      method: "get",
-      url: `${baseURL}recommendations`,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + accessToken,
-      },
-      params: {
-        seed_artists: artists,
-        seed_genres: genres,
-        seed_tracks: tracks,
-        limit: limit,
-      },
-    });
-    const dataPromise = promise.then((response) => response.data.tracks);
-    return dataPromise;
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
+  const promise = axios({
+    method: "get",
+    url: `${baseURL}recommendations`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    params: {
+      seed_artists: artists,
+      seed_genres: genres,
+      seed_tracks: tracks,
+      limit: limit,
+    },
+  });
+  const dataPromise = promise.then((response) => response.data.tracks);
+  return dataPromise;
 }
 
 //returns recommendations. The only parameter is a JSON object containing the parameters that should be added to the request
@@ -121,6 +121,7 @@ export async function getRecommendationsAdvanced(jsonBody) {
 //Returns information about a user such as their username/ number of followers/ profile image if they have one
 //More info here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-current-users-profile
 export async function getUserInfo() {
+
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
@@ -140,6 +141,7 @@ export async function getUserInfo() {
 //returns info about what artists the user is following and how many artists the user follows
 //More infor about response here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-followed
 export async function getUserFollowing() {
+
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
@@ -160,6 +162,7 @@ export async function getUserFollowing() {
 }
 
 export async function getUserPlaylist() {
+
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
@@ -177,6 +180,7 @@ export async function getUserPlaylist() {
 }
 
 export async function getRequestedPlaylist(playlist_id) {
+
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
