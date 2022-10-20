@@ -6,11 +6,13 @@ import { StatusBar } from "react-native";
 import { UserProvider } from "@src/components/contexts/UserProvider";
 import { registerRootComponent } from "expo";
 import UserScreen from "@src/screens/UserScreen";
+import * as SecureStore from "expo-secure-store";
 
 // Screens
 import LoginScreen from "@src/screens/login";
 import NavigationBar from "@src/screens/navigation-bar";
 import DisplayPlaylist from "@src/screens/showPlaylistSongs";
+import Loading from "@src/screens/Loading";
 
 export const AuthContext = React.createContext();
 
@@ -27,6 +29,7 @@ const MyTheme = {
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = React.useState(false);
 
+
   const authContext = React.useMemo(
     () => ({
       signIn: async (data) => {
@@ -35,6 +38,18 @@ export default function App() {
     }),
     []
   );
+
+
+  React.useEffect(() => {
+    SecureStore.getItemAsync("access_token").then((data) => {
+      if (data == null) {
+        setLoggedInStatus(false);
+      } else {
+        setLoggedInStatus(true);
+      }
+    });
+  }, []);
+
 
   return (
     <AuthContext.Provider value={authContext}>
@@ -46,13 +61,16 @@ export default function App() {
               headerShown: false,
             }}
           >
-            {loggedInStatus ? ( 
+            {loggedInStatus ? (
+              <>
               <Stack.Screen name="NavigationBar" component={NavigationBar} />
+              <Stack.Screen name="DisplayPlaylist" component={DisplayPlaylist} />
+              <Stack.Screen name="User" component={UserScreen} />
+              </>
             ) : (
               <Stack.Screen name="Login" component={LoginScreen} />
             )}
-              <Stack.Screen name="DisplayPlaylist" component={DisplayPlaylist} />
-              <Stack.Screen name="User" component={UserScreen} />
+  
           </Stack.Navigator>
         </NavigationContainer>
       </UserProvider>

@@ -1,4 +1,5 @@
 import { getAudioFeaturesOfSong } from "@src/utils/Queries";
+import * as SecureStore from "expo-secure-store"
 
 //function that returns average values of certain attributes from a users top 50 tracks
 //topTracks is an array of tracks
@@ -15,7 +16,6 @@ export async function getStatisticsFromTopSongs(topTracks) {
   var avgValence = 0;
   var avgPopularity = 0;
   for (var i = 0; i < topTracks.length; i++) {
-
     topTracksAttributes[i] = await getAudioFeaturesOfSong(topTracks[i].id);
     avgPopularity += topTracks[i].popularity;
     avgValence += topTracksAttributes[i].valence;

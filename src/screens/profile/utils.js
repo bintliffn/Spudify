@@ -56,6 +56,13 @@ export const styles = StyleSheet.create({
     width: windowWidth * 0.9,
     padding: 10,
   },
+  button: {
+    borderRadius: 50,
+    width: 211,
+    height: 80,
+    justifyContent: "center",
+    backgroundColor: "#1DB954",
+  },
   // emptyPlaylistContainer: {
   //   alignItems: "flex-start",
   //   justifyContent: "center",

@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   FlatList,
+  Alert,
 } from "react-native";
 import {
   getUserInfo,
@@ -19,6 +20,9 @@ import Song from "@src/components/DisplaySong/Song";
 import Artist from "@src/components/DisplayArtist/Artist";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
+import { getNewToken } from "@src/utils/RefreshToken";
+import { mdiCheckboxMultipleMarkedOutline, mdiSleep } from "@mdi/js";
+import * as SecureStore from "expo-secure-store";
 
 export default function Home({ navigation }) {
   //Variable to determine whether to display dahsboard or not
@@ -52,6 +56,7 @@ export default function Home({ navigation }) {
   const [displayText, setDisplayText] = React.useState("Loading...");
   //Store attributes of users top songs found from statistics method
   var attributes;
+  var tokenCounter;
 
   //Function to get the keyword to display for a statistical attribute based on it's numerical value
   //Takes in 5 keywords and the value of the attribute
@@ -187,22 +192,43 @@ export default function Home({ navigation }) {
       setDisplayText(
         "Error fetching info please ensure you are connected to the internet and restart the app"
       );
-      alert(error);
-      console.log(error.response.data);
       return;
     }
+  }
+
+  async function checkToken() {
+    const sleep = async () => await setTimeout(checkToken, 1000);
+    if (tokenCounter > 5) {
+      Alert.alert("Error logging in");
+      return;
+    }
+    SecureStore.getItemAsync("access_token").then((data) => {
+      if (data != null) {
+        if (tokenCounter == 0) {
+          getNewToken();
+          tokenCounter++;
+          sleep();
+        } else {
+          fetchData(1);
+        }
+      } else {
+        tokenCounter++;
+        sleep();
+      }
+    });
   }
 
   useFocusEffect(
     React.useCallback(() => {
       //only fetch recently and currently played data
-      fetchData(0);
+      //fetchData(0);
     }, [])
   );
 
   React.useEffect(() => {
     //fetch all data
-    fetchData(1);
+    tokenCounter = 0;
+    checkToken();
   }, []);
 
   return (

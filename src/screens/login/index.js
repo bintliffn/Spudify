@@ -7,7 +7,6 @@ import * as React from "react";
 import * as WebBrowser from "expo-web-browser";
 import * as SecureStore from "expo-secure-store";
 import { useFocusEffect } from "@react-navigation/native";
-import { getNewToken } from "@src/utils/RefreshToken";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import { SafeAreaView, Image, Text, View, LogBox } from "react-native";
 import { Button } from "react-native-paper";
@@ -34,13 +33,6 @@ function LoginScreen({ navigation }) {
 
     console.log(makeRedirectUri());
     promptAsync();
-  }
-
-  function logout() {
-    SecureStore.deleteItemAsync("access_token");
-    SecureStore.deleteItemAsync("refresh_token");
-    SecureStore.deleteItemAsync("token_expriration");
-    signIn(false)
   }
 
   const [request, response, promptAsync] = useAuthRequest(
@@ -107,7 +99,7 @@ function LoginScreen({ navigation }) {
           }
         })
         .catch((error) => {
-          console.log(error.response.data.message);
+          console.log(error);
         });
     }
   }, [response]);
@@ -118,7 +110,6 @@ function LoginScreen({ navigation }) {
       //if the accessToken is stored
       SecureStore.getItemAsync("access_token").then((data) => {
         if (data != null) {
-          getNewToken();
           signIn(true)
         }
       });
