@@ -3,15 +3,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DefaultTheme } from "react-native-paper";
 import { StatusBar } from "react-native";
-import { UserProvider } from "@src/components/contexts/UserProvider";
+import { UserProvider } from "@src/contexts/UserProvider";
 import { registerRootComponent } from "expo";
 import UserScreen from "@src/screens/UserScreen";
 import * as SecureStore from "expo-secure-store";
 
 // Screens
-import LoginScreen from "@src/screens/login";
-import NavigationBar from "@src/screens/navigation-bar";
-import DisplayPlaylist from "@src/screens/showPlaylistSongs";
+import LoginScreen from "@src/screens/Login";
+import NavigationBar from "@src/screens/Navigation-Bar";
+import DisplayPlaylist from "@src/screens/ShowPlaylistSongs";
 import Loading from "@src/screens/Loading";
 
 export const AuthContext = React.createContext();

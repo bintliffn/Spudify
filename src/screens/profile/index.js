@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { styles } from "./utils";
+import { styles } from "./profileStyles";
 import Playlist from "@src/components/DisplayPlaylist/Playlist";
 import { AuthContext } from "@src/App";
 import * as SecureStore from "expo-secure-store";

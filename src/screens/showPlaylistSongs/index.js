@@ -5,7 +5,7 @@ import { getRequestedPlaylist } from "../../utils/Queries";
 import { SafeAreaView, Text, View, FlatList } from "react-native";
 import Song from "@src/components/DisplaySong/Song";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { styles } from "../profile/utils";
+import { styles } from "../Profile/profileStyles";
 
 const DisplayPlaylist = ({ route, navigation }) => {
   const [display, setDisplay] = React.useState(false);

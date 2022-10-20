@@ -3,10 +3,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
 // Screens
-import Home from "@src/screens/home";
-import Recommend from "@src/screens/recommendations";
-import Songs from "@src/screens/songs";
-import Profile from "@src/screens/profile";
+import Home from "@src/screens/Home";
+import Recommend from "@src/screens/Recommendations";
+import Songs from "@src/screens/Songs";
+import Profile from "@src/screens/Profile";
 
 const Tab = createMaterialBottomTabNavigator();
 
