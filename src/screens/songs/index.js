@@ -73,6 +73,7 @@ export default function Songs({ navigation }) {
         showsVerticalScrollIndicator={false}
         directionalLockEnabled={true}
         nestedScrollEnabled={true}
+        contentContainerStyle={{ paddingBottom: 125 }}
       >
         <View style={[styles.parentView]}>
           <View style={[styles.view]}>
