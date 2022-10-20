@@ -1,5 +1,12 @@
 import * as React from "react";
-import { View, Text, SafeAreaView, FlatList, ScrollView, LogBox } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
+  ScrollView,
+  LogBox,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { styles } from "@src/screens/Songs/songStyles";
 import Song from "@src/components/DisplaySong/Song";
@@ -67,7 +74,7 @@ export default function Songs({ navigation }) {
         directionalLockEnabled={true}
         nestedScrollEnabled={true}
       >
-        <View>
+        <View style={[styles.parentView]}>
           <View style={[styles.view]}>
             <Text style={[styles.titleText]}>Top Songs</Text>
             <DropDownPicker
@@ -96,9 +103,7 @@ export default function Songs({ navigation }) {
                   }}
                 />
               </View>
-            ) : (
-              <Text style={{ color: "white", fontSize: 24 }}>Loading...</Text>
-            )}
+            ) : null}
           </View>
           <View style={[styles.view]}>
             <Text style={[styles.titleText]}>Top Artists</Text>
@@ -128,9 +133,7 @@ export default function Songs({ navigation }) {
                   }}
                 />
               </View>
-            ) : (
-              <Text style={{ color: "white", fontSize: 24 }}>Loading...</Text>
-            )}
+            ) : null}
           </View>
         </View>
       </ScrollView>
