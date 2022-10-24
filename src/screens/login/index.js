@@ -11,7 +11,7 @@ import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import { SafeAreaView, Image, Text, View, LogBox } from "react-native";
 import { Button } from "react-native-paper";
 import { styles } from "@src/screens/Login/loginStyles";
-import { AuthContext } from "@src/App"
+import { AuthContext } from "@src/App";
 
 const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
@@ -30,7 +30,6 @@ function LoginScreen({ navigation }) {
   };
 
   function login() {
-
     console.log(makeRedirectUri());
     promptAsync();
   }
@@ -45,6 +44,7 @@ function LoginScreen({ navigation }) {
         "user-read-recently-played",
         "user-top-read",
         "playlist-read-private",
+        "playlist-modify-private",
       ],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
@@ -57,7 +57,7 @@ function LoginScreen({ navigation }) {
   //when response variable changes run the code below to exchange authenication code for authentication token /refresh token
   React.useEffect(() => {
     if (response?.type === "success") {
-      signIn(true)
+      signIn(true);
       //retreive authentication code if user successfully logged in
       const { code } = response.params;
       //send post request using authentication code to get authentication token
@@ -91,10 +91,12 @@ function LoginScreen({ navigation }) {
               "token_expriration",
               JSON.stringify(response.data.expires_in)
             );
-            signIn(true)
+            signIn(true);
           } else {
             // res.send(response);
-            alert("Error signing in, Please ensure you are connected to the internet");
+            alert(
+              "Error signing in, Please ensure you are connected to the internet"
+            );
             console.log(response.data);
           }
         })
@@ -110,7 +112,7 @@ function LoginScreen({ navigation }) {
       //if the accessToken is stored
       SecureStore.getItemAsync("access_token").then((data) => {
         if (data != null) {
-          signIn(true)
+          signIn(true);
         }
       });
     }, [])
@@ -119,32 +121,32 @@ function LoginScreen({ navigation }) {
   // Ignores the warning for cycle between App.js --> login/index.js --> App.js
   // @TODO resolve error
   React.useEffect(() => {
-    LogBox.ignoreLogs(['Require cycle:']);
+    LogBox.ignoreLogs(["Require cycle:"]);
   }, []);
 
   /*display button
   when the button is pressed begin authentication process by calling promptAsync function*/
   return (
     <SafeAreaView>
-        <View style={[styles.view]}>
-          <Image
-            style={[styles.logo]}
-            source={require("@assets/spotify_logo.png")}
-          ></Image>
-          <Text style={[styles.titleText]}>Spudify</Text>
-          <Text style={[styles.bodyText]}>Login to start your journey!</Text>
-          <Button
-            title="login"
-            compact
-            mode="contained"
-            contentStyle={{ height: "100%" }}
-            uppercase={false}
-            style={[styles.button]}
-            onPress={() => login()}
-          >
-            <Text style={[styles.loginButtonText]}>Login</Text>
-          </Button>
-        </View>
+      <View style={[styles.view]}>
+        <Image
+          style={[styles.logo]}
+          source={require("@assets/spotify_logo.png")}
+        ></Image>
+        <Text style={[styles.titleText]}>Spudify</Text>
+        <Text style={[styles.bodyText]}>Login to start your journey!</Text>
+        <Button
+          title="login"
+          compact
+          mode="contained"
+          contentStyle={{ height: "100%" }}
+          uppercase={false}
+          style={[styles.button]}
+          onPress={() => login()}
+        >
+          <Text style={[styles.loginButtonText]}>Login</Text>
+        </Button>
+      </View>
     </SafeAreaView>
   );
 }

@@ -48,12 +48,12 @@ const Profile = ({ navigation }) => {
 
     const test2 = await getUserFollowing();
     setUserFollowing(test2.artists.total);
-
     const test3 = await getUserPlaylist();
     setUserPlaylists(test3.items);
+
     if (test3.total > 0) {
       setHasPlaylists(true);
-      for (let a = 0; a < test3.total; a++) {
+      for (let a = 0; a < test3.total && a < 20; a++) {
         if (test3.items[a].tracks.total > 0) {
           playlistTracksTotalTemp[a] = true;
         } else playlistTracksTotalTemp[a] = false;
@@ -78,12 +78,12 @@ const Profile = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style = {{flex : 1}}>
       {display ? (
-        <View>
+        <View style= {{flex : 1}}>
           <View style={[styles.upperProfileView]}>
             <Button
-              onPress={()=>logout()}
+              onPress={() => logout()}
               title="login"
               compact
               mode="contained"
@@ -115,7 +115,7 @@ const Profile = ({ navigation }) => {
             <Text style={[styles.followersText]}> Following </Text>
           </View>
           {hasPlaylists ? (
-            <View>
+            <View style = {{flex : 1}}>
               <Text style={[styles.playlistHeaderText]}>
                 {" "}
                 Spotify Playlists{" "}

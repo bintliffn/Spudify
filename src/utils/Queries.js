@@ -216,3 +216,50 @@ export async function getCurrentSongPlaying() {
   const dataPromise = promise.then((response) => response.data);
   return dataPromise;
 }
+
+//creates a playlist on a users account
+export async function createPlaylist(playlistName, userId){
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
+  const promise = axios({
+    method: "post",
+    url: `${baseURL}users/${userId}/playlists`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    data: {
+      name: `${playlistName}`,
+      description : "Playlist created by the Spudify App"
+    },
+  });
+
+  const dataPromise = promise.then((response) => response.data);
+  return dataPromise;
+}
+
+//function to add tracks to a playlist
+//must pass a playlistid to add the tracks to and a 
+//list of comma seperated track uris
+export async function addTracksToPlaylist(playlistId, tracks){
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
+  const promise = axios({
+    method: "post",  
+    url: `${baseURL}playlists/${playlistId}/tracks`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    data: {
+      position: 0, 
+      uris: tracks,
+    },
+  });
+  const dataPromise = promise.then((response) => response.data);
+  return dataPromise;
+}
