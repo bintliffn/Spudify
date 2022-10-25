@@ -73,6 +73,15 @@ export const styles = StyleSheet.create({
     borderColor: "#1DB954",
     borderWidth: 1,
   },
+  addplaylistButton: {
+    borderRadius: 40,
+    width: windowWidth * 0.5,
+    height: 40,
+    justifyContent: "center",
+    alignSelf: "center",
+    borderColor: "#1DB954",
+    borderWidth: 1,
+  },
   coverImage: {
     width: 60,
     height: 60,
@@ -120,5 +129,5 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 23,
     paddingLeft: 20,
-  },
+  }
 });

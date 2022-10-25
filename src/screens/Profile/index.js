@@ -82,15 +82,9 @@ const Profile = ({ navigation }) => {
       {display ? (
         <View style= {{flex : 1}}>
           <View style={[styles.upperProfileView]}>
-            <Button
-              onPress={() => logout()}
-              title="login"
-              compact
-              mode="contained"
-              contentStyle={{ height: "100%" }}
-              uppercase={false}
-              style={[styles.button]}
-            />
+          <TouchableHighlight onPress={() => logout()} style={[styles.button]}>
+            <Text style={[styles.buttonText]}>Logout</Text>
+          </TouchableHighlight>
             {hasProfilePic ? (
               <Image
                 style={[styles.profilepic]}

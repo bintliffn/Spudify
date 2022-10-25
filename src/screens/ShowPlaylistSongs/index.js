@@ -2,7 +2,14 @@
 //Can be used by both recommendations and profile screen
 import * as React from "react";
 import { getRequestedPlaylist } from "../../utils/Queries";
-import { SafeAreaView, Text, View, FlatList, Alert, TouchableHighlight } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  FlatList,
+  Alert,
+  TouchableHighlight,
+} from "react-native";
 import Song from "@src/components/DisplaySong/Song";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { styles } from "../Profile/profileStyles";
@@ -15,6 +22,7 @@ import {
 
 const DisplayPlaylist = ({ route, navigation }) => {
   const [display, setDisplay] = React.useState(false);
+  const [hideButton, setHideButton] = React.useState(false);
 
   const [requestedPlaylist, setRequestedPlaylist] = React.useState();
   //const [removeSong, setRemoveSong] = React.useState();
@@ -26,6 +34,7 @@ const DisplayPlaylist = ({ route, navigation }) => {
           route.params.playlistId
         );
         setRequestedPlaylist(requestedPlaylistResponse.tracks.items);
+        setHideButton(true);
       } else {
         setRequestedPlaylist(route.params.playlistSongs);
       }
@@ -38,24 +47,29 @@ const DisplayPlaylist = ({ route, navigation }) => {
   }
 
   async function addPlaylistToAccount(playlistName) {
+    setHideButton(true);
     try {
       var userInfoResponse = await getUserInfo();
       var userId = userInfoResponse.id;
       var createPlaylistResponse = await createPlaylist(playlistName, userId);
       var playlistId = createPlaylistResponse.id;
-      var songUris= requestedPlaylist;
-      for (var i = 0; i < songUris.length; i++) {
-        songUris[i]="spotify:track:" + requestedPlaylist[i].id;
+      var playlistCopy = {...requestedPlaylist};
+      var songUris = [];
+      for (var i = 0; i < requestedPlaylist.length; i++) {
+        songUris.push("spotify:track:" + playlistCopy[i].id);
       }
-      addTracksToPlaylist(playlistId, songUris);
+      addTracksToPlaylist(playlistId, songUris)
+      Alert.alert("Successfully added playlist to your Spotify account");
     } catch (error) {
       console.log(error);
-      Alert.alert("Error, please ensure you are connected to the internet and you have not already created a playlist with this name");
+      Alert.alert(
+        "Error, please ensure you are connected to the internet and you have not already created a playlist with this name"
+      );
     }
   }
 
   React.useEffect(() => {
-    loadPage(); 
+    loadPage();
   }, []);
 
   /*                         
@@ -84,30 +98,31 @@ const DisplayPlaylist = ({ route, navigation }) => {
               color="white"
               size={40}
               onPress={() => {
-                route.params.isUserPlaylist
-                  ? navigation.navigate("Profile")
-                  : navigation.navigate("Recommend");
+                   navigation.goBack()
               }}
             />
             <Text style={[styles.innerPlaylistSongsView]}>
               Songs in your playlist
             </Text>
           </View>
-          {route.params.isUserPlaylist ? 
-          (null):(<Button
-              onPress={()=>addPlaylistToAccount("Generated Spudify Playlist")}
-              title="add to spotify account"
-              compact
-              mode="contained"
-              contentStyle={{ height: "100%" }}
-              uppercase={false}
-              style={[styles.button]}
-            /> )
-          }
+          {hideButton ? null  : (
+            <View style={[styles.addPlaylistView]}>
+              <TouchableHighlight
+                onPress={() =>
+                  addPlaylistToAccount("Generated Spudify Playlist")
+                }
+                style={[styles.addplaylistButton]}
+              >
+                <Text style={[styles.buttonText]}>
+                  Add Playlist to your Spotify Account
+                </Text>
+              </TouchableHighlight>
+            </View>
+          )}
 
           <FlatList
             data={requestedPlaylist}
-            contentContainerStyle={{ paddingBottom: 125 }}
+            contentContainerStyle={{ paddingBottom: 200 }}
             renderItem={(item) => {
               return (
                 <TouchableHighlight>
