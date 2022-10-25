@@ -121,7 +121,6 @@ export async function getRecommendationsAdvanced(jsonBody) {
 //Returns information about a user such as their username/ number of followers/ profile image if they have one
 //More info here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-current-users-profile
 export async function getUserInfo() {
-
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
@@ -139,9 +138,8 @@ export async function getUserInfo() {
 }
 
 //returns info about what artists the user is following and how many artists the user follows
-//More infor about response here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-followed
+//More info about response here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-followed
 export async function getUserFollowing() {
-
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
@@ -161,8 +159,9 @@ export async function getUserFollowing() {
   return dataPromise;
 }
 
+//returns array of playlists that the artist follows or created
+//More info about response here https://developer.spotify.com/documentation/web-api/reference/#/operations/get-a-list-of-current-users-playlists
 export async function getUserPlaylist() {
-
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
@@ -179,8 +178,9 @@ export async function getUserPlaylist() {
   return dataPromise;
 }
 
+//returns the requested playlist by the id of a playlist
+//More info about response here: https://developer.spotify.com/documentation/web-api/reference/#/operations/get-playlist
 export async function getRequestedPlaylist(playlist_id) {
-
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
@@ -208,6 +208,25 @@ export async function getCurrentSongPlaying() {
   const promise = axios({
     method: "get",
     url: `${baseURL}me/player/currently-playing`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+  const dataPromise = promise.then((response) => response.data);
+  return dataPromise;
+}
+
+//deletes items such as songs from a user's playlist by the requested id
+//More info about response here: https://developer.spotify.com/documentation/web-api/reference/#/operations/add-tracks-to-playlist
+export async function removeSongsToPlaylist(playlist_id) {
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
+  const promise = axios({
+    method: "delete",
+    url: `${baseURL}playlists/${playlist_id}/tracks`,
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,

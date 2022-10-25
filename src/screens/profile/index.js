@@ -18,7 +18,6 @@ import { styles } from "./utils";
 import Playlist from "@src/components/DisplayPlaylist/Playlist";
 import { AuthContext } from "@src/App";
 import * as SecureStore from "expo-secure-store";
-import { Button } from "react-native-paper";
 
 const Profile = ({ navigation }) => {
   const playlistTracksTotalTemp = new Array();
@@ -81,16 +80,11 @@ const Profile = ({ navigation }) => {
     <SafeAreaView>
       {display ? (
         <View>
+          <TouchableHighlight onPress={() => logout()} style={[styles.button]}>
+            <Text style={[styles.buttonText]}>Logout</Text>
+          </TouchableHighlight>
+
           <View style={[styles.upperProfileView]}>
-            <Button
-              onPress={()=>logout()}
-              title="login"
-              compact
-              mode="contained"
-              contentStyle={{ height: "100%" }}
-              uppercase={false}
-              style={[styles.button]}
-            />
             {hasProfilePic ? (
               <Image
                 style={[styles.profilepic]}
