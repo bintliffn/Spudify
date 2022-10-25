@@ -2,7 +2,7 @@
 //Can be used by both recommendations and profile screen
 import * as React from "react";
 import { getRequestedPlaylist } from "../../utils/Queries";
-import { SafeAreaView, Text, View, FlatList, Alert } from "react-native";
+import { SafeAreaView, Text, View, FlatList, Alert, TouchableHighlight } from "react-native";
 import Song from "@src/components/DisplaySong/Song";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { styles } from "../Profile/profileStyles";

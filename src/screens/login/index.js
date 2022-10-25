@@ -45,6 +45,7 @@ function LoginScreen({ navigation }) {
         "user-top-read",
         "playlist-read-private",
         "playlist-modify-private",
+        "playlist-modify-public"
       ],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
