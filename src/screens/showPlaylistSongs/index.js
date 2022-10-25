@@ -17,6 +17,7 @@ const DisplayPlaylist = ({ route, navigation }) => {
   const [display, setDisplay] = React.useState(false);
 
   const [requestedPlaylist, setRequestedPlaylist] = React.useState();
+  //const [removeSong, setRemoveSong] = React.useState();
 
   async function loadPage() {
     try {
@@ -57,6 +58,22 @@ const DisplayPlaylist = ({ route, navigation }) => {
     loadPage(); 
   }, []);
 
+  /*                         
+                          1.need id for add and remove song function 
+                                  probably add functions to showPlaylistSongs screen
+                          2.only can affect USER'S playlist not ones made by others
+                          3.have to differentiate from users and followed playlist
+                          
+                          3.5 NOTE: Prob want function to work for generated playlists as well 
+                          but probably wont work unless add playlist to user's account works
+
+                          4.track/song identification uses uri's which is unknown to user's 
+                          and we dont have a search/display songs that user's can search 
+                          for wanted songs
+                          4.5 remove songs we can do but add is different 
+
+                          */
+  // console.log(removeSong);
   return (
     <SafeAreaView>
       {display ? (
@@ -93,9 +110,17 @@ const DisplayPlaylist = ({ route, navigation }) => {
             contentContainerStyle={{ paddingBottom: 125 }}
             renderItem={(item) => {
               return (
-                <View style={[styles.container]}>
-                  <Song SingleJsonSong={route.params.isUserPlaylist? item.item.track : item.item} />
-                </View>
+                <TouchableHighlight>
+                  <View style={[styles.container]}>
+                    <Song
+                      SingleJsonSong={
+                        route.params.isUserPlaylist
+                          ? item.item.track
+                          : item.item
+                      }
+                    />
+                  </View>
+                </TouchableHighlight>
               );
             }}
           />
