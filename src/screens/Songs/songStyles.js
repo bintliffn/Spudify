@@ -15,9 +15,6 @@ export const styles = StyleSheet.create({
   parentView: {
     height: windowHeight
   },
-  parentView :{
-    height : windowHeight
-  },
   view: {
     flexDirection: "row",
     alignItems: "center",
@@ -37,6 +34,12 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 10,
+    maxHeight: 360
+  },
+  buttonView: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   titleText: {
     color: "#FFFFFF",
@@ -61,5 +64,8 @@ export const styles = StyleSheet.create({
     color: "#1DB954",
     fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     fontSize: 12,
+  },
+  button: {
+    width: 150
   },
 });
