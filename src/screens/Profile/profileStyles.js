@@ -10,6 +10,14 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingTop: 25,
   },
+  buttonText: {
+    color: "#1DB954",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlignVertical: "center",
+    textAlign: "center",
+  },
   profilepic: {
     width: 100,
     height: 100,
@@ -57,29 +65,23 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    borderRadius: 50,
-    width: 211,
-    height: 80,
+    borderRadius: 40,
+    width: windowWidth * 0.35,
+    height: 40,
     justifyContent: "center",
-    backgroundColor: "#1DB954",
+    alignSelf: "flex-end",
+    borderColor: "#1DB954",
+    borderWidth: 1,
   },
-  // emptyPlaylistContainer: {
-  //   alignItems: "flex-start",
-  //   justifyContent: "center",
-  //   flexDirection: "column",
-  //   flex: 1,
-  //   paddingLeft: 20,
-  // },
-  // emptyPlaylistUpperText: {
-  //   color: "white",
-  //   fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
-  //   fontSize: 20,
-  //   paddingRight: 20,
-  // },
-  // emptyPlaylistLowerText: {
-  //   color: "white",
-  //   fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
-  // },
+  addplaylistButton: {
+    borderRadius: 40,
+    width: windowWidth * 0.5,
+    height: 40,
+    justifyContent: "center",
+    alignSelf: "center",
+    borderColor: "#1DB954",
+    borderWidth: 1,
+  },
   coverImage: {
     width: 60,
     height: 60,
@@ -127,5 +129,5 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 23,
     paddingLeft: 20,
-  },
+  }
 });
