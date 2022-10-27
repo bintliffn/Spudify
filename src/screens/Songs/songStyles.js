@@ -12,6 +12,9 @@ export const styles = StyleSheet.create({
     width: windowWidth * 0.95,
     height: windowHeight
   },
+  scrollView: {
+    paddingBottom: windowHeight * .25
+  },
   parentView: {
     height: windowHeight
   },
@@ -64,10 +67,12 @@ export const styles = StyleSheet.create({
     color: "#1DB954",
     fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     fontSize: 12,
+    fontWeight : "bold",
   },
   buttonText: {
     color: "#1DB954",
     fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     fontSize: 12,
+    fontWeight : "bold",
   },
 });
