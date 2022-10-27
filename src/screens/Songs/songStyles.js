@@ -65,7 +65,9 @@ export const styles = StyleSheet.create({
     fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     fontSize: 12,
   },
-  button: {
-    width: 150
+  buttonText: {
+    color: "#1DB954",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontSize: 12,
   },
 });

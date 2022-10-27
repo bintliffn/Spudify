@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   LogBox,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { Button } from "react-native-paper";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -20,6 +21,9 @@ const dropdownItems = [
   { label: "Last 6 Months", value: "medium_term" },
   { label: "All Time", value: "long_term" },
 ];
+
+// Background color for the show more/less buttons
+const btnColor = "#191414";
 
 export default function Songs({ navigation }) {
   // useStates for top songs and artists dropdowns
@@ -96,96 +100,121 @@ export default function Songs({ navigation }) {
         nestedScrollEnabled={true}
         contentContainerStyle={{ paddingBottom: 100 }}
       >
-        <View style={[styles.parentView]}>
-          <View style={[styles.view]}>
-            <Text style={[styles.titleText]}>Top Songs</Text>
-            <DropDownPicker
-              open={songsOpen}
-              value={songsValue}
-              items={items}
-              setOpen={setSongsOpen}
-              setValue={setSongsValue}
-              setItems={setItems}
-              style={[styles.selectDropdown]}
-              dropDownContainerStyle={[styles.dropdownContainer]}
-              textStyle={[styles.dropdownText]}
-              listMode="SCROLLVIEW"
-              scrollViewProps={{
-                nestedScrollEnabled: true,
-              }}
-            />
-          </View>
-          <View style={[styles.dataView]}>
-            {topSongsLoaded ? (
-              <View style={[styles.songOrArtistView]}>
-                <FlatList
-                  data={topSongs}
-                  showsVerticalScrollIndicator={false}
-                  renderItem={(item) => {
-                    return <Song SingleJsonSong={item.item} />;
-                  }}
-                />
-              </View>
-            ) : null}
-          </View>
-          <View style={[styles.buttonView]}>
-            <Button style={[styles.button]} onPress={loadMoreSongs} mode={"outlined"}>
-              Load More +
-            </Button>
-            {songsQuantity > 5 ? (
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setSongsOpen(false);
+            setArtistsOpen(false);
+          }}
+        >
+          <View style={[styles.parentView]}>
+            <View style={[styles.view]}>
+              <Text style={[styles.titleText]}>Top Songs</Text>
+              <DropDownPicker
+                open={songsOpen}
+                value={songsValue}
+                items={items}
+                setOpen={setSongsOpen}
+                setValue={setSongsValue}
+                setItems={setItems}
+                style={[styles.selectDropdown]}
+                dropDownContainerStyle={[styles.dropdownContainer]}
+                textStyle={[styles.dropdownText]}
+                listMode="SCROLLVIEW"
+                scrollViewProps={{
+                  nestedScrollEnabled: true,
+                }}
+              />
+            </View>
+            <View style={[styles.dataView]}>
+              {topSongsLoaded ? (
+                <View style={[styles.songOrArtistView]}>
+                  <FlatList
+                    data={topSongs}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={(item) => {
+                      return <Song SingleJsonSong={item.item} />;
+                    }}
+                  />
+                </View>
+              ) : null}
+            </View>
+            <View style={[styles.buttonView]}>
               <Button
-                style={[styles.button]}
-                onPress={() => setSongsQuantity(5)}
+                labelStyle={[styles.buttonText]}
+                color={btnColor}
+                compact={true}
+                mode={"text"}
+                onPress={loadMoreSongs}
               >
-                Show Less
+                Load More
               </Button>
-            ) : null}
-          </View>
-          <View style={[styles.view]}>
-            <Text style={[styles.titleText]}>Top Artists</Text>
-            <DropDownPicker
-              open={artistsOpen}
-              value={artistsValue}
-              items={items}
-              setOpen={setArtistsOpen}
-              setValue={setArtistsValue}
-              setItems={setItems}
-              style={[styles.selectDropdown]}
-              dropDownContainerStyle={[styles.dropdownContainer]}
-              textStyle={[styles.dropdownText]}
-              listMode="SCROLLVIEW"
-              scrollViewProps={{
-                nestedScrollEnabled: true,
-              }}
-            />
-          </View>
-          <View style={[styles.dataView]}>
-            {topArtistsLoaded ? (
-              <View style={[styles.songOrArtistView]}>
-                <FlatList
-                  data={topArtists}
-                  showsVerticalScrollIndicator={false}
-                  renderItem={(item) => {
-                    return <Artist SingleJsonArtist={item.item} />;
-                  }}
-                />
-              </View>
-            ) : null}
-          </View>
-          <View style={[styles.buttonView]}>
-            <Button style={[styles.button]} onPress={loadMoreArtists}>
-              Load More +
-            </Button>
-            {artistsQuantity > 5 ? (
+              {songsQuantity > 5 ? (
+                <Button
+                  labelStyle={[styles.buttonText]}
+                  color={btnColor}
+                  compact={true}
+                  mode={"text"}
+                  onPress={() => setSongsQuantity(5)}
+                >
+                  Show Less
+                </Button>
+              ) : null}
+            </View>
+            <View style={[styles.view]}>
+              <Text style={[styles.titleText]}>Top Artists</Text>
+              <DropDownPicker
+                open={artistsOpen}
+                value={artistsValue}
+                items={items}
+                setOpen={setArtistsOpen}
+                setValue={setArtistsValue}
+                setItems={setItems}
+                style={[styles.selectDropdown]}
+                dropDownContainerStyle={[styles.dropdownContainer]}
+                textStyle={[styles.dropdownText]}
+                listMode="SCROLLVIEW"
+                scrollViewProps={{
+                  nestedScrollEnabled: true,
+                }}
+              />
+            </View>
+            <View style={[styles.dataView]}>
+              {topArtistsLoaded ? (
+                <View style={[styles.songOrArtistView]}>
+                  <FlatList
+                    data={topArtists}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={(item) => {
+                      return <Artist SingleJsonArtist={item.item} />;
+                    }}
+                  />
+                </View>
+              ) : null}
+            </View>
+            <View style={[styles.buttonView]}>
               <Button
-                style={[styles.button]}
-                onPress={() => setArtistsQuantity(5)}
+                labelStyle={[styles.buttonText]}
+                color={btnColor}
+                compact={true}
+                mode={"text"}
+                onPress={loadMoreArtists}
               >
-                Show Less
+                Load More
               </Button>
-            ) : null}
+              {artistsQuantity > 5 ? (
+                <Button
+                  labelStyle={[styles.buttonText]}
+                  color={btnColor}
+                  compact={true}
+                  mode={"text"}
+                  onPress={() => setArtistsQuantity(5)}
+                >
+                  Show Less
+                </Button>
+              ) : null}
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </ScrollView>
     </SafeAreaView>
   );
