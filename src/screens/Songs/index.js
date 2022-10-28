@@ -1,17 +1,8 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  FlatList,
-  ScrollView,
-  LogBox,
-} from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import { View, SafeAreaView, ScrollView, LogBox } from "react-native";
 import { styles } from "@src/screens/Songs/songStyles";
-import Song from "@src/components/DisplaySong/Song";
 import { getTopArtistsOrTracks } from "@src/utils/Queries";
-import Artist from "@src/components/DisplayArtist/Artist";
+import Top from "@src/components/DisplayTop/Top";
 
 // Options for the 2 dropdown selectors for time range
 const dropdownItems = [
@@ -21,12 +12,16 @@ const dropdownItems = [
 ];
 
 export default function Songs({ navigation }) {
-  // useStates for top songs dropdown
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("short_term");
+  // useStates for top songs and artists dropdowns
+  const [songsOpen, setSongsOpen] = React.useState(false);
+  const [songsValue, setSongsValue] = React.useState("short_term");
   const [items, setItems] = React.useState(dropdownItems);
   const [artistsOpen, setArtistsOpen] = React.useState(false);
   const [artistsValue, setArtistsValue] = React.useState("short_term");
+
+  // useStates for how many songs and artists to display
+  const [songsQuantity, setSongsQuantity] = React.useState(5);
+  const [artistsQuantity, setArtistsQuantity] = React.useState(5);
 
   // useStates to hold the top songs/artists data and for ensuring data is loaded
   const [topArtists, setTopArtists] = React.useState();
@@ -40,8 +35,12 @@ export default function Songs({ navigation }) {
    * @returns doesn't return anything, sets the state of topSongs/topArtists
    * to the data returned from the query
    */
-  async function fetchData(artistsOrTracks, time_range) {
-    const data = await getTopArtistsOrTracks(artistsOrTracks, time_range, 5);
+  async function fetchData(artistsOrTracks, time_range, quantity) {
+    const data = await getTopArtistsOrTracks(
+      artistsOrTracks,
+      time_range,
+      quantity
+    );
     if (artistsOrTracks === "tracks") {
       setTopSongs(data);
       setTopSongsLoaded(true);
@@ -51,14 +50,26 @@ export default function Songs({ navigation }) {
     }
   }
 
-  React.useEffect(() => {
-    // Calls async function to get data from the Spotify API for user's top songs
-    fetchData("tracks", value);
-  }, [value]);
+  const loadMoreSongs = () => {
+    if (songsQuantity <= 45) {
+      setSongsQuantity(songsQuantity + 5);
+    }
+  };
 
+  const loadMoreArtists = () => {
+    if (artistsQuantity <= 45) {
+      setArtistsQuantity(artistsQuantity + 5);
+    }
+  };
+
+  // Calls async function to get data from the Spotify API for user's top songs on page load and when the time frame changes
   React.useEffect(() => {
-    // Calls async function to get data from the Spotify API for user's top artists
-    fetchData("artists", artistsValue);
+    fetchData("tracks", songsValue, 50);
+  }, [songsValue]);
+
+  // Calls async function to get data from the Spotify API for user's top artists on page load and when the time frame changes
+  React.useEffect(() => {
+    fetchData("artists", artistsValue, 50);
   }, [artistsValue]);
 
   // Ignores the virtualized lists error with scroll view and flatlist
@@ -73,69 +84,39 @@ export default function Songs({ navigation }) {
         showsVerticalScrollIndicator={false}
         directionalLockEnabled={true}
         nestedScrollEnabled={true}
-        contentContainerStyle={{ paddingBottom: 125 }}
+        contentContainerStyle={[styles.scrollView]}
       >
         <View style={[styles.parentView]}>
-          <View style={[styles.view]}>
-            <Text style={[styles.titleText]}>Top Songs</Text>
-            <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-              style={[styles.selectDropdown]}
-              dropDownContainerStyle={[styles.dropdownContainer]}
-              textStyle={[styles.dropdownText]}
-              listMode="SCROLLVIEW"
-              scrollViewProps={{
-                nestedScrollEnabled: true,
-              }}
-            />
-          </View>
-          <View style={[styles.dataView]}>
-            {topSongsLoaded ? (
-              <View style={[styles.songOrArtistView]}>
-                <FlatList
-                  data={topSongs}
-                  renderItem={(item) => {
-                    return <Song SingleJsonSong={item.item} />;
-                  }}
-                />
-              </View>
-            ) : null}
-          </View>
-          <View style={[styles.view]}>
-            <Text style={[styles.titleText]}>Top Artists</Text>
-            <DropDownPicker
-              open={artistsOpen}
-              value={artistsValue}
-              items={items}
-              setOpen={setArtistsOpen}
-              setValue={setArtistsValue}
-              setItems={setItems}
-              style={[styles.selectDropdown]}
-              dropDownContainerStyle={[styles.dropdownContainer]}
-              textStyle={[styles.dropdownText]}
-              listMode="SCROLLVIEW"
-              scrollViewProps={{
-                nestedScrollEnabled: true,
-              }}
-            />
-          </View>
-          <View style={[styles.dataView]}>
-            {topArtistsLoaded ? (
-              <View style={[styles.songOrArtistView]}>
-                <FlatList
-                  data={topArtists}
-                  renderItem={(item) => {
-                    return <Artist SingleJsonArtist={item.item} />;
-                  }}
-                />
-              </View>
-            ) : null}
-          </View>
+          <Top
+            title={"Top Songs"}
+            type={"songs"}
+            open={songsOpen}
+            value={songsValue}
+            items={items}
+            setOpen={setSongsOpen}
+            setValue={setSongsValue}
+            setItems={setItems}
+            loaded={topSongsLoaded}
+            data={topSongs}
+            loadMore={loadMoreSongs}
+            quantity={songsQuantity}
+            setQuantity={setSongsQuantity}
+          ></Top>
+          <Top
+            title={"Top Artists"}
+            type={"artists"}
+            open={artistsOpen}
+            value={artistsValue}
+            items={items}
+            setOpen={setArtistsOpen}
+            setValue={setArtistsValue}
+            setItems={setItems}
+            loaded={topArtistsLoaded}
+            data={topArtists}
+            loadMore={loadMoreArtists}
+            quantity={artistsQuantity}
+            setQuantity={setArtistsQuantity}
+          ></Top>
         </View>
       </ScrollView>
     </SafeAreaView>
