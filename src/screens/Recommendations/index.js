@@ -152,7 +152,12 @@ export default function Playlists({ navigation }) {
           Generate a curated recommendation playlist using your top spotify
           artists or songs!
         </Text>
-        <View style={[styles.buffer]} />
+        <TouchableOpacity
+            style={[styles.button]}
+            onPress={() => navigation.navigate("AdvancedRecommendations")}
+          >
+            <Text style={[styles.buttonText]}>Generate adancced recommendations</Text>
+          </TouchableOpacity>
         <View style={[styles.rowView]}>
           <View style={[styles.rowTextView]}>
             <Text style={[styles.bodyText]}>Highly Danceable</Text>
