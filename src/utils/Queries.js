@@ -263,3 +263,27 @@ export async function addTracksToPlaylist(playlistId, tracks){
   const dataPromise = promise.then((response) => response.data);
   return dataPromise;
 }
+
+//function to search for items in spotify's database
+//must pass in a valid item type ex (album,artist,track,genre)
+//response type is responseobject.itemType.items (this is the array of returned results)
+export async function searchForItems(itemType, itemValue) {
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
+  const promise = axios({
+    method: "get",
+    url: `${baseURL}search`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    params: {
+      q: itemType+":"+itemValue,
+      type: itemType
+    },
+  });
+  const dataPromise = promise.then((response) => response.data);
+  return dataPromise;
+}
