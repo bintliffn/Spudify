@@ -10,20 +10,28 @@ import {
 import { Searchbar } from "react-native-paper";
 import DropDownPicker from "react-native-dropdown-picker";
 import { styles } from "@src/components/SearchBar/SearchBarStyles";
-import { searchForItems } from "@src/utils/Queries";
+import { searchForItems, getGenres } from "@src/utils/Queries";
 import Song from "@src/components/DisplaySong/Song";
 import Artist from "@src/components/DisplayArtist/Artist";
 
-function SearchBar({ queryType }) {
+function SearchBar({ handleValue }) {
+  //Array that stores results from search query
   const [results, setResults] = React.useState([]);
+  //Array that stores available genres
+  const [genres, setGenres] = React.useState([]);
+  //Array that stores all selected items (max of 5)
   const [selectedItems, setSelectedItems] = React.useState([]);
+  //comma seperated list of respective tracks, artists, or genres
   const [selectedTracks, setSelectedTracks] = React.useState("");
   const [selectedArtists, setSelectedArtists] = React.useState("");
   const [selectedGenres, setSelectedGenres] = React.useState("");
 
+  //String that stores the search query inputted by the user
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [displaySongs, setDisplaySongs] = React.useState(true);
+  //Boolean value to decide whether to render songs or artists in the flatlist
+  const [displayItemType, setDisplayItemType] = React.useState("track");
 
+  //options displayed in the dropdown picker
   const dropdownItems = [
     { label: "Tracks", value: "track" },
     { label: "Artists", value: "artist" },
@@ -35,46 +43,59 @@ function SearchBar({ queryType }) {
   const [value, setValue] = React.useState("track");
   const [items, setItems] = React.useState(dropdownItems);
 
+  //function to search for something using spotifys API
   async function search(query) {
     var itemsReturned = await searchForItems(value, query);
     if (value == "track") {
       setResults(itemsReturned.tracks.items);
     } else if (value == "artist") {
       setResults(itemsReturned.artists.items);
-    } else {
-      setResults(itemsReturned.genres.items);
     }
   }
 
+  //function to retreive genres
+  async function retrieveGenres() {
+    var genresResponse = await getGenres();
+    setGenres(genresResponse.genres);
+  }
+
+  function passValueUp(seedName, value) {
+    let attributeValuePair = {};
+    attributeValuePair[seedName] = value;
+    handleValue(attributeValuePair);
+  }
+
+  //function to update query when user input changes
   const onChangeSearch = (query) => {
     setSearchQuery(query);
   };
 
-  //for testing
+  //use effect that gets genres when page is first loaded
   React.useEffect(() => {
-    console.log(selectedItems);
-  }, [selectedItems]);
+    retrieveGenres();
+  }, []);
 
-  //for testing
-  React.useEffect(() => {
-    console.log(selectedTracks);
-  }, [selectedTracks]);
-
+  //use effect that resets the flatlist when the dropdown value changes
   React.useEffect(() => {
     setResults([]);
   }, [value]);
 
+  //use effect that toggles whether the flatlist displays songs or artists when the results array resets
   React.useEffect(() => {
     if (value == "track") {
-      setDisplaySongs(true);
+      setDisplayItemType("track");
+    } else if (value == "artist") {
+      setDisplayItemType("artist");
     } else {
-      setDisplaySongs(false);
+      setResults(genres);
+      setDisplayItemType("genre");
     }
   }, [results]);
 
+  // use effect that adds values to the respective string when an item is added to the selectedItems array
   React.useEffect(() => {
-    if(selectedItems.length == 0){
-        return;
+    if (selectedItems.length == 0) {
+      return;
     }
     if (value == "track") {
       setSelectedTracks(
@@ -85,11 +106,23 @@ function SearchBar({ queryType }) {
         selectedArtists + selectedItems[selectedItems.length - 1] + ","
       );
     } else {
-      setSelectedTracks(
+      setSelectedGenres(
         selectedGenres + selectedItems[selectedItems.length - 1] + ","
       );
     }
   }, [selectedItems]);
+
+  React.useEffect(() => {
+    passValueUp("seed_tracks", selectedTracks);
+  }, [selectedTracks]);
+
+  React.useEffect(() => {
+    passValueUp("seed_artists", selectedArtists);
+  }, [selectedArtists]);
+
+  React.useEffect(() => {
+    passValueUp("seed_genres", selectedGenres);
+  }, [selectedGenres]);
 
   return (
     <SafeAreaView style={[styles.masterView]}>
@@ -108,21 +141,27 @@ function SearchBar({ queryType }) {
           nestedScrollEnabled: true,
         }}
       />
-      <Searchbar
-        placeholder={"Search for a " + value}
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-      />
-      <View style={[styles.buffer]} />
-      <TouchableHighlight
-        onPress={() => {
-          search(searchQuery);
-          Alert.alert("Searching for " + value);
-        }}
-        style={[styles.addplaylistButton]}
-      >
-        <Text style={[styles.buttonText]}>Search for {value}</Text>
-      </TouchableHighlight>
+      {displayItemType == "genre" ? (
+        <View />
+      ) : (
+        <>
+          <Searchbar
+            placeholder={"Search for a " + value}
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+          />
+          <View style={[styles.buffer]} />
+          <TouchableHighlight
+            onPress={() => {
+              search(searchQuery);
+              Alert.alert("Searching for " + value);
+            }}
+            style={[styles.addplaylistButton]}
+          >
+            <Text style={[styles.buttonText]}>Search for {value}</Text>
+          </TouchableHighlight>
+        </>
+      )}
       <View style={[styles.buffer]} />
       <FlatList
         data={results}
@@ -133,18 +172,30 @@ function SearchBar({ queryType }) {
             <View style={[styles.container]}>
               <TouchableHighlight
                 onPress={() => {
-                  if (selectedItems.length < 5) {
+                  if (selectedItems.length < 5 && displayItemType != "genre") {
                     setSelectedItems([...selectedItems, item.item.id]);
+                    Alert.alert("Added item to search");
+                  } else if (
+                    selectedItems.length < 5 &&
+                    displayItemType == "genre"
+                  ) {
+                    setSelectedItems([...selectedItems, item.item]);
                     Alert.alert("Added item to search");
                   } else {
                     Alert.alert("Cannot have more than 5 items in a search");
                   }
                 }}
               >
-                {displaySongs == true ? (
+                {displayItemType == "track" ? (
                   <Song SingleJsonSong={item.item} />
                 ) : (
-                  <Artist SingleJsonArtist={item.item} />
+                  <>
+                    {displayItemType == "artist" ? (
+                      <Artist SingleJsonArtist={item.item} />
+                    ) : (
+                      <Text style={styles.bodyText}> {item.item} </Text>
+                    )}
+                  </>
                 )}
               </TouchableHighlight>
             </View>

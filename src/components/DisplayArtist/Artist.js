@@ -8,20 +8,27 @@ import { styles } from "@src/components/DisplayArtist/ArtistStyles";
 function Artist({ SingleJsonArtist }) {
   //extract the song name, album name, and artist name for a track
   let artistName = SingleJsonArtist.name;
+  const [artistImageUrl, setArtistImageUrl] = React.useState("");
 
-  //extract album cover image of 320 x 320 size ( for higher resolution)
-  let artistImageUrl = SingleJsonArtist.images[1].url;
+  React.useEffect(() => {
+    //extract album cover image of 320 x 320 size ( for higher resolution)
+    try {
+      setArtistImageUrl(SingleJsonArtist.images[1].url);
+    } catch (error) {}
+  }, []);
 
   return (
     <SafeAreaView style={[styles.safeView]}>
       <Image
         style={[styles.image]}
-        source={{
-          uri: artistImageUrl,
-        }}
+        source={
+          artistImageUrl === ""
+            ? require("@root/assets/poggies.gif")
+            : { uri: `${artistImageUrl}` }
+        }
       />
       <View style={[styles.artistNameView]}>
-      <Text style={[styles.artistText]}>{artistName}</Text>
+        <Text style={[styles.artistText]}>{artistName}</Text>
       </View>
     </SafeAreaView>
   );

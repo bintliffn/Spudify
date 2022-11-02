@@ -17,10 +17,17 @@ export default function Home({ navigation }) {
   const [display, setDisplay] = React.useState(false);
   const [queryNumValues, setQueryNumValues] = React.useState({});
 
-  handleAttributeValue = (attributePlusValue) => {
+  const handleAttributeValue = (attributePlusValue) => {
     setQueryNumValues((queryNumValues) => ({
       ...queryNumValues,
       ...attributePlusValue,
+    }));
+  };
+
+  const handleSeedValue = (seedPlusValue) => {
+    setQueryNumValues((queryNumValues) => ({
+      ...queryNumValues,
+      ...seedPlusValue,
     }));
   };
 
@@ -29,13 +36,14 @@ export default function Home({ navigation }) {
   }, []);
 
 
+
   return (
     <SafeAreaView >
       <ScrollView>
         {display ? (
           <>
             <View style={[styles.searchBarView]}>
-              <SearchBar queryType={"track"}/>
+              <SearchBar handleValue={handleSeedValue}/>
             </View>
             <View style={[styles.masterView]}>
             <TextSlider

@@ -6,11 +6,12 @@ const windowHeight = Dimensions.get("window").height;
 export const styles = StyleSheet.create({
   flatList: {
     paddingBottom: 20,
+    alignItems : "center"
   },
   container: {
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row",
+    //flexDirection: "row",
     height: 70,
     width: windowWidth * .9,
     padding: 15,
@@ -40,6 +41,11 @@ export const styles = StyleSheet.create({
   buffer: {
     width : "100%",
     height : 10
-
-  }
+  },
+  bodyText: {
+    color: "#FFFFFF",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontSize: 20,
+    paddingBottom: 10,
+  },
 });

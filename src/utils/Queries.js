@@ -287,3 +287,21 @@ export async function searchForItems(itemType, itemValue) {
   const dataPromise = promise.then((response) => response.data);
   return dataPromise;
 }
+
+//function to search for valid genres in spotify's databse
+export async function getGenres() {
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
+  const promise = axios({
+    method: "get",
+    url: `${baseURL}recommendations/available-genre-seeds`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+  const dataPromise = promise.then((response) => response.data);
+  return dataPromise;
+}
