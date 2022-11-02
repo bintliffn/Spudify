@@ -14,7 +14,6 @@ function TextSlider({
   const [sliderValue, setSliderValue] = React.useState(50);
 
   function passValueUp(value) {
-    console.log(value)
     let attributeValuePair = {}
     attributeValuePair[attributeName] = value[0]
     setSliderValue(value);

@@ -11,6 +11,7 @@ import React from "react";
 import { TextInput } from "react-native-paper";
 import TextSlider from "@src/components/Slider/Slider";
 import { styles } from "@src/screens/AdvancedRecommendations/advancedRecommendationsStyles";
+import SearchBar from "@src/components/SearchBar/SearchBar";
 
 export default function Home({ navigation }) {
   const [display, setDisplay] = React.useState(false);
@@ -27,15 +28,16 @@ export default function Home({ navigation }) {
     setDisplay(true);
   }, []);
 
-  React.useEffect(() => {
-    console.log(queryNumValues);
-  }, [queryNumValues]);
 
   return (
-    <SafeAreaView style={[styles.masterView]}>
+    <SafeAreaView >
       <ScrollView>
         {display ? (
           <>
+            <View style={[styles.searchBarView]}>
+              <SearchBar queryType={"track"}/>
+            </View>
+            <View style={[styles.masterView]}>
             <TextSlider
               sliderText={"Target Danceability"}
               step={1}
@@ -108,6 +110,7 @@ export default function Home({ navigation }) {
               attributeName={"target_duration"}
               handleValue={handleAttributeValue}
             />
+            </View>
           </>
         ) : null}
       </ScrollView>

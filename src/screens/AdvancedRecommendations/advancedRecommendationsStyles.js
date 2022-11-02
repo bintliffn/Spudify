@@ -9,12 +9,13 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flex: 1,
   },
-  sliderView: {
-    alignItems: "stretch",
-    width: windowWidth * 0.9,
+  searchBarView : {
+    width: windowWidth * 1,
+    alignItems : "center",
+    justifyContent: "center"
   },
   textInput: {
-    width: windowWidth * 0.9,
+    width: "100%",
     padding: 0,
   },
   bodyText: {
