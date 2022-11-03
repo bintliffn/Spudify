@@ -218,7 +218,7 @@ export async function getCurrentSongPlaying() {
 }
 
 //creates a playlist on a users account
-export async function createPlaylist(playlistName, userId){
+export async function createPlaylist(playlistName, userId) {
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
@@ -232,7 +232,7 @@ export async function createPlaylist(playlistName, userId){
     },
     data: {
       name: `${playlistName}`,
-      description : "Playlist created by the Spudify App"
+      description: "Playlist created by the Spudify App",
     },
   });
 
@@ -241,22 +241,46 @@ export async function createPlaylist(playlistName, userId){
 }
 
 //function to add tracks to a playlist
-//must pass a playlistid to add the tracks to and a 
+//must pass a playlistid to add the tracks to and a
 //list of comma seperated track uris
-export async function addTracksToPlaylist(playlistId, tracks){
+export async function addTracksToPlaylist(playlistId, tracks) {
   var accessToken = await SecureStore.getItemAsync("access_token");
   if (accessToken.includes('"')) {
     accessToken = JSON.parse(accessToken);
   }
   const promise = axios({
-    method: "post",  
+    method: "post",
     url: `${baseURL}playlists/${playlistId}/tracks`,
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
     data: {
-      position: 0, 
+      position: 0,
+      uris: tracks,
+    },
+  });
+  const dataPromise = promise.then((response) => response.data);
+  return dataPromise;
+}
+
+//function to remove tracks from a playlist
+//must pass a playlistid to remove the tracks and a
+//list of comma seperated track uris
+export async function removeTracksFromPlaylist(playlistId, tracks) {
+  var accessToken = await SecureStore.getItemAsync("access_token");
+  if (accessToken.includes('"')) {
+    accessToken = JSON.parse(accessToken);
+  }
+  const promise = axios({
+    method: "delete",
+    url: `${baseURL}playlists/${playlistId}/tracks`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    data: {
+      position: 0,
       uris: tracks,
     },
   });

@@ -2,7 +2,14 @@
 //Can be used by both recommendations and profile screen
 import * as React from "react";
 import { getRequestedPlaylist } from "../../utils/Queries";
-import { SafeAreaView, Text, View, FlatList, Alert } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  FlatList,
+  Alert,
+  TouchableHighlight,
+} from "react-native";
 import Song from "@src/components/DisplaySong/Song";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { styles } from "../Profile/profileStyles";
@@ -17,7 +24,8 @@ const DisplayPlaylist = ({ route, navigation }) => {
   const [display, setDisplay] = React.useState(false);
 
   const [requestedPlaylist, setRequestedPlaylist] = React.useState();
-  //const [removeSong, setRemoveSong] = React.useState();
+
+  // const removeSongFromPlaylist = (songID) => filter();
 
   async function loadPage() {
     try {
@@ -43,37 +51,23 @@ const DisplayPlaylist = ({ route, navigation }) => {
       var userId = userInfoResponse.id;
       var createPlaylistResponse = await createPlaylist(playlistName, userId);
       var playlistId = createPlaylistResponse.id;
-      var songUris= requestedPlaylist;
+      var songUris = requestedPlaylist;
       for (var i = 0; i < songUris.length; i++) {
-        songUris[i]="spotify:track:" + requestedPlaylist[i].id;
+        songUris[i] = "spotify:track:" + requestedPlaylist[i].id;
       }
       addTracksToPlaylist(playlistId, songUris);
     } catch (error) {
       console.log(error);
-      Alert.alert("Error, please ensure you are connected to the internet and you have not already created a playlist with this name");
+      Alert.alert(
+        "Error, please ensure you are connected to the internet and you have not already created a playlist with this name"
+      );
     }
   }
 
   React.useEffect(() => {
-    loadPage(); 
+    loadPage();
   }, []);
 
-  /*                         
-                          1.need id for add and remove song function 
-                                  probably add functions to showPlaylistSongs screen
-                          2.only can affect USER'S playlist not ones made by others
-                          3.have to differentiate from users and followed playlist
-                          
-                          3.5 NOTE: Prob want function to work for generated playlists as well 
-                          but probably wont work unless add playlist to user's account works
-
-                          4.track/song identification uses uri's which is unknown to user's 
-                          and we dont have a search/display songs that user's can search 
-                          for wanted songs
-                          4.5 remove songs we can do but add is different 
-
-                          */
-  // console.log(removeSong);
   return (
     <SafeAreaView>
       {display ? (
@@ -93,21 +87,21 @@ const DisplayPlaylist = ({ route, navigation }) => {
               Songs in your playlist
             </Text>
           </View>
-          {route.params.isUserPlaylist ? 
-          (null):(<Button
-              onPress={()=>addPlaylistToAccount("Generated Spudify Playlist")}
+          {route.params.isUserPlaylist ? null : (
+            <Button
+              onPress={() => addPlaylistToAccount("Generated Spudify Playlist")}
               title="add to spotify account"
               compact
               mode="contained"
               contentStyle={{ height: "100%" }}
               uppercase={false}
               style={[styles.button]}
-            /> )
-          }
+            />
+          )}
 
           <FlatList
             data={requestedPlaylist}
-            contentContainerStyle={{ paddingBottom: 125 }}
+            contentContainerStyle={{ paddingBottom: 200 }}
             renderItem={(item) => {
               return (
                 <TouchableHighlight>
@@ -118,6 +112,7 @@ const DisplayPlaylist = ({ route, navigation }) => {
                           ? item.item.track
                           : item.item
                       }
+                      alert={route.params.isUserPlaylist ? false : true}
                     />
                   </View>
                 </TouchableHighlight>

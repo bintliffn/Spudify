@@ -1,14 +1,35 @@
-import React from "react";
-import { View, SafeAreaView, Image } from "react-native";
+import React, { Component } from "react";
+import {
+  View,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  Alert,
+  Button,
+  TouchableHighlight,
+} from "react-native";
 import { Text } from "react-native-paper";
 import { styles } from "@src/components/DisplaySong/SongStyles";
+import { removeTracksFromPlaylist } from "@src/utils/Queries";
 
 //MUST PASS IN A SINGLE SONG FOR CODE TO WORK
 //THIS IS DIFFERENT FOR DIFFERENT ENDPOINTS
 //For recommendations/top tracks endpoints simply pass returnedArray[indexOfSongYouWantDataFor]
 //For recently played tracks pass returnedArray[indexOfSongYouWantDataFor].track
 
-function Song({ SingleJsonSong }) {
+var deleteAlertFunc = () => {
+  Alert.alert(
+    "Alert",
+    "Do you want to delete this song from the playlist?",
+    [
+      { text: "Yes", onPress: () => console.log("yes pressed") },
+      { text: "No", onPress: () => console.log("no pressed") },
+    ],
+    { cancelable: false }
+  );
+};
+
+function Song({ SingleJsonSong, alert }) {
   //extract the song name, album name, and artist name for a track
   let songName = SingleJsonSong.name;
   let artistName = SingleJsonSong.artists[0].name;
@@ -24,21 +45,43 @@ function Song({ SingleJsonSong }) {
 
   return (
     <SafeAreaView style={[styles.safeView]}>
-      <Image
-        style={[styles.image]}
-        source={{
-          uri: albumCoverUrl,
-        }}
-      />
-      <View style={[styles.innerView]}>
-        <Text style={[styles.songText]}>{songName}</Text>
-        <Text style={[styles.artistText]}>{artistName}</Text>
-      </View>
-      <View style={[styles.DurationView]}>
-        <Text style={[styles.artistText]}>
-          {durationMin}:{durationSec}
-        </Text>
-      </View>
+      {alert ? (
+        <TouchableOpacity style={[styles.safeView]} onPress={deleteAlertFunc}>
+          <Image
+            style={[styles.image]}
+            source={{
+              uri: albumCoverUrl,
+            }}
+          />
+          <View style={[styles.innerView]}>
+            <Text style={[styles.songText]}>{songName}</Text>
+            <Text style={[styles.artistText]}>{artistName}</Text>
+          </View>
+          <View style={[styles.DurationView]}>
+            <Text style={[styles.artistText]}>
+              {durationMin}:{durationSec}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      ) : (
+        <>
+          <Image
+            style={[styles.image]}
+            source={{
+              uri: albumCoverUrl,
+            }}
+          />
+          <View style={[styles.innerView]}>
+            <Text style={[styles.songText]}>{songName}</Text>
+            <Text style={[styles.artistText]}>{artistName}</Text>
+          </View>
+          <View style={[styles.DurationView]}>
+            <Text style={[styles.artistText]}>
+              {durationMin}:{durationSec}
+            </Text>
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 }

@@ -77,28 +77,14 @@ const Profile = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style = {{flex : 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       {display ? (
-<<<<<<< HEAD
-        <View style= {{flex : 1}}>
-          <View style={[styles.upperProfileView]}>
-            <Button
-              onPress={() => logout()}
-              title="login"
-              compact
-              mode="contained"
-              contentStyle={{ height: "100%" }}
-              uppercase={false}
-              style={[styles.button]}
-            />
-=======
-        <View>
+        <View style={{ flex: 1 }}>
           <TouchableHighlight onPress={() => logout()} style={[styles.button]}>
             <Text style={[styles.buttonText]}>Logout</Text>
           </TouchableHighlight>
 
           <View style={[styles.upperProfileView]}>
->>>>>>> d6c9f9f4d29d4a4707f5bd0f4929a1ea6071eac1
             {hasProfilePic ? (
               <Image
                 style={[styles.profilepic]}
@@ -123,7 +109,7 @@ const Profile = ({ navigation }) => {
             <Text style={[styles.followersText]}> Following </Text>
           </View>
           {hasPlaylists ? (
-            <View style = {{flex : 1}}>
+            <View style={{ flex: 1 }}>
               <Text style={[styles.playlistHeaderText]}>
                 {" "}
                 Spotify Playlists{" "}

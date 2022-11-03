@@ -10,7 +10,7 @@ import * as SecureStore from "expo-secure-store";
 
 // Screens
 import LoginScreen from "@src/screens/Login";
-import NavigationBar from "@src/screens/Navigation-Bar";
+import NavigationBar from "@src/screens/Navigation-bar";
 import DisplayPlaylist from "@src/screens/ShowPlaylistSongs";
 import Loading from "@src/screens/Loading";
 
@@ -29,7 +29,6 @@ const MyTheme = {
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = React.useState(false);
 
-
   const authContext = React.useMemo(
     () => ({
       signIn: async (data) => {
@@ -38,7 +37,6 @@ export default function App() {
     }),
     []
   );
-
 
   React.useEffect(() => {
     SecureStore.getItemAsync("access_token").then((data) => {
@@ -49,7 +47,6 @@ export default function App() {
       }
     });
   }, []);
-
 
   return (
     <AuthContext.Provider value={authContext}>
@@ -63,14 +60,16 @@ export default function App() {
           >
             {loggedInStatus ? (
               <>
-              <Stack.Screen name="NavigationBar" component={NavigationBar} />
-              <Stack.Screen name="DisplayPlaylist" component={DisplayPlaylist} />
-              <Stack.Screen name="User" component={UserScreen} />
+                <Stack.Screen name="NavigationBar" component={NavigationBar} />
+                <Stack.Screen
+                  name="DisplayPlaylist"
+                  component={DisplayPlaylist}
+                />
+                <Stack.Screen name="User" component={UserScreen} />
               </>
             ) : (
               <Stack.Screen name="Login" component={LoginScreen} />
             )}
-  
           </Stack.Navigator>
         </NavigationContainer>
       </UserProvider>
