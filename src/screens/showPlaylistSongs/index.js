@@ -25,8 +25,6 @@ const DisplayPlaylist = ({ route, navigation }) => {
 
   const [requestedPlaylist, setRequestedPlaylist] = React.useState();
 
-  // const removeSongFromPlaylist = (songID) => filter();
-
   async function loadPage() {
     try {
       if (route.params.isUserPlaylist) {
@@ -68,6 +66,25 @@ const DisplayPlaylist = ({ route, navigation }) => {
     loadPage();
   }, []);
 
+  const removeItem = (id) => {
+    let arr = requestedPlaylist.filter(function (item) {
+      return item.id !== id;
+    });
+    setRequestedPlaylist(arr);
+  };
+
+  var deleteAlertFunc = (tempId) => {
+    Alert.alert(
+      "Are you sure?",
+      "Do you want to delete this song from the playlist?",
+      [
+        { text: "Yes", onPress: () => removeItem(tempId) },
+        { text: "No", onPress: null },
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <SafeAreaView>
       {display ? (
@@ -99,26 +116,54 @@ const DisplayPlaylist = ({ route, navigation }) => {
             />
           )}
 
-          <FlatList
-            data={requestedPlaylist}
-            contentContainerStyle={{ paddingBottom: 200 }}
-            renderItem={(item) => {
-              return (
-                <TouchableHighlight>
-                  <View style={[styles.container]}>
-                    <Song
-                      SingleJsonSong={
-                        route.params.isUserPlaylist
-                          ? item.item.track
-                          : item.item
-                      }
-                      alert={route.params.isUserPlaylist ? false : true}
-                    />
-                  </View>
-                </TouchableHighlight>
-              );
-            }}
-          />
+          {route.params.isUserPlaylist ? (
+            <FlatList
+              data={requestedPlaylist}
+              contentContainerStyle={{ paddingBottom: 200 }}
+              renderItem={(item) => {
+                return (
+                  <TouchableHighlight
+                    style={[styles.safeView]}
+                    onPress={() => console.log("userplaylist")}
+                  >
+                    <View style={[styles.container]}>
+                      <Song
+                        SingleJsonSong={
+                          route.params.isUserPlaylist
+                            ? item.item.track
+                            : item.item
+                        }
+                      />
+                    </View>
+                  </TouchableHighlight>
+                );
+              }}
+            />
+          ) : (
+            <FlatList
+              data={requestedPlaylist}
+              contentContainerStyle={{ paddingBottom: 200 }}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={(item) => {
+                return (
+                  <TouchableHighlight
+                    style={[styles.safeView]}
+                    onPress={() => deleteAlertFunc(item.item.id)}
+                  >
+                    <View style={[styles.container]}>
+                      <Song
+                        SingleJsonSong={
+                          route.params.isUserPlaylist
+                            ? item.item.track
+                            : item.item
+                        }
+                      />
+                    </View>
+                  </TouchableHighlight>
+                );
+              }}
+            />
+          )}
         </View>
       ) : null}
     </SafeAreaView>
