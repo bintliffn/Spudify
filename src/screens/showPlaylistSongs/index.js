@@ -122,10 +122,7 @@ const DisplayPlaylist = ({ route, navigation }) => {
               contentContainerStyle={{ paddingBottom: 200 }}
               renderItem={(item) => {
                 return (
-                  <TouchableHighlight
-                    style={[styles.safeView]}
-                    onPress={() => console.log("userplaylist")}
-                  >
+                  <TouchableHighlight style={[styles.safeView]}>
                     <View style={[styles.container]}>
                       <Song
                         SingleJsonSong={
