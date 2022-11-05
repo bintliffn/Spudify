@@ -124,6 +124,8 @@ const DisplayPlaylist = ({ route, navigation }) => {
             data={requestedPlaylist}
             contentContainerStyle={{ paddingBottom: 200 }}
             renderItem={(item) => {
+              console.log(                        route.params.playlistId
+                );
               return (
                 <TouchableHighlight>
                   <View style={[styles.container]}>
