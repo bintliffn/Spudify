@@ -22,6 +22,7 @@ import {
 
 const DisplayPlaylist = ({ route, navigation }) => {
   const [display, setDisplay] = React.useState(false);
+  const [hideButton, setHideButton] = React.useState(false);
 
   const [requestedPlaylist, setRequestedPlaylist] = React.useState();
 
@@ -32,6 +33,7 @@ const DisplayPlaylist = ({ route, navigation }) => {
           route.params.playlistId
         );
         setRequestedPlaylist(requestedPlaylistResponse.tracks.items);
+        setHideButton(true);
       } else {
         setRequestedPlaylist(route.params.playlistSongs);
       }
@@ -44,16 +46,19 @@ const DisplayPlaylist = ({ route, navigation }) => {
   }
 
   async function addPlaylistToAccount(playlistName) {
+    setHideButton(true);
     try {
       var userInfoResponse = await getUserInfo();
       var userId = userInfoResponse.id;
       var createPlaylistResponse = await createPlaylist(playlistName, userId);
       var playlistId = createPlaylistResponse.id;
-      var songUris = requestedPlaylist;
-      for (var i = 0; i < songUris.length; i++) {
-        songUris[i] = "spotify:track:" + requestedPlaylist[i].id;
+      var playlistCopy = { ...requestedPlaylist };
+      var songUris = [];
+      for (var i = 0; i < requestedPlaylist.length; i++) {
+        songUris.push("spotify:track:" + playlistCopy[i].id);
       }
       addTracksToPlaylist(playlistId, songUris);
+      Alert.alert("Successfully added playlist to your Spotify account");
     } catch (error) {
       console.log(error);
       Alert.alert(
@@ -95,25 +100,26 @@ const DisplayPlaylist = ({ route, navigation }) => {
               color="white"
               size={40}
               onPress={() => {
-                route.params.isUserPlaylist
-                  ? navigation.navigate("Profile")
-                  : navigation.navigate("Recommend");
+                navigation.goBack();
               }}
             />
             <Text style={[styles.innerPlaylistSongsView]}>
               Songs in your playlist
             </Text>
           </View>
-          {route.params.isUserPlaylist ? null : (
-            <Button
-              onPress={() => addPlaylistToAccount("Generated Spudify Playlist")}
-              title="add to spotify account"
-              compact
-              mode="contained"
-              contentStyle={{ height: "100%" }}
-              uppercase={false}
-              style={[styles.button]}
-            />
+          {hideButton ? null : (
+            <View style={[styles.addPlaylistView]}>
+              <TouchableHighlight
+                onPress={() =>
+                  addPlaylistToAccount("Generated Spudify Playlist")
+                }
+                style={[styles.addplaylistButton]}
+              >
+                <Text style={[styles.buttonText]}>
+                  Add Playlist to your Spotify Account
+                </Text>
+              </TouchableHighlight>
+            </View>
           )}
 
           {route.params.isUserPlaylist ? (

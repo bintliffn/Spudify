@@ -17,6 +17,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { styles } from "./profileStyles";
 import Playlist from "@src/components/DisplayPlaylist/Playlist";
 import { AuthContext } from "@src/App";
+import { Button } from "react-native-paper";
 import * as SecureStore from "expo-secure-store";
 
 const Profile = ({ navigation }) => {
@@ -80,11 +81,13 @@ const Profile = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       {display ? (
         <View style={{ flex: 1 }}>
-          <TouchableHighlight onPress={() => logout()} style={[styles.button]}>
-            <Text style={[styles.buttonText]}>Logout</Text>
-          </TouchableHighlight>
-
           <View style={[styles.upperProfileView]}>
+            <TouchableHighlight
+              onPress={() => logout()}
+              style={[styles.button]}
+            >
+              <Text style={[styles.buttonText]}>Logout</Text>
+            </TouchableHighlight>
             {hasProfilePic ? (
               <Image
                 style={[styles.profilepic]}
