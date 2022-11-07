@@ -12,8 +12,6 @@ import * as SecureStore from "expo-secure-store";
 import LoginScreen from "@src/screens/Login";
 import NavigationBar from "@src/screens/Navigation-Bar";
 import DisplayPlaylist from "@src/screens/ShowPlaylistSongs";
-import AdvancedRecommendations from "@src/screens/AdvancedRecommendations"
-import Loading from "@src/screens/Loading";
 
 export const AuthContext = React.createContext();
 
@@ -30,7 +28,6 @@ const MyTheme = {
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = React.useState(false);
 
-
   const authContext = React.useMemo(
     () => ({
       signIn: async (data) => {
@@ -39,7 +36,6 @@ export default function App() {
     }),
     []
   );
-
 
   React.useEffect(() => {
     SecureStore.getItemAsync("access_token").then((data) => {
@@ -50,7 +46,6 @@ export default function App() {
       }
     });
   }, []);
-
 
   return (
     <AuthContext.Provider value={authContext}>
@@ -77,24 +72,6 @@ export default function App() {
         </NavigationContainer>
       </UserProvider>
     </AuthContext.Provider>
-
-    // <UserProvider>
-    //   <NavigationContainer theme={MyTheme}>
-    //     <Stack.Navigator
-    //       initialRouteName="Login"
-    //       screenOptions={{
-    //         headerShown: false,
-    //       }}
-    //     >
-    //       <Stack.Screen name="Login" component={LoginScreen} />
-    //       <Stack.Screen name="RecommendedPlaylists" component={RecommendedPlaylists} />
-    //       <Stack.Screen name="spotifyPlaylists" component={SpotifyPlaylists} />
-    //       <Stack.Screen name="Test" component={Test} />
-    //       <Stack.Screen name="User" component={UserScreen} />
-    //       <Stack.Screen name="NavBarRouter" component={NavBarRouter} />
-    //     </Stack.Navigator>
-    //   </NavigationContainer>
-    // </UserProvider>
   );
 }
 

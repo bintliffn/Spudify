@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     padding: 15,
   },
   masterView : {
-    height : 250,
+    height : 400,
    // alignItems : "flex-start",
    // justifyContent : "flex-start"
   },
@@ -47,5 +47,27 @@ export const styles = StyleSheet.create({
     fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     fontSize: 20,
     paddingBottom: 10,
+  },
+  selectDropdown: {
+    width: windowWidth,
+    backgroundColor: "#434343",
+    borderWidth: 0,
+    borderRadius: 25,
+  },
+  dropdownContainer: {
+    backgroundColor: "#434343",
+    maxWidth: windowWidth,
+    borderWidth: 0,
+    borderRadius: 25,
+  },
+  dropdownText: {
+    color: "#1DB954",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontSize: 12,
+  },
+  searchBar: {
+    width: windowWidth,
+    backgroundColor: "#434343",
+    borderWidth: 0,
   },
 });

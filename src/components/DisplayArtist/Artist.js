@@ -23,7 +23,7 @@ function Artist({ SingleJsonArtist }) {
         style={[styles.image]}
         source={
           artistImageUrl === ""
-            ? require("@root/assets/poggies.gif")
+            ? require("@root/assets/spotify_logo.png")
             : { uri: `${artistImageUrl}` }
         }
       />

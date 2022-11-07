@@ -27,6 +27,10 @@ const DisplayPlaylist = ({ route, navigation }) => {
   const [requestedPlaylist, setRequestedPlaylist] = React.useState();
   //const [removeSong, setRemoveSong] = React.useState();
 
+  const removeSongFromPlaylist = (songId) =>{
+
+  }
+
   async function loadPage() {
     try {
       if (route.params.isUserPlaylist) {
@@ -124,8 +128,6 @@ const DisplayPlaylist = ({ route, navigation }) => {
             data={requestedPlaylist}
             contentContainerStyle={{ paddingBottom: 200 }}
             renderItem={(item) => {
-              console.log(                        route.params.playlistId
-                );
               return (
                 <TouchableHighlight>
                   <View style={[styles.container]}>

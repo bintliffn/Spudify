@@ -21,7 +21,15 @@ import {
 } from "@src/utils/Queries";
 import { styles } from "@src/screens/Recommendations/recommendationStyles";
 import Playlist from "@src/components/DisplayPlaylist/Playlist";
-export default function Playlists({ navigation }) {
+import { DeviceEventEmitter } from "react-native";
+
+export default function Playlists({ route, navigation }) {
+
+  DeviceEventEmitter.addListener("event.advancedPayload", (eventData) =>
+    handleAdvancedPayload(eventData)
+  );
+
+  const [advancedPayload, setAdvancedPayload] = React.useState("");
   const [playlistCount, setPlaylistCount] = React.useState(1);
   const [playlists, setPlaylists] = React.useState([]);
   const [topSongs, setTopSongs] = React.useState([]);
@@ -52,7 +60,22 @@ export default function Playlists({ navigation }) {
     setIsEnabledObscure((previousState) => !previousState);
   };
 
-  const[ playlistTracksTotal, setPlaylistTracksTotal] = React.useState([]);
+  const [playlistTracksTotal, setPlaylistTracksTotal] = React.useState([]);
+
+  async function getRecommendationsFromAdvancedPayload(requestBody) {
+    if(requestBody.seed_artists == "" && requestBody.seed_genres == "" && requestBody.seed_tracks== ""){
+      Alert.alert("You mus select at least 1 artist/track/genre to generate an advanced recommendation");
+      return;
+    }
+    try {
+      var songRecommendations = await getRecommendationsAdvanced(requestBody);
+      songRecommendations.playlistName = "Generated Playlist #" + playlistCount;
+      setPlaylistCount(playlistCount + 1);
+      setPlaylists((oldArray) => [...oldArray, songRecommendations]);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
 
   async function getSongRecommendationsByTracks() {
     try {
@@ -127,12 +150,22 @@ export default function Playlists({ navigation }) {
     }
   }
 
+  const handleAdvancedPayload = (advancedPayload) => {
+    setAdvancedPayload(advancedPayload.queryNumValues);
+  };
+
+  React.useEffect(() => {
+    if(advancedPayload!= ""){
+      getRecommendationsFromAdvancedPayload(advancedPayload);
+    }
+  }, [advancedPayload]);
+
   React.useEffect(() => {
     var tempPlaylistTracksTotal = [];
-    for(var i=0;i<50;i++){
+    for (var i = 0; i < 50; i++) {
       tempPlaylistTracksTotal.push(true);
     }
-    setPlaylistTracksTotal(tempPlaylistTracksTotal)
+    setPlaylistTracksTotal(tempPlaylistTracksTotal);
     //fetch all data
     fetchData();
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -153,11 +186,15 @@ export default function Playlists({ navigation }) {
           artists or songs!
         </Text>
         <TouchableOpacity
-            style={[styles.button]}
-            onPress={() => navigation.navigate("AdvancedRecommendations")}
-          >
-            <Text style={[styles.buttonText]}>Generate adancced recommendations</Text>
-          </TouchableOpacity>
+          style={[styles.button]}
+          onPress={() => {
+            navigation.navigate("AdvancedRecommendations");
+          }}
+        >
+          <Text style={[styles.buttonText]}>
+            Generate advanced recommendations
+          </Text>
+        </TouchableOpacity>
         <View style={[styles.rowView]}>
           <View style={[styles.rowTextView]}>
             <Text style={[styles.bodyText]}>Highly Danceable</Text>

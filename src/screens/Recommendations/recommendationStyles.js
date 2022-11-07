@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
         height: 25,
       },
       buttonText: {
-        color: "#B3B3B3",
+        color: "#1DB954",
         fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
         fontSize: 12,
         fontWeight : "bold",
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
       button:{
         width : windowWidth*.35,
         height : 50,
-        backgroundColor : "#212121",
+        backgroundColor: "#434343",
         color : "#B3B3B3",
         justifyContent : "center",
         borderRadius : 40,
@@ -59,7 +59,6 @@ export const styles = StyleSheet.create({
       },
       rowTextView:{
         alignItems: "flex-start",
-        //justifyContent: "flex-start",
         flex: 1
       },
       container: {

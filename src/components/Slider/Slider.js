@@ -21,7 +21,7 @@ function TextSlider({
   }
 
   React.useEffect(() => {
-    passValueUp([(maxValue-minValue)/2]);
+    setSliderValue((maxValue-minValue)/2);
   }, []);
   return (
     <>

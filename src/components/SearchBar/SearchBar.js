@@ -145,10 +145,14 @@ function SearchBar({ handleValue }) {
         <View />
       ) : (
         <>
+        <View style={[styles.buffer]}/>
           <Searchbar
             placeholder={"Search for a " + value}
             onChangeText={onChangeSearch}
             value={searchQuery}
+            style={[styles.searchBar]}
+            inputStyle={[styles.dropdownText]}
+            iconColor="#1DB954"
           />
           <View style={[styles.buffer]} />
           <TouchableHighlight

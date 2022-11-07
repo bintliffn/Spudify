@@ -24,4 +24,20 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     paddingBottom: 10,
   },
+  buttonText: {
+    color: "#B3B3B3",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontSize: 12,
+    fontWeight : "bold",
+    textAlignVertical: "center",
+    textAlign: "center"
+  },
+  button:{
+    width : windowWidth*.35,
+    height : 50,
+    backgroundColor : "#212121",
+    color : "#B3B3B3",
+    justifyContent : "center",
+    borderRadius : 40,
+  },
 });
