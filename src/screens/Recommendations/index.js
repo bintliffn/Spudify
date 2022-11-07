@@ -22,6 +22,7 @@ import {
 import { styles } from "@src/screens/Recommendations/recommendationStyles";
 import Playlist from "@src/components/DisplayPlaylist/Playlist";
 import { DeviceEventEmitter } from "react-native";
+import { mdiConsoleLine } from "@mdi/js";
 
 export default function Playlists({ route, navigation }) {
 
@@ -73,7 +74,7 @@ export default function Playlists({ route, navigation }) {
       setPlaylistCount(playlistCount + 1);
       setPlaylists((oldArray) => [...oldArray, songRecommendations]);
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   }
 
@@ -275,6 +276,7 @@ export default function Playlists({ route, navigation }) {
             extraData={playlists}
             contentContainerStyle={[styles.flatList]}
             renderItem={(item) => {
+              if(item.item.length != 0){
               return (
                 <View style={[styles.container]}>
                   <TouchableHighlight
@@ -293,6 +295,7 @@ export default function Playlists({ route, navigation }) {
                   </TouchableHighlight>
                 </View>
               );
+                  }
             }}
           />
         </View>
