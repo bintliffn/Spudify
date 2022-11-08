@@ -16,6 +16,6 @@ export const styles = StyleSheet.create({
     paddingBottom: windowHeight * .25
   },
   parentView: {
-    height: windowHeight
+    height: windowHeight*1.15
   },
 });

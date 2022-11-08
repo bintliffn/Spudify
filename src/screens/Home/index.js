@@ -188,6 +188,7 @@ export default function Home({ navigation }) {
         setIsPlaying(true);
       }
     } catch (error) {
+      console.log(error);
       setDisplay(false);
       setDisplayText(
         "Error fetching info please ensure you are connected to the internet and restart the app"

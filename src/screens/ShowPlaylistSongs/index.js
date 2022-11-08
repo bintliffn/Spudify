@@ -26,6 +26,10 @@ const DisplayPlaylist = ({ route, navigation }) => {
 
   const [requestedPlaylist, setRequestedPlaylist] = React.useState();
 
+  const removeSongFromPlaylist = (songId) =>{
+
+  }
+
   async function loadPage() {
     try {
       if (route.params.isUserPlaylist) {
