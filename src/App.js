@@ -59,14 +59,16 @@ export default function App() {
           >
             {loggedInStatus ? (
               <>
-              <Stack.Screen name="NavigationBar" component={NavigationBar} />
-              <Stack.Screen name="DisplayPlaylist" component={DisplayPlaylist} />
-              <Stack.Screen name="User" component={UserScreen} />
+                <Stack.Screen name="NavigationBar" component={NavigationBar} />
+                <Stack.Screen
+                  name="DisplayPlaylist"
+                  component={DisplayPlaylist}
+                />
+                <Stack.Screen name="User" component={UserScreen} />
               </>
             ) : (
               <Stack.Screen name="Login" component={LoginScreen} />
             )}
-  
           </Stack.Navigator>
         </NavigationContainer>
       </UserProvider>

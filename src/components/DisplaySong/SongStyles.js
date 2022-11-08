@@ -35,6 +35,6 @@ export const styles = StyleSheet.create({
   },
   DurationView: {
     alignItems: "flex-end",
-    justifyContent: "center",
+    //justifyContent: "center",
   },
 });

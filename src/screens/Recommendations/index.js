@@ -52,7 +52,7 @@ export default function Playlists({ navigation }) {
     setIsEnabledObscure((previousState) => !previousState);
   };
 
-  const[ playlistTracksTotal, setPlaylistTracksTotal] = React.useState([]);
+  const [playlistTracksTotal, setPlaylistTracksTotal] = React.useState([]);
 
   async function getSongRecommendationsByTracks() {
     try {
@@ -129,10 +129,10 @@ export default function Playlists({ navigation }) {
 
   React.useEffect(() => {
     var tempPlaylistTracksTotal = [];
-    for(var i=0;i<50;i++){
+    for (var i = 0; i < 50; i++) {
       tempPlaylistTracksTotal.push(true);
     }
-    setPlaylistTracksTotal(tempPlaylistTracksTotal)
+    setPlaylistTracksTotal(tempPlaylistTracksTotal);
     //fetch all data
     fetchData();
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);

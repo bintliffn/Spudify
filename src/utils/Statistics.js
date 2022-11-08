@@ -1,5 +1,5 @@
 import { getAudioFeaturesOfSong } from "@src/utils/Queries";
-import * as SecureStore from "expo-secure-store"
+import * as SecureStore from "expo-secure-store";
 
 //function that returns average values of certain attributes from a users top 50 tracks
 //topTracks is an array of tracks

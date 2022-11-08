@@ -25,7 +25,6 @@ const DisplayPlaylist = ({ route, navigation }) => {
   const [hideButton, setHideButton] = React.useState(false);
 
   const [requestedPlaylist, setRequestedPlaylist] = React.useState();
-  //const [removeSong, setRemoveSong] = React.useState();
 
   async function loadPage() {
     try {
@@ -53,12 +52,12 @@ const DisplayPlaylist = ({ route, navigation }) => {
       var userId = userInfoResponse.id;
       var createPlaylistResponse = await createPlaylist(playlistName, userId);
       var playlistId = createPlaylistResponse.id;
-      var playlistCopy = {...requestedPlaylist};
+      var playlistCopy = { ...requestedPlaylist };
       var songUris = [];
       for (var i = 0; i < requestedPlaylist.length; i++) {
         songUris.push("spotify:track:" + playlistCopy[i].id);
       }
-      addTracksToPlaylist(playlistId, songUris)
+      addTracksToPlaylist(playlistId, songUris);
       Alert.alert("Successfully added playlist to your Spotify account");
     } catch (error) {
       console.log(error);
@@ -72,22 +71,25 @@ const DisplayPlaylist = ({ route, navigation }) => {
     loadPage();
   }, []);
 
-  /*                         
-                          1.need id for add and remove song function 
-                                  probably add functions to showPlaylistSongs screen
-                          2.only can affect USER'S playlist not ones made by others
-                          3.have to differentiate from users and followed playlist
-                          
-                          3.5 NOTE: Prob want function to work for generated playlists as well 
-                          but probably wont work unless add playlist to user's account works
+  const removeItem = (id) => {
+    let arr = requestedPlaylist.filter(function (item) {
+      return item.id !== id;
+    });
+    setRequestedPlaylist(arr);
+  };
 
-                          4.track/song identification uses uri's which is unknown to user's 
-                          and we dont have a search/display songs that user's can search 
-                          for wanted songs
-                          4.5 remove songs we can do but add is different 
+  var deleteAlertFunc = (tempId) => {
+    Alert.alert(
+      "Are you sure?",
+      "Do you want to delete this song from the playlist?",
+      [
+        { text: "Yes", onPress: () => removeItem(tempId) },
+        { text: "No", onPress: null },
+      ],
+      { cancelable: false }
+    );
+  };
 
-                          */
-  // console.log(removeSong);
   return (
     <SafeAreaView>
       {display ? (
@@ -98,14 +100,14 @@ const DisplayPlaylist = ({ route, navigation }) => {
               color="white"
               size={40}
               onPress={() => {
-                   navigation.goBack()
+                navigation.goBack();
               }}
             />
             <Text style={[styles.innerPlaylistSongsView]}>
               Songs in your playlist
             </Text>
           </View>
-          {hideButton ? null  : (
+          {hideButton ? null : (
             <View style={[styles.addPlaylistView]}>
               <TouchableHighlight
                 onPress={() =>
@@ -120,25 +122,51 @@ const DisplayPlaylist = ({ route, navigation }) => {
             </View>
           )}
 
-          <FlatList
-            data={requestedPlaylist}
-            contentContainerStyle={{ paddingBottom: 200 }}
-            renderItem={(item) => {
-              return (
-                <TouchableHighlight>
-                  <View style={[styles.container]}>
-                    <Song
-                      SingleJsonSong={
-                        route.params.isUserPlaylist
-                          ? item.item.track
-                          : item.item
-                      }
-                    />
-                  </View>
-                </TouchableHighlight>
-              );
-            }}
-          />
+          {route.params.isUserPlaylist ? (
+            <FlatList
+              data={requestedPlaylist}
+              contentContainerStyle={{ paddingBottom: 200 }}
+              renderItem={(item) => {
+                return (
+                  <TouchableHighlight style={[styles.safeView]}>
+                    <View style={[styles.container]}>
+                      <Song
+                        SingleJsonSong={
+                          route.params.isUserPlaylist
+                            ? item.item.track
+                            : item.item
+                        }
+                      />
+                    </View>
+                  </TouchableHighlight>
+                );
+              }}
+            />
+          ) : (
+            <FlatList
+              data={requestedPlaylist}
+              contentContainerStyle={{ paddingBottom: 200 }}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={(item) => {
+                return (
+                  <TouchableHighlight
+                    style={[styles.safeView]}
+                    onPress={() => deleteAlertFunc(item.item.id)}
+                  >
+                    <View style={[styles.container]}>
+                      <Song
+                        SingleJsonSong={
+                          route.params.isUserPlaylist
+                            ? item.item.track
+                            : item.item
+                        }
+                      />
+                    </View>
+                  </TouchableHighlight>
+                );
+              }}
+            />
+          )}
         </View>
       ) : null}
     </SafeAreaView>
