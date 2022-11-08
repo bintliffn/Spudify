@@ -1,14 +1,23 @@
-import React from "react";
-import { View, SafeAreaView, Image } from "react-native";
+import React, { Component } from "react";
+import {
+  View,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  Alert,
+  Button,
+  TouchableHighlight,
+} from "react-native";
 import { Text } from "react-native-paper";
 import { styles } from "@src/components/DisplaySong/SongStyles";
+import { removeTracksFromPlaylist } from "@src/utils/Queries";
 
 //MUST PASS IN A SINGLE SONG FOR CODE TO WORK
 //THIS IS DIFFERENT FOR DIFFERENT ENDPOINTS
 //For recommendations/top tracks endpoints simply pass returnedArray[indexOfSongYouWantDataFor]
 //For recently played tracks pass returnedArray[indexOfSongYouWantDataFor].track
 
-function Song({ SingleJsonSong }) {
+function Song({ SingleJsonSong, alert }) {
   //extract the song name, album name, and artist name for a track
   let songName = SingleJsonSong.name;
   let artistName = SingleJsonSong.artists[0].name;

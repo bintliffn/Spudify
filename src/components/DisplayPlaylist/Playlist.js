@@ -11,22 +11,32 @@ import {
 
 import { styles } from "@src/screens/Profile/profileStyles";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
 
-
-
-function Playlist({isUserPlaylist, playlistTracksTotal, item}) {
+function Playlist({ isUserPlaylist, playlistTracksTotal, item }) {
   return (
     <View style={[styles.container]}>
-      {playlistTracksTotal[item.index] ? (  
-          <View style={[styles.innerContainer]}>
-            <Image
-              style={[styles.coverImage]}
-              source={{ uri: isUserPlaylist ? item.item.images[0].url : item.item[0].album.images[0].url }}
-            />
-            <View style={[styles.innerView]}>
-              <Text style={[styles.playlistText]}>{ isUserPlaylist? item.item.name : item.item.playlistName}</Text>
-            </View>
+      {playlistTracksTotal[item.index] ? (
+        <View style={[styles.innerContainer]}>
+          <Image
+            style={[styles.coverImage]}
+            source={{
+              uri: isUserPlaylist
+                ? item.item.images[0].url
+                : item.item[0].album.images[0].url,
+            }}
+          />
+          <View style={[styles.innerView]}>
+            <Text style={[styles.playlistText]}>
+              {isUserPlaylist ? item.item.name : item.item.playlistName}
+            </Text>
           </View>
+          <SimpleLineIcon
+            name="arrow-right"
+            size={20}
+            style={[styles.followersText]}
+          />
+        </View>
       ) : (
         <View style={[styles.innerContainer]}>
           <MaterialCommunityIcons

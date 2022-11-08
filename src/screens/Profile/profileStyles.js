@@ -1,5 +1,4 @@
 import { StyleSheet, Platform, Dimensions } from "react-native";
-import { authorize } from "react-native-app-auth";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -129,5 +128,13 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 23,
     paddingLeft: 20,
-  }
+  },
+  safeView: {
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    height: 70,
+    width: windowWidth * 0.9,
+    padding: 10,
+  },
 });
