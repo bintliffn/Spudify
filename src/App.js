@@ -77,23 +77,7 @@ export default function App() {
       </UserProvider>
     </AuthContext.Provider>
 
-    // <UserProvider>
-    //   <NavigationContainer theme={MyTheme}>
-    //     <Stack.Navigator
-    //       initialRouteName="Login"
-    //       screenOptions={{
-    //         headerShown: false,
-    //       }}
-    //     >
-    //       <Stack.Screen name="Login" component={LoginScreen} />
-    //       <Stack.Screen name="RecommendedPlaylists" component={RecommendedPlaylists} />
-    //       <Stack.Screen name="spotifyPlaylists" component={SpotifyPlaylists} />
-    //       <Stack.Screen name="Test" component={Test} />
-    //       <Stack.Screen name="User" component={UserScreen} />
-    //       <Stack.Screen name="NavBarRouter" component={NavBarRouter} />
-    //     </Stack.Navigator>
-    //   </NavigationContainer>
-    // </UserProvider>
+    
   );
 }
 
