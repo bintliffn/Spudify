@@ -1,5 +1,4 @@
 import { StyleSheet, Platform, Dimensions } from "react-native";
-import { authorize } from "react-native-app-auth";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -66,12 +65,12 @@ export const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 40,
-    width: windowWidth * 0.35,
     height: 40,
     justifyContent: "center",
     alignSelf: "flex-end",
     borderColor: "#1DB954",
-    borderWidth: 1,
+    
+    borderWidth: 0,
   },
   addplaylistButton: {
     borderRadius: 40,
