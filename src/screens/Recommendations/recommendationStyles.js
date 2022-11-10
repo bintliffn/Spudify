@@ -42,6 +42,7 @@ export const styles = StyleSheet.create({
     color: "#B3B3B3",
     justifyContent: "center",
     borderRadius: 40,
+    margin: 5
   },
   bodyText: {
     color: "#FFFFFF",
@@ -81,7 +82,7 @@ export const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   flatList: {
-    paddingBottom: 20,
+    paddingBottom: 30,
     justifyContent: "flex-start",
   },
 });

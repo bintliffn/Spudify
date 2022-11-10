@@ -19,7 +19,7 @@ export default function Home({ navigation }) {
   const [queryNumValues, setQueryNumValues] = React.useState({});
 
   const handleAttributeValue = (attributePlusValue) => {
-    if ('target_duration_ms' in attributePlusValue) {
+    if ("target_duration_ms" in attributePlusValue) {
       attributePlusValue.target_duration_ms =
         attributePlusValue.target_duration_ms * 1000;
     }
@@ -40,8 +40,6 @@ export default function Home({ navigation }) {
     setDisplay(true);
   }, []);
 
-
-
   return (
     <SafeAreaView>
       <ScrollView>
@@ -52,55 +50,55 @@ export default function Home({ navigation }) {
             </View>
             <View style={[styles.masterView]}>
               <TextSlider
-                sliderText={"Target Danceability"}
-                step={.01}
-                minValue={0.00}
-                maxValue={1.00}
+                sliderText={"Danceability"}
+                step={0.01}
+                minValue={0.0}
+                maxValue={1.0}
                 attributeName={"target_danceability"}
                 handleValue={handleAttributeValue}
               />
               <TextSlider
-                sliderText={"Target Energy"}
-                step={.01}
-                minValue={0.00}
-                maxValue={1.00}
+                sliderText={"Energy"}
+                step={0.01}
+                minValue={0.0}
+                maxValue={1.0}
                 attributeName={"target_energy"}
                 handleValue={handleAttributeValue}
               />
               <TextSlider
-                sliderText={"Target Acousticness"}
-                step={.01}
-                minValue={0.00}
-                maxValue={1.00}
+                sliderText={"Acousticness"}
+                step={0.01}
+                minValue={0.0}
+                maxValue={1.0}
                 attributeName={"target_acousticness"}
                 handleValue={handleAttributeValue}
               />
               <TextSlider
-                sliderText={"Target Loudness"}
-                step={.01}
-                minValue={0.00}
-                maxValue={1.00}
+                sliderText={"Loudness"}
+                step={0.01}
+                minValue={0.0}
+                maxValue={1.0}
                 attributeName={"target_loudness"}
                 handleValue={handleAttributeValue}
               />
               <TextSlider
-                sliderText={"Target Liveness"}
-                step={.01}
-                minValue={0.00}
-                maxValue={1.00}
+                sliderText={"Liveness"}
+                step={0.01}
+                minValue={0.0}
+                maxValue={1.0}
                 attributeName={"target_liveness"}
                 handleValue={handleAttributeValue}
               />
               <TextSlider
-                sliderText={"Target Happiness"}
-                step={.01}
-                minValue={0.00}
-                maxValue={1.00}
+                sliderText={"Happiness"}
+                step={0.01}
+                minValue={0.0}
+                maxValue={1.0}
                 attributeName={"target_happiness"}
                 handleValue={handleAttributeValue}
               />
               <TextSlider
-                sliderText={"Target Popularity"}
+                sliderText={"Popularity"}
                 step={1}
                 minValue={0}
                 maxValue={100}
@@ -108,15 +106,15 @@ export default function Home({ navigation }) {
                 handleValue={handleAttributeValue}
               />
               <TextSlider
-                sliderText={"Target Instrumentalness"}
-                step={.01}
-                minValue={0.00}
-                maxValue={1.00}
+                sliderText={"Instrumentalness"}
+                step={0.01}
+                minValue={0.0}
+                maxValue={1.0}
                 attributeName={"target_instrumentalness"}
                 handleValue={handleAttributeValue}
               />
               <TextSlider
-                sliderText={"Target Duration (seconds)"}
+                sliderText={"Duration (seconds)"}
                 step={1}
                 minValue={0}
                 maxValue={1800}

@@ -11,12 +11,12 @@ function TextSlider({
   attributeName,
   handleValue,
 }) {
-  const [sliderValue, setSliderValue] = React.useState(50);
+  const [sliderValue, setSliderValue] = React.useState(.5);
 
   function passValueUp(value) {
     let attributeValuePair = {}
     attributeValuePair[attributeName] = value[0]
-    setSliderValue(value);
+    setSliderValue(value[0].toFixed(2));
     handleValue(attributeValuePair);
   }
 
