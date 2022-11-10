@@ -22,14 +22,16 @@ import {
 import { styles } from "@src/screens/Recommendations/recommendationStyles";
 import Playlist from "@src/components/DisplayPlaylist/Playlist";
 import { DeviceEventEmitter } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { mdiConsoleLine } from "@mdi/js";
+import Tooltip from "react-native-walkthrough-tooltip";
 
 export default function Playlists({ route, navigation }) {
-
   DeviceEventEmitter.addListener("event.advancedPayload", (eventData) =>
     handleAdvancedPayload(eventData)
   );
 
+  const [showTip, setTip] = React.useState(false);
   const [advancedPayload, setAdvancedPayload] = React.useState("");
   const [playlistCount, setPlaylistCount] = React.useState(1);
   const [playlists, setPlaylists] = React.useState([]);
@@ -64,8 +66,14 @@ export default function Playlists({ route, navigation }) {
   const [playlistTracksTotal, setPlaylistTracksTotal] = React.useState([]);
 
   async function getRecommendationsFromAdvancedPayload(requestBody) {
-    if(requestBody.seed_artists == "" && requestBody.seed_genres == "" && requestBody.seed_tracks== ""){
-      Alert.alert("You mus select at least 1 artist/track/genre to generate an advanced recommendation");
+    if (
+      requestBody.seed_artists == "" &&
+      requestBody.seed_genres == "" &&
+      requestBody.seed_tracks == ""
+    ) {
+      Alert.alert(
+        "You must select at least 1 artist/track/genre to generate an advanced recommendation"
+      );
       return;
     }
     try {
@@ -156,7 +164,7 @@ export default function Playlists({ route, navigation }) {
   };
 
   React.useEffect(() => {
-    if(advancedPayload!= ""){
+    if (advancedPayload != "") {
       getRecommendationsFromAdvancedPayload(advancedPayload);
     }
   }, [advancedPayload]);
@@ -186,16 +194,43 @@ export default function Playlists({ route, navigation }) {
           Generate a curated recommendation playlist using your top spotify
           artists or songs!
         </Text>
+        <View style={{flexDirection : "row", alignItems : "center"}}>
         <TouchableOpacity
           style={[styles.button]}
           onPress={() => {
             navigation.navigate("AdvancedRecommendations");
           }}
         >
-          <Text style={[styles.buttonText]}>
-            Generate advanced recommendations
-          </Text>
+          <Text style={[styles.buttonText]}>Advanced</Text>
         </TouchableOpacity>
+        <Tooltip
+          isVisible={showTip}
+          content={
+            <View>
+              <Text>
+                {" "}
+                Select a combination of up to 5 Artists, Tracks, or Genres to
+                generate recommendations from.
+              </Text>
+            </View>
+          }
+          onClose={() => setTip(false)}
+          placement="bottom"
+          // below is for the status bar of react navigation bar
+          topAdjustment={
+            Platform.OS === "android" ? -StatusBar.currentHeight : 0
+          }
+        >
+          <TouchableOpacity onPress={() => setTip(true)}>
+            <Ionicons
+              name="help-circle-outline"
+              color="white"
+              style={[styles.profilepic]}
+              size={25}
+            />
+          </TouchableOpacity>
+        </Tooltip>
+        </View>
         <View style={[styles.rowView]}>
           <View style={[styles.rowTextView]}>
             <Text style={[styles.bodyText]}>Highly Danceable</Text>
@@ -261,6 +296,7 @@ export default function Playlists({ route, navigation }) {
           >
             <Text style={[styles.buttonText]}>From Top Songs</Text>
           </TouchableOpacity>
+          <View />
           <TouchableOpacity
             style={[styles.button]}
             onPress={() => getSongRecommendationsByArtists()}
@@ -276,26 +312,26 @@ export default function Playlists({ route, navigation }) {
             extraData={playlists}
             contentContainerStyle={[styles.flatList]}
             renderItem={(item) => {
-              if(item.item.length != 0){
-              return (
-                <View style={[styles.container]}>
-                  <TouchableHighlight
-                    onPress={() =>
-                      navigation.navigate("DisplayPlaylist", {
-                        playlistSongs: item.item,
-                        isUserPlaylist: false,
-                      })
-                    }
-                  >
-                    <Playlist
-                      item={item}
-                      playlistTracksTotal={playlistTracksTotal}
-                      isUserPlaylist={false}
-                    />
-                  </TouchableHighlight>
-                </View>
-              );
-                  }
+              if (item.item.length != 0) {
+                return (
+                  <View style={[styles.container]}>
+                    <TouchableHighlight
+                      onPress={() =>
+                        navigation.navigate("DisplayPlaylist", {
+                          playlistSongs: item.item,
+                          isUserPlaylist: false,
+                        })
+                      }
+                    >
+                      <Playlist
+                        item={item}
+                        playlistTracksTotal={playlistTracksTotal}
+                        isUserPlaylist={false}
+                      />
+                    </TouchableHighlight>
+                  </View>
+                );
+              }
             }}
           />
         </View>

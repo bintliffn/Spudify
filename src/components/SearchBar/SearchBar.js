@@ -6,8 +6,10 @@ import {
   FlatList,
   TouchableHighlight,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import { Searchbar } from "react-native-paper";
+import Tooltip from "react-native-walkthrough-tooltip";
 import DropDownPicker from "react-native-dropdown-picker";
 import { styles } from "@src/components/SearchBar/SearchBarStyles";
 import { searchForItems, getGenres } from "@src/utils/Queries";
@@ -43,8 +45,11 @@ function SearchBar({ handleValue }) {
   const [value, setValue] = React.useState("track");
   const [items, setItems] = React.useState(dropdownItems);
 
+  const [showTip, setTip] = React.useState(false);
+
   //function to search for something using spotifys API
   async function search(query) {
+    console.log("Here");
     var itemsReturned = await searchForItems(value, query);
     if (value == "track") {
       setResults(itemsReturned.tracks.items);
@@ -126,46 +131,58 @@ function SearchBar({ handleValue }) {
 
   return (
     <SafeAreaView style={[styles.masterView]}>
-      <DropDownPicker
-        open={open}
-        value={value}
-        items={items}
-        setOpen={setOpen}
-        setValue={setValue}
-        setItems={setItems}
-        style={[styles.selectDropdown]}
-        dropDownContainerStyle={[styles.dropdownContainer]}
-        textStyle={[styles.dropdownText]}
-        listMode="SCROLLVIEW"
-        scrollViewProps={{
-          nestedScrollEnabled: true,
-        }}
-      />
       {displayItemType == "genre" ? (
-        <View />
-      ) : (
         <>
-        <View style={[styles.buffer]}/>
-          <Searchbar
-            placeholder={"Search for a " + value}
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-            style={[styles.searchBar]}
-            inputStyle={[styles.dropdownText]}
-            iconColor="#1DB954"
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            style={[styles.selectDropdown]}
+            dropDownContainerStyle={[styles.dropdownContainer]}
+            textStyle={[styles.dropdownText]}
+            listMode="SCROLLVIEW"
+            scrollViewProps={{
+              nestedScrollEnabled: true,
+            }}
           />
           <View style={[styles.buffer]} />
-          <TouchableHighlight
-            onPress={() => {
-              search(searchQuery);
-              Alert.alert("Searching for " + value);
-            }}
-            style={[styles.addplaylistButton]}
-          >
-            <Text style={[styles.buttonText]}>Search for {value}</Text>
-          </TouchableHighlight>
+        </>
+      ) : (
+        <>
+          <View style={[styles.rowView]}>
+            <Searchbar
+              placeholder={"Search for a " + value}
+              onChangeText={onChangeSearch}
+              onSubmitEditing={(event) => search(event.nativeEvent.text)}
+              value={searchQuery}
+              style={[styles.searchBar]}
+              inputStyle={[styles.dropdownText]}
+              iconColor="#1DB954"
+            />
+            <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              style={[styles.selectDropdown]}
+              dropDownContainerStyle={[styles.dropdownContainer]}
+              textStyle={[styles.dropdownText]}
+              listMode="SCROLLVIEW"
+              scrollViewProps={{
+                nestedScrollEnabled: true,
+              }}
+            />
+          </View>
+          <View style={[styles.buffer]} />
         </>
       )}
+
+
       <View style={[styles.buffer]} />
       <FlatList
         data={results}

@@ -1,9 +1,11 @@
 {
   "expo": {
     "name": "SpotifyStatistics-Recommendations",
-    "slug": "SpotifyStatistics-Recommendations",
+    "slug": "spudify",
+    "owner": "bintliffn",
     "version": "1.0.0",
     "scheme": "myapp", 
+    "privacy" : "public",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

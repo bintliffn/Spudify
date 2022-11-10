@@ -6,12 +6,13 @@ import axios from "axios";
 import * as React from "react";
 import * as WebBrowser from "expo-web-browser";
 import * as SecureStore from "expo-secure-store";
-import { useFocusEffect } from "@react-navigation/native";
+import { Link, useFocusEffect } from "@react-navigation/native";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import { SafeAreaView, Image, Text, View, LogBox } from "react-native";
 import { Button } from "react-native-paper";
 import { styles } from "@src/screens/Login/loginStyles";
 import { AuthContext } from "@src/App";
+import * as Linking from 'expo-linking';
 
 const querystring = require("querystring");
 const Buffer = require("buffer").Buffer;
@@ -30,7 +31,7 @@ function LoginScreen({ navigation }) {
   };
 
   function login() {
-    console.log(makeRedirectUri());
+    console.log(Linking.createURL());
     promptAsync();
   }
 
@@ -50,7 +51,7 @@ function LoginScreen({ navigation }) {
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
-      redirectUri: makeRedirectUri(),
+      redirectUri: Linking.createURL(),
     },
     discovery
   );
@@ -68,7 +69,7 @@ function LoginScreen({ navigation }) {
         data: querystring.stringify({
           grant_type: "authorization_code",
           code: code,
-          redirect_uri: makeRedirectUri(),
+          redirect_uri: Linking.createURL(),
         }),
         headers: {
           "content-type": "application/x-www-form-urlencoded",
