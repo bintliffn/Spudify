@@ -11,8 +11,9 @@ import {
   View,
   TouchableHighlight,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
-import { Menu, Button, Provider } from "react-native-paper";
+import { Menu, Provider } from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { styles } from "./profileStyles";
@@ -88,17 +89,28 @@ const Profile = ({ navigation }) => {
       <SafeAreaView style={{ flex: 1 }}>
         {display ? (
           <View style={{ flex: 1 }}>
-            <View style={{alignItems: "flex-end"}}>
+            <View style={{ alignItems: "flex-end" }}>
               <Menu
                 visible={visible}
                 onDismiss={closeMenu}
+                style={[styles.menu]}
                 anchor={
-                  <Button onPress={() => openMenu()} style={[styles.button]} compact={true} mode={"text"}>
+                  <TouchableOpacity
+                    onPress={() => openMenu()}
+                    style={[styles.button]}
+                  >
                     <Ionicons name="menu-outline" color="white" size={25} />
-                  </Button>
+                  </TouchableOpacity>
                 }
               >
-                <Menu.Item onPress={() => logout()} title="Logout" />
+                <View style={[styles.menu]}>
+                  <Menu.Item
+                    onPress={() => logout()}
+                    title="Logout"
+                    style={[styles.menuItem]}
+                    titleStyle={[styles.menuTitle]}
+                  />
+                </View>
               </Menu>
             </View>
             <View style={[styles.upperProfileView]}>

@@ -64,13 +64,9 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    borderRadius: 40,
-    height: 40,
+    paddingRight: 10,
     justifyContent: "center",
     alignSelf: "flex-end",
-    borderColor: "#1DB954",
-    
-    borderWidth: 0,
   },
   addplaylistButton: {
     borderRadius: 40,
@@ -128,5 +124,20 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 23,
     paddingLeft: 20,
-  }
+  },
+  menu: {
+    paddingRight: 110,
+    justifyContent: "center",
+    width: windowWidth * .1,
+    height: 30,
+  },
+  menuItem: {
+    backgroundColor: "white",
+    borderRadius: 50,
+  },
+  menuTitle: {
+    color: "black",
+    fontSize: 16,
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+  },
 });
