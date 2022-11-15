@@ -120,7 +120,7 @@ const DisplayPlaylist = ({ route, navigation }) => {
                 style={[styles.addplaylistButton]}
               >
                 <Text style={[styles.buttonText]}>
-                  Add Playlist to your Spotify Account
+                  Add to your Spotify Account
                 </Text>
               </TouchableHighlight>
             </View>

@@ -9,14 +9,6 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingTop: 25,
   },
-  buttonText: {
-    color: "#1DB954",
-    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
-    fontSize: 15,
-    fontWeight: "bold",
-    textAlignVertical: "center",
-    textAlign: "center",
-  },
   profilepic: {
     width: 100,
     height: 100,
@@ -63,6 +55,14 @@ export const styles = StyleSheet.create({
     width: windowWidth * 0.9,
     padding: 10,
   },
+  buttonText: {
+    color: "#1DB954",
+    fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
+    fontSize: 12,
+    fontWeight: "bold",
+    textAlignVertical: "center",
+    textAlign: "center",
+  },
   button: {
     paddingRight: 10,
     justifyContent: "center",
@@ -71,10 +71,11 @@ export const styles = StyleSheet.create({
   addplaylistButton: {
     borderRadius: 40,
     width: windowWidth * 0.5,
-    height: 40,
+    height: 50,
     justifyContent: "center",
     alignSelf: "center",
-    borderColor: "#1DB954",
+    color: "#B3B3B3",
+    backgroundColor: "#434343",
     borderWidth: 1,
   },
   coverImage: {

@@ -7,6 +7,8 @@ import { UserProvider } from "@src/contexts/UserProvider";
 import { registerRootComponent } from "expo";
 import UserScreen from "@src/screens/UserScreen";
 import * as SecureStore from "expo-secure-store";
+import * as Linking from 'expo-linking';
+
 
 // Screens
 import LoginScreen from "@src/screens/Login";
@@ -16,6 +18,8 @@ import AdvancedRecommendations from "@src/screens/AdvancedRecommendations"
 import Loading from "@src/screens/Loading";
 
 export const AuthContext = React.createContext();
+
+
 
 const Stack = createNativeStackNavigator();
 StatusBar.setBarStyle("light-content", true);

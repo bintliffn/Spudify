@@ -285,7 +285,7 @@ export default function Home({ navigation }) {
                     with an average dancability of{" "}
                     <Text style={[styles.highlightedWord]}>
                       {" "}
-                      {danceabilityValue.toFixed(2) * 100}%{" "}
+                      {(danceabilityValue * 100).toPrecision(2)}%{" "}
                     </Text>
                   </Text>
                 </View>
@@ -298,7 +298,7 @@ export default function Home({ navigation }) {
                     with an average popularity of{" "}
                     <Text style={[styles.highlightedWord]}>
                       {" "}
-                      {popularityValue}%{" "}
+                      {popularityValue.toPrecision(2)}%{" "}
                     </Text>
                   </Text>
                 </View>
@@ -310,7 +310,7 @@ export default function Home({ navigation }) {
                     with an average valence of{" "}
                     <Text style={[styles.highlightedWord]}>
                       {" "}
-                      {valenceValue.toFixed(2) * 100}%{" "}
+                      {(valenceValue* 100).toPrecision(2)}%{" "}
                     </Text>
                   </Text>
                 </View>
@@ -322,7 +322,7 @@ export default function Home({ navigation }) {
                     with an average energy of{" "}
                     <Text style={[styles.highlightedWord]}>
                       {" "}
-                      {energyValue.toFixed(2) * 100}%{" "}
+                      {(energyValue* 100).toPrecision(2)}%{" "}
                     </Text>
                   </Text>
                 </View>

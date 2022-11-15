@@ -7,12 +7,11 @@ export const styles = StyleSheet.create({
   masterView: {
     alignItems: "center",
     justifyContent: "flex-start",
-    flex: 1,
   },
   searchBarView : {
-    width: windowWidth * 1,
     alignItems : "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    height : 400 
   },
   textInput: {
     width: "100%",
@@ -25,19 +24,20 @@ export const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   buttonText: {
-    color: "#B3B3B3",
+    color: "#1DB954",
     fontFamily: Platform.OS === "ios" ? "Helvetica Neue" : "sans-serif",
     fontSize: 12,
-    fontWeight : "bold",
+    fontWeight: "bold",
     textAlignVertical: "center",
-    textAlign: "center"
+    textAlign: "center",
   },
-  button:{
-    width : windowWidth*.35,
-    height : 50,
-    backgroundColor : "#212121",
-    color : "#B3B3B3",
-    justifyContent : "center",
-    borderRadius : 40,
+  button: {
+    width: windowWidth * 0.5,
+    height: 50,
+    backgroundColor: "#434343",
+    color: "#B3B3B3",
+    justifyContent: "center",
+    borderRadius: 40,
+    margin: 5
   },
 });
