@@ -120,15 +120,12 @@ const Profile = ({ navigation }) => {
                   source={{ uri: userImage }}
                 ></Image>
               ) : (
-                <View style={[styles.container]}>
-                  <MaterialCommunityIcons
-                    name="album"
-                    style={[styles.defaultCoverAlbum]}
-                    size={60}
+                  <Ionicons
+                    name="person"
+                    style={[styles.profilepic]}
+                    size = {100}
                     color="white"
                   />
-                  <Text style={[styles.playlistText]}> No Playlists </Text>
-                </View>
               )}
             </View>
             <View style={[styles.numberOfFollowersView]}>
