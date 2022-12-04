@@ -217,9 +217,9 @@ export default function Playlists({ route, navigation }) {
           onClose={() => setTip(false)}
           placement="bottom"
           // below is for the status bar of react navigation bar
-          topAdjustment={
-            Platform.OS === "android" ? -StatusBar.currentHeight : 0
-          }
+          // topAdjustment={
+          //   Platform.OS === "android" ? -StatusBar.currentHeight : 0
+          // }
         >
           <TouchableOpacity onPress={() => setTip(true)}>
             <Ionicons
