@@ -5,6 +5,4 @@ We successfully developed an iOS and Android mobile app where users can login us
 
 Currently, we are in progress of getting the mobile application approved by Spotify to increase our query usage and the app is only usable by our team's developers. We plan on publishing the app on the Apple App Store and Google Play Store in the near future.
 
-Project website: https://bintliffn.github.io/spudify-website/
 
-This was a group project for CS 4850 Senior Project Fall 2022. This code should only be used for educational purposes and should not be copied or plagiarized. 
